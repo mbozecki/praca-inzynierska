@@ -1,0 +1,42 @@
+version: '2.5'
+
+services:
+    ########################################
+    ########### REVERSE-PROXY ##############
+    ########################################
+    traefik:
+        image: traefik
+        command: --api.insecure=true --providers.docker #Enables the web UI and tells Træfik to listen to docker
+        ports:
+            - "80:80"   #The HTTP port
+            - "8082:8080" #The Web UI (enabled by --api)
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock #so Traefik can listen to the Docker events
+
+    ########################################
+    ############### DATABASE ###############
+    ########################################
+
+    postgresdb:
+        image: postgres
+        environment:
+            POSTGRES_PASSWORD: admin
+        ports:
+            - "5432:5432"
+            # disable volume cause windows is $hit- ./pgdata:/var/lib/postgresql/data
+        labels:
+            - "traefik.ports=5432"
+            - "traefik.frontend.rule=Host:postgresdb"
+
+    pgadmin:
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.com
+            PGADMIN_DEFAULT_PASSWORD: mysecretpassword
+        volumes:
+            - ./init-data/servers.json:/pgadmin4/servers.json
+            - ./pgadminvolume:/var/lib/pgadmin
+        labels:
+            - "traefik.port=80"
+            - "traefik.frontend.rule=Host:pgadmin"
+            - "traefik.http.routers.pgadmin.rule=Host(`pgadmin`)"
