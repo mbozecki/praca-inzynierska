@@ -2,7 +2,7 @@
     height: 100vh;
     padding-right: 8rem;
     padding-left: 8rem;
-
+    
     background-image: url(../../../assets/HOMEPAGE_bg.png)
   }
 
@@ -10,8 +10,10 @@
   font-size: 61px;
   margin-top: 10rem;
   margin-left: 6rem;
+  transition-timing-function: ease;
   font-family: 'Inter', sans-serif;
   font-weight: bolder;
+  color: white;
   max-width: 660px;
   height: auto;
 }

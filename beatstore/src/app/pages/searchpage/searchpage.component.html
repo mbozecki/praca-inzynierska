@@ -1,0 +1,35 @@
+<div id="searchpage">
+  <app-navbar></app-navbar>
+  <app-search-bar hint="Search..." actionHint="Search"></app-search-bar>
+  <div class="d-flex searchContainer">
+    <div class="filtersContainer">
+      <h2>Filters</h2>
+      <hr />
+      <h3>Genre</h3>
+      <div class="chips">
+        <mat-form-field appearance="fill">
+          <mat-label>Genre</mat-label>
+          <mat-select [formControl]="genre" multiple>
+            <mat-option *ngFor="let genre of genreList" [value]="genre">{{
+              genre
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="price">
+        <mat-slider
+          thumbLabel
+          [displayWith]="formatLabel"
+          tickInterval="1000"
+          step="1000"
+          min="0"
+          max="100000"
+          aria-label="units"
+        ></mat-slider>
+      </div>
+    </div>
+    <div class="searchResultContainer">
+      <h2>xd</h2>
+    </div>
+  </div>
+</div>

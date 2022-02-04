@@ -2,7 +2,7 @@
   <!-- Container wrapper -->
   <div class="container-fluid">
     <!-- Navbar brand -->
-    <img class="navbar-brand" src="../../../assets/Logo.png">
+    <a [routerLink]="['']"><img class="navbar-brand" src="../../../assets/Logo.png"></a>
 
     <!-- Toggle button -->
     <button
@@ -22,22 +22,22 @@
       <!-- Left links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" [routerLink]="['']">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/xd" routerLinkActive="active">Explore</a>
+          <a class="nav-link" [routerLink]="['/explore']" routerLinkActive="active">Explore</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Search</a>
+          <a class="nav-link" [routerLink]="['/search']">Search</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Log in</a>
+          <a class="nav-link" [routerLink]="['/login']">Log in</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" >|</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><fa-icon [icon]="faCart"></fa-icon></a>
+          <a class="nav-link" [routerLink]="['/cart']"><fa-icon [icon]="faCart"></fa-icon></a>
         </li>
 
       </ul>
