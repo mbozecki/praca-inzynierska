@@ -2,34 +2,66 @@
   <app-navbar></app-navbar>
   <app-search-bar hint="Search..." actionHint="Search"></app-search-bar>
   <div class="d-flex searchContainer">
-    <div class="filtersContainer">
+    <div class="filtersContainer" [formGroup]="fg">
       <h2>Filters</h2>
       <hr />
-      <h3>Genre</h3>
+      <h4>Genre</h4>
       <div class="chips">
         <mat-form-field appearance="fill">
           <mat-label>Genre</mat-label>
-          <mat-select [formControl]="genre" multiple>
+          <mat-select formControlName="genre" multiple>
             <mat-option *ngFor="let genre of genreList" [value]="genre">{{
               genre
             }}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
+      <h4>BPM</h4>
+      <div class="bpm">
+        <mat-slider
+          thumbLabel
+          [displayWith]="formatLabel"
+          tickInterval="1"
+          step="1"
+          min="60"
+          max="220"
+          aria-label="BPM"
+        ></mat-slider>
+      </div>
+      <h4>Price</h4>
       <div class="price">
         <mat-slider
           thumbLabel
           [displayWith]="formatLabel"
-          tickInterval="1000"
-          step="1000"
+          tickInterval="1"
+          step="1"
           min="0"
-          max="100000"
-          aria-label="units"
+          max="300"
+          aria-label="$"
         ></mat-slider>
       </div>
+      <p>
+        <mat-checkbox formControlName="favorites"
+          >Show only favorites</mat-checkbox
+        >
+      </p>
     </div>
-    <div class="searchResultContainer">
-      <h2>xd</h2>
-    </div>
+    <div class="searchResult">
+      <div class="searchResultContainer">
+        <span class="headers">·</span>
+        <span class="headers">·</span>
+        
+        <span class="headers">Name</span>
+        <span class="headers">·</span>
+        <span class="headers">Produced by</span>
+        <span class="headers">Genre</span>
+        <span class="headers">Tempo</span>
+        <span class="headers">·</span>
+        <span class="headers">Price</span>
+        <span class="headers">Favorite?</span>
+      </div>
+      <ng-container *ngFor="let _ of [].constructor(20)">
+        <app-beat-single-item></app-beat-single-item>
+      </ng-container>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -10,15 +10,18 @@ import { FormControl } from '@angular/forms';
 export class SearchpageComponent implements OnInit {
 
   constructor() { }
-
-  genre = new FormControl();
-  genreList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  fg = new FormGroup({
+    genre: new FormControl(''),
+    favorites: new FormControl(''),
+  });
+  
+  genreList: string[] = ['Lo-fi', 'Electronic', 'Experimental', 'Guitar', 'Piano', 'Pop'];
   ngOnInit(): void {
   }
 
   formatLabel(value: number) {
-    if (value >= 1000) {
-      return Math.round(value / 1000) + 'k';
+    if (value >= 1) {
+      return value + '$';
     }
 
     return value;

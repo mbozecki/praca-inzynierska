@@ -1,13 +1,20 @@
-<!---<div id="searchBar">
-    <span>S</span>
-    
-    <input type="text" placeholder={{hint}}>
-    <button (click)="navigateToExplore()">{{actionHint}}</button>
-</div> -->
+
 <div class="container" id="searchBar">
-    <div class="row height d-flex justify-content-center align-items-center">
-        <div class="col-md-6">
-            <div class="form"> <span ><fa-icon [icon]="faSearch"></fa-icon></span> <input type="text" class="form-control form-input" placeholder={{hint}}> <span class="left-pan"><button id="actionButton" (click)="navigateToExplore()">{{actionHint}}</button></span> </div>
-        </div>
+  <div class="row height d-flex justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="form">
+        <span><fa-icon [icon]="faSearch"></fa-icon></span>
+        <input
+          type="text"
+          class="form-control form-input"
+          placeholder="{{ hint }}"
+        />
+        <span class="left-pan"
+          ><button class="btn" id="actionButton" (click)="navigateToExplore()">
+            {{ actionHint }}
+          </button></span
+        >
+      </div>
     </div>
+  </div>
 </div>

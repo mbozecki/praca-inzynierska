@@ -1,0 +1,26 @@
+.beatSingleItem {
+    color: #EFEBEB;
+    display: flex;
+    flex-direction: row;
+    margin: 1vh 2vw 1vh 2vw;
+    padding-top: 1.1vh;
+    padding-bottom: 1.1vh;
+    justify-content: space-around;
+    background: rgba(148, 145, 185, 0.82);
+    border-radius: 9px;
+    align-items: center
+}
+.beatImg {
+    width:130px;
+    height: 130px;
+}
+
+.instrumental {font-family: Inter;
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 22px;
+text-align: center;
+
+color: #EFEBEB;
+}

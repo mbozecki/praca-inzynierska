@@ -1,0 +1,27 @@
+<div class="beatSingleItem">
+  <img class="beatImg" src="../../../assets/singleItemMock.png" />
+  <span class="headers instrumental">Instrumental Name</span>
+  <span class="headers">·</span>
+  <span class="headers">Producer name</span>
+  <span class="headers genre">
+    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
+        <mat-chip *ngFor="let chip of availableColors" selected [color]="chip.color">
+          {{chip.name}}
+        </mat-chip>
+      </mat-chip-list>
+  </span>
+  <span class="headers">159bpm</span>
+  <button mat-raised-button color="primary">
+    <mat-icon>play_circle_outline</mat-icon> Play
+  </button>
+  <button mat-raised-button color="primary"><mat-icon>add_shopping_cart</mat-icon>19.99$</button>
+  <div class="example-button-container">
+    <button
+      mat-mini-fab
+      color="primary"
+      aria-label="Heart"
+    >
+      <mat-icon>favorite</mat-icon>
+    </button>
+  </div>
+</div>

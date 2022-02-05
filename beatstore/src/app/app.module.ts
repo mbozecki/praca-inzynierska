@@ -22,6 +22,11 @@ import { NavbarOnlyLogoComponent } from './components/navbar-only-logo/navbar-on
 import { SearchpageComponent } from './pages/searchpage/searchpage.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { BeatSingleItemComponent } from './components/beat-single-item/beat-single-item.component';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,7 @@ import {MatSliderModule} from '@angular/material/slider';
     MusicBottomBarComponent,
     NavbarOnlyLogoComponent,
     SearchpageComponent,
+    BeatSingleItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +53,11 @@ import {MatSliderModule} from '@angular/material/slider';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatSliderModule
+    MatSliderModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatChipsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
