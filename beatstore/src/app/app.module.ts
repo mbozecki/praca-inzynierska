@@ -28,7 +28,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatChipsModule} from '@angular/material/chips';
 import { ProfilepageComponent } from './pages/profilepage/profilepage.component';
-
+import {MatTabsModule} from '@angular/material/tabs';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +59,8 @@ import { ProfilepageComponent } from './pages/profilepage/profilepage.component'
     MatCheckboxModule,
     MatButtonModule,
     MatIconModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTabsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

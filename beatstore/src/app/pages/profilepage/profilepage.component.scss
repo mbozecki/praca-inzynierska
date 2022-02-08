@@ -13,4 +13,41 @@
     margin: 18vh auto;
     background-color: #f0f0f0;
     border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.picture {
+    margin-top: -7%;
+    border:2px solid black;
+    border-radius: 8px;
+    flex-direction: column;
+}
+
+.profileName {
+    text-align: center;
+}
+
+.settings {
+    font-weight: bold;
+    margin-top: 2vh;
+}
+.profilePicture {
+    
+    height: 200px;
+}
+.tabs {
+    margin-top: 3vh;
+    width: 70%;
+    flex-direction: column;
+}
+.bio {
+    margin-left:100px;
+    margin-right: 100px;
+    text-align: center;
+    margin-top: 5vh;
 }

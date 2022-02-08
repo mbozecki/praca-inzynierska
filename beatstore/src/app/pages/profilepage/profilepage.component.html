@@ -1,4 +1,32 @@
 <div id="profilepage">
-    <app-navbar></app-navbar>
-    <div class="d-flex profileContainer"></div>
+  <app-navbar></app-navbar>
+  <div class="profileContainer">
+    <div class="picture">
+      <img
+        class="profilePicture"
+        src="https://media.istockphoto.com/vectors/male-user-icon-vector-id517998264?k=20&m=517998264&s=612x612&w=0&h=pdEwtkJlZsIoYBVeO2Bo4jJN6lxOuifgjaH8uMIaHTU="
+      />
+      <div class="profileName"><h2>User</h2></div>
+    </div>
+    <div class="profileName settings">
+      <fa-icon [icon]="faWrench"></fa-icon> Edit
+    </div>
+    <p class="bio">
+      Bacon ipsum dolor amet capicola fatback hamburger, doner boudin swine
+      tongue ham cow meatloaf. Pastrami venison doner, pancetta landjaeger
+      boudin bacon ham hock jowl burgdoggen ground round kielbasa flank tongue
+      turkey. Landjaeger beef ribs biltong buffalo meatball ham.
+    </p>
+    <mat-tab-group class="tabs" mat-align-tabs="center">
+      <mat-tab label="Bought licenses">
+        <ng-container *ngFor="let beat of myBeats">
+          <app-beat-single-item [data]="beat"></app-beat-single-item>
+        </ng-container>
+      </mat-tab>
+      <mat-tab label="My sales">
+        <h3>Total plays: 200</h3>
+        <h3>Total sales: 399$</h3>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
