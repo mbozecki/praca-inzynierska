@@ -28,9 +28,9 @@
           aria-label="BPM"
         ></mat-slider>
       </div>
-      <h4>Price</h4>
+      <h4>Max Price</h4>
       <div class="price">
-        <mat-slider
+        <mat-slider #priceslider
           thumbLabel
           [displayWith]="formatLabel"
           tickInterval="1"
@@ -60,8 +60,8 @@
         <span class="headers">Price</span>
         <span class="headers">Favorite?</span>
       </div>
-      <ng-container *ngFor="let _ of [].constructor(20)">
-        <app-beat-single-item></app-beat-single-item>
+      <ng-container *ngFor="let beat of allBeats">
+        <app-beat-single-item [data]="beat"></app-beat-single-item>
       </ng-container>
   </div>
 </div>

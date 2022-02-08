@@ -4,6 +4,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
+import { ProfilepageComponent } from './pages/profilepage/profilepage.component';
 import { SearchpageComponent } from './pages/searchpage/searchpage.component';
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
   { path: '',  pathMatch: 'full', component: HomepageComponent  },
   { path: 'register', component: SignUpComponent }, 
   { path: 'login', component: SignInComponent},
-  { path: 'search', component: SearchpageComponent}
+  { path: 'search', component: SearchpageComponent},
+  { path: 'profile', component: ProfilepageComponent}
 ];
 
 @NgModule({

@@ -27,6 +27,7 @@ import { BeatSingleItemComponent } from './components/beat-single-item/beat-sing
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatChipsModule} from '@angular/material/chips';
+import { ProfilepageComponent } from './pages/profilepage/profilepage.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {MatChipsModule} from '@angular/material/chips';
     NavbarOnlyLogoComponent,
     SearchpageComponent,
     BeatSingleItemComponent,
+    ProfilepageComponent,
   ],
   imports: [
     BrowserModule,

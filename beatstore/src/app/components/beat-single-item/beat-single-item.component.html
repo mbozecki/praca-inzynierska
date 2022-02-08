@@ -1,26 +1,28 @@
 <div class="beatSingleItem">
-  <img class="beatImg" src="../../../assets/singleItemMock.png" />
-  <span class="headers instrumental">Instrumental Name</span>
+  <img class=" beatImg" [src]='thumbnail'/>
+  <span class="headers instrumental">{{this.data.name}}</span>
   <span class="headers">·</span>
-  <span class="headers">Producer name</span>
+  <span class="headers">{{this.data.producedby}}</span>
   <span class="headers genre">
-    <mat-chip-list class="mat-chip-list-stacked" aria-label="Color selection">
-        <mat-chip *ngFor="let chip of availableColors" selected [color]="chip.color">
-          {{chip.name}}
-        </mat-chip>
-      </mat-chip-list>
+    <mat-chip-list class="mat-chip-list-stacked headers" aria-label="Color selection">
+      <mat-chip
+        *ngFor="let type of beatTypes"
+        selected
+        [color]="type.color"
+      >
+        {{ type.name }}
+      </mat-chip>
+    </mat-chip-list>
   </span>
-  <span class="headers">159bpm</span>
-  <button mat-raised-button color="primary">
+  <span class="headers">{{this.data.BPM + "BPM"}}</span>
+  <button mat-raised-button color="primary" class="headers">
     <mat-icon>play_circle_outline</mat-icon> Play
   </button>
-  <button mat-raised-button color="primary"><mat-icon>add_shopping_cart</mat-icon>19.99$</button>
-  <div class="example-button-container">
-    <button
-      mat-mini-fab
-      color="primary"
-      aria-label="Heart"
-    >
+  <button mat-raised-button color="primary" class="headers">
+    <mat-icon>add_shopping_cart</mat-icon>{{this.data.price + "$"}}
+  </button>
+  <div class="example-button-container" class="headers">
+    <button mat-mini-fab color="primary" aria-label="Heart">
       <mat-icon>favorite</mat-icon>
     </button>
   </div>

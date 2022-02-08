@@ -1,0 +1,16 @@
+#profilepage {
+    background: rgb(54,21,68);
+    background: linear-gradient(93deg, rgba(54,21,68,1) 0%, rgba(66,32,83,1) 45%, rgba(97,18,94,1) 93%);
+    min-height: 100vh;
+    padding-right: 8rem;
+    padding-left: 8rem;
+
+}
+
+.profileContainer {
+    width: 80%;
+    min-height: 80vh;
+    margin: 18vh auto;
+    background-color: #f0f0f0;
+    border-radius: 14px;
+}
