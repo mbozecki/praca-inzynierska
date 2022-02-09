@@ -29,6 +29,13 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatChipsModule} from '@angular/material/chips';
 import { ProfilepageComponent } from './pages/profilepage/profilepage.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatStepperModule} from '@angular/material/stepper';
+import { AddBeatDialogComponent } from './components/add-beat-dialog/add-beat-dialog.component';
+import {MatInputModule} from '@angular/material/input';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +50,7 @@ import {MatTabsModule} from '@angular/material/tabs';
     SearchpageComponent,
     BeatSingleItemComponent,
     ProfilepageComponent,
+    AddBeatDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +68,12 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatButtonModule,
     MatIconModule,
     MatChipsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule,
+    MatStepperModule,
+    MatInputModule,
+    NgxMatFileInputModule,
+    MatSnackBarModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
