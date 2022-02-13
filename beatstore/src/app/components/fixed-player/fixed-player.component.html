@@ -1,0 +1,52 @@
+<div class="fixedInput">
+    <mat-slider
+      #songslider
+      thumbLabel
+      step="1"
+      min="0"
+      value="0"
+      max="100"
+      aria-label=""
+    ></mat-slider>
+  </div>
+<div id="fixedPlayer">
+
+  <div class="fixedPlayerContainer d-flex">
+    <div class="imgTitle">
+      <img class="img" src="../../../assets/singleItemMock.png" />
+      <div class="title">
+        <div>Beat title</div>
+        <div class="light">Producer</div>
+        <div class="type">Lo-fi · hiphop · pop</div>
+      </div>
+    </div>
+    <div>
+      <a class="like" href="/"><fa-icon [icon]="faHeart"></fa-icon></a>
+    </div>
+    <div *ngIf="!isPlaying" class="playPause">
+      <a (click)="play()"><fa-icon [icon]="faPlay"></fa-icon></a>
+    </div>
+    <div *ngIf="isPlaying" class="playPause">
+      <a (click)="pause()"><fa-icon [icon]="faPause"></fa-icon></a>
+    </div>
+
+    <div class="volume">
+      <fa-icon [icon]="faVolume"></fa-icon>
+      <mat-slider
+        #volumeslider
+        thumbLabel
+        tickInterval="1"
+        step="1"
+        min="0"
+        value="100"
+        max="100"
+        aria-label=""
+      ></mat-slider>
+    </div>
+
+    <div class="price">
+      <span class="prc">29.99$</span>
+      <fa-icon [icon]="faCart"></fa-icon>
+    </div>
+  </div>
+</div>

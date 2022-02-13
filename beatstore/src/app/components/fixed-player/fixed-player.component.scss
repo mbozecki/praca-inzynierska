@@ -1,0 +1,89 @@
+#fixedPlayer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100vw;
+    min-width: 1180px;
+    height: 80px;
+    background-color: #f0f0f0;
+    z-index: 999;
+    border-top: 1px solid #e6e6e6;
+}
+
+.fixedPlayerContainer {
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100%;
+    width: calc(100% - 70px);
+    padding: 9px 0 9px 20px;
+    box-sizing: border-box;
+    justify-content: space-between;
+}
+
+.img {
+    max-width: 90px;
+    margin: auto;
+    display: block;
+    padding: 3px;
+}
+
+.imgTitle{ 
+    display: inline-flex;
+    align-items: center;
+}
+
+.playPause {
+    font-size: 28px;
+}
+
+.volume {
+    display: flex;
+    align-items: center;
+}
+
+.like {
+    color: #920B4F !important;
+}
+
+.light {
+    
+}
+
+.type {
+    font-size:80%;
+    font-weight: lighter;
+}
+
+.prc {
+    font-weight: 500;
+    margin-right:15px;
+}
+
+.fixedInput {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100vw;
+    min-width: 1180px;
+    height: 106px;
+    display: flex;
+    margin:0;
+    padding:0;
+    -ms-flex-align: center;
+    align-items:flex-start;
+    z-index: 998;
+}
+
+.fixedInput .mat-slider-horizontal {
+    min-width: 100vw;
+    z-index: 1000;
+}
+
+:host :ng-deep .fixedInput .mat-slider-track-background {
+    color: #920B4F !important;
+}

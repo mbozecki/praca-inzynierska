@@ -38,6 +38,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { PublicProfilePageComponent } from './pages/public-profile-page/public-profile-page.component';
 import { FaqpageComponent } from './pages/faqpage/faqpage.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { FixedPlayerComponent } from './components/fixed-player/fixed-player.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     AddBeatDialogComponent,
     PublicProfilePageComponent,
     FaqpageComponent,
+    FixedPlayerComponent,
   ],
   imports: [
     BrowserModule,
