@@ -1,0 +1,64 @@
+<div id="publicProfilePage">
+    <app-navbar></app-navbar>
+    <div class="banner">
+        <img class="profileImg" src="https://media.istockphoto.com/vectors/male-user-icon-vector-id517998264?k=20&m=517998264&s=612x612&w=0&h=pdEwtkJlZsIoYBVeO2Bo4jJN6lxOuifgjaH8uMIaHTU=">
+        <span class="username">User420</span>
+    </div>
+    <div class="bio">
+        <p>
+            Bacon ipsum dolor amet bacon shoulder kielbasa rump bresaola pig capicola alcatra frankfurter picanha beef ribs biltong filet mignon spare ribs shankle. Shoulder jowl spare ribs swine. Pork short loin meatloaf pork belly, leberkas shankle capicola pancetta t-bone ham tail. 
+        </p>
+    </div>
+    <div class="d-flex searchContainer">
+      <div class="filtersContainer" [formGroup]="fg">
+        <h2>Filters</h2>
+        <hr />
+        <h4>Genre</h4>
+        <div class="chips">
+          <mat-form-field appearance="fill">
+            <mat-label>Genre</mat-label>
+            <mat-select formControlName="genre" multiple>
+              <mat-option *ngFor="let genre of genreList" [value]="genre">{{
+                genre
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <h4>BPM</h4>
+        <div class="bpm">
+          <mat-slider
+            thumbLabel
+            [displayWith]="formatLabel"
+            tickInterval="1"
+            step="1"
+            min="60"
+            max="220"
+            aria-label="BPM"
+          ></mat-slider>
+        </div>
+        <h4>Max Price</h4>
+        <div class="price">
+          <mat-slider #priceslider
+            thumbLabel
+            [displayWith]="formatLabel"
+            tickInterval="1"
+            step="1"
+            min="0"
+            max="300"
+            aria-label="$"
+          ></mat-slider>
+        </div>
+        <p>
+          <mat-checkbox formControlName="favorites"
+            >Show only favorites</mat-checkbox
+          >
+        </p>
+      </div>
+      <div class="searchResult">
+
+        <ng-container *ngFor="let beat of allBeats">
+          <app-beat-single-item [data]="beat"></app-beat-single-item>
+        </ng-container>
+    </div>
+  </div>
+  

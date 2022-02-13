@@ -6,6 +6,8 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ProfilepageComponent } from './pages/profilepage/profilepage.component';
 import { SearchpageComponent } from './pages/searchpage/searchpage.component';
+import { PublicProfilePageComponent } from './pages/public-profile-page/public-profile-page.component';
+import { FaqpageComponent } from './pages/faqpage/faqpage.component';
 
 const routes: Routes = [
 
@@ -13,7 +15,9 @@ const routes: Routes = [
   { path: 'register', component: SignUpComponent }, 
   { path: 'login', component: SignInComponent},
   { path: 'search', component: SearchpageComponent},
-  { path: 'profile', component: ProfilepageComponent}
+  { path: 'profile', component: ProfilepageComponent},
+  { path: 'profile/public', component: PublicProfilePageComponent},
+  { path: 'faq', component: FaqpageComponent}
 ];
 
 @NgModule({

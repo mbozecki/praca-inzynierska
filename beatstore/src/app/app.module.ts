@@ -35,6 +35,9 @@ import { AddBeatDialogComponent } from './components/add-beat-dialog/add-beat-di
 import {MatInputModule} from '@angular/material/input';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { PublicProfilePageComponent } from './pages/public-profile-page/public-profile-page.component';
+import { FaqpageComponent } from './pages/faqpage/faqpage.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     BeatSingleItemComponent,
     ProfilepageComponent,
     AddBeatDialogComponent,
+    PublicProfilePageComponent,
+    FaqpageComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,7 +78,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatStepperModule,
     MatInputModule,
     NgxMatFileInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

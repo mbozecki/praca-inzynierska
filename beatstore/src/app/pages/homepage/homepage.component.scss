@@ -3,7 +3,6 @@
     padding-right: 8rem;
     padding-left: 8rem;
     
-    background-image: url(../../../assets/HOMEPAGE_bg.png)
   }
 
 #bigText {
@@ -20,4 +19,15 @@
 
 #primarycolor {
   color: #920B4F
+}
+#myVideo {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
 }

@@ -18,5 +18,5 @@ export class AddBeatDialogComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
 }
