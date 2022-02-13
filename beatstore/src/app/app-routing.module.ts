@@ -8,6 +8,7 @@ import { ProfilepageComponent } from './pages/profilepage/profilepage.component'
 import { SearchpageComponent } from './pages/searchpage/searchpage.component';
 import { PublicProfilePageComponent } from './pages/public-profile-page/public-profile-page.component';
 import { FaqpageComponent } from './pages/faqpage/faqpage.component';
+import { CartPageComponent } from './pages/cart-page/cart-page.component';
 
 const routes: Routes = [
 
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'search', component: SearchpageComponent},
   { path: 'profile', component: ProfilepageComponent},
   { path: 'profile/public', component: PublicProfilePageComponent},
-  { path: 'faq', component: FaqpageComponent}
+  { path: 'faq', component: FaqpageComponent},
+  { path: 'cart', component: CartPageComponent},
 ];
 
 @NgModule({

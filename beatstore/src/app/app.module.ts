@@ -39,6 +39,8 @@ import { PublicProfilePageComponent } from './pages/public-profile-page/public-p
 import { FaqpageComponent } from './pages/faqpage/faqpage.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { FixedPlayerComponent } from './components/fixed-player/fixed-player.component';
+import { CartPageComponent } from './pages/cart-page/cart-page.component';
+import { CartSingleItemComponent } from './components/cart-single-item/cart-single-item.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { FixedPlayerComponent } from './components/fixed-player/fixed-player.com
     PublicProfilePageComponent,
     FaqpageComponent,
     FixedPlayerComponent,
+    CartPageComponent,
+    CartSingleItemComponent,
   ],
   imports: [
     BrowserModule,

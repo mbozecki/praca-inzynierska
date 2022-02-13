@@ -1,0 +1,16 @@
+<div id="cartPage">
+  <app-navbar></app-navbar>
+
+  <h1 id="bigText">Your cart</h1>
+  <div class="cartContainer">
+    <ng-container *ngFor="let beat of cartBeats">
+      <app-cart-single-item [data]="beat"></app-cart-single-item>
+    </ng-container>
+    <div class="checkout">
+        <div class="total"><h2>Total: 439.99$</h2></div>
+        <button mat-raised-button color="primary" class="headers">
+            <mat-icon>payment</mat-icon> Pay
+          </button>
+    </div>
+  </div>
+</div>

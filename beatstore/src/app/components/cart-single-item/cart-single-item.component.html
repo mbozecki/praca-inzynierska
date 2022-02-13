@@ -1,0 +1,17 @@
+<div class="inline"> 
+<div class="beatSingleItem">
+  <img class="beatImg" [src]="thumbnail" />
+  <span class="headers instrumental">{{ this.data.name }}</span>
+  <span class="headers">·</span>
+  <span class="headers">{{ this.data.producedby }}</span>
+  <span class="headers">·</span>
+  <span>{{ this.data.price + "$" }}</span>
+
+  <div class="example-button-container" class="headers">
+    <button mat-mini-fab color="secondary" aria-label="Heart">
+      <mat-icon>delete_outline</mat-icon>
+    </button>
+  </div>
+</div>
+
+</div>
