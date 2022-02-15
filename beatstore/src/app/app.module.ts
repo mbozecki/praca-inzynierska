@@ -41,6 +41,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { FixedPlayerComponent } from './components/fixed-player/fixed-player.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { CartSingleItemComponent } from './components/cart-single-item/cart-single-item.component';
+import { MatCardModule } from '@angular/material/card';
+import { HttpClientModule } from '@angular/common/http';
+import { SuccessComponent } from './components/success/success.component';
+import { CancelComponent } from './components/cancel/cancel.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +66,8 @@ import { CartSingleItemComponent } from './components/cart-single-item/cart-sing
     FixedPlayerComponent,
     CartPageComponent,
     CartSingleItemComponent,
+    SuccessComponent,
+    CancelComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +91,9 @@ import { CartSingleItemComponent } from './components/cart-single-item/cart-sing
     MatInputModule,
     NgxMatFileInputModule,
     MatSnackBarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCardModule,
+    HttpClientModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

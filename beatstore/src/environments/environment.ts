@@ -13,6 +13,8 @@ export const environment = {
     appId: "1:75759305119:web:aeb8d6575421866775fdaa",
     measurementId: "G-LQ9M2WR6NM"
   },
+  stripe: 'pk_test_51KT2eYERavA46NSd1ZhBhtWuu8xvOjbRjFR2QQvn3xCkGuXdJ7uu0PoepcQMqJgRsWNg4C9VG7BeaT6fEkwQIbMI00l19vJ5ic',
+  serverUrl: '/api',
 };
 
 /*

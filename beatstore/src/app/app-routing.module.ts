@@ -9,6 +9,8 @@ import { SearchpageComponent } from './pages/searchpage/searchpage.component';
 import { PublicProfilePageComponent } from './pages/public-profile-page/public-profile-page.component';
 import { FaqpageComponent } from './pages/faqpage/faqpage.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
+import { CancelComponent } from './components/cancel/cancel.component';
+import { SuccessComponent } from './components/success/success.component';
 
 const routes: Routes = [
 
@@ -20,6 +22,8 @@ const routes: Routes = [
   { path: 'profile/public', component: PublicProfilePageComponent},
   { path: 'faq', component: FaqpageComponent},
   { path: 'cart', component: CartPageComponent},
+  { path: 'cancel', component: CancelComponent },
+  { path: 'success', component: SuccessComponent },
 ];
 
 @NgModule({
