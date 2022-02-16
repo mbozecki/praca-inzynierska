@@ -1,0 +1,13 @@
+{
+    "/api/*": {
+      "target": "http://localhost:8080/",
+      "secure": false
+    },
+    "/beat-store/*": {
+      "target": "https://localhost:8080/",
+      "secure": false,
+      "pathRewrite": {
+        "^/beat-store-api": ""
+      }
+  }
+  }

@@ -5,6 +5,8 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +17,8 @@ import lombok.Setter;
 @Table(name="t_beat")
 public class Beat extends PanacheEntityBase {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long guid;
+    @Column(name = "guid")
+    private String guid = UUID.randomUUID().toString();
 
     public String name;
 
