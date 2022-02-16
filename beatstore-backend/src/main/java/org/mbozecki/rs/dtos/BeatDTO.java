@@ -14,13 +14,13 @@ public class BeatDTO {
 
     private String name;
 
-    public String img_url;
+    public byte[] beatimg;
 
     private Double price;
 
     private List<String> genre;
 
-    private String link;
+    public byte[] beatmp3;
 
     private String producedby;
 

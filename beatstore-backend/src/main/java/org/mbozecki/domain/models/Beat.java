@@ -20,13 +20,17 @@ public class Beat extends PanacheEntityBase {
 
     public String name;
 
-    public String img_url;
+    @Lob
+    public byte[] beatimg;
 
     public Double price;
 
     @ElementCollection
     public List<String> genre = new ArrayList<String>();
-    public String link;
+
+    @Lob
+    public byte[] beatmp3;
+
     public String producedby;
     public Integer howmanysold;
 }

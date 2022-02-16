@@ -3,14 +3,7 @@ package org.mbozecki.domain.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -34,13 +27,14 @@ public class User {
 
     private String name;
 
-    private String img_url;
-
     private String bio;
 
     private String email;
 
     private String firebase_id;
+
+    @Lob
+    private byte[] profilepicture;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Beat> likedbeats;
