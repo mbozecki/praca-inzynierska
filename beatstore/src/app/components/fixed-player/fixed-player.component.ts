@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faPause } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -20,12 +21,13 @@ export class FixedPlayerComponent implements OnInit {
   faCart = faCartPlus;
   faVolume = faVolumeUp
 
+  isVisible: boolean = true;
   isPlaying: boolean= false;
 
   files: Array<any> = [];
   state: StreamState;
   currentFile: any = {};
-  constructor(public audioService: AudioService, public beatService: BeatsService) { }
+  constructor(public audioService: AudioService, public beatService: BeatsService, private router: Router) { }
 
   ngOnInit(): void {
     this.beatService.getFiles().subscribe((files : any) => {
@@ -65,5 +67,12 @@ export class FixedPlayerComponent implements OnInit {
 
   formatLabel(value: number) {
     return value*100;
+  }
+
+  enableVisibility() {
+    this.isVisible = true;
+  }
+  disableVisibility() {
+    this.isVisible = false;
   }
 }

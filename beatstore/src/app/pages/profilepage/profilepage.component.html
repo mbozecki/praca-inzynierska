@@ -9,10 +9,10 @@
       <div class="profileName"><h2>User</h2></div>
     </div>
     <div class="profileName settings">
-      <fa-icon [icon]="faWrench"></fa-icon> Edit
+     <a  [routerLink]="['edit']"> <fa-icon [icon]="faWrench"></fa-icon> Edit </a>
     </div>
-    <div class="profileName settings">
-      <fa-icon [icon]="faWrench"></fa-icon> Show public profile
+    <div class="profileName settings" >
+      <a [routerLink]="['public']"> <fa-icon [icon]="faWrench"></fa-icon> Show public profile </a>
     </div>
     <p class="bio">
       Bacon ipsum dolor amet capicola fatback hamburger, doner boudin swine

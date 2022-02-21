@@ -20,6 +20,7 @@
       <h4>BPM</h4>
       <div class="bpm">
         <mat-slider
+          formControlName="BPM"
           thumbLabel
           [displayWith]="formatLabel"
           tickInterval="1"
@@ -31,7 +32,9 @@
       </div>
       <h4>Max Price</h4>
       <div class="price">
-        <mat-slider #priceslider
+        <mat-slider
+          #priceslider
+          formControlName="maxPrice"
           thumbLabel
           [displayWith]="formatLabel"
           tickInterval="1"
@@ -51,7 +54,7 @@
       <div class="searchResultContainer">
         <span class="headers">·</span>
         <span class="headers">·</span>
-        
+
         <span class="headers">Name</span>
         <span class="headers">·</span>
         <span class="headers">Produced by</span>
@@ -61,8 +64,9 @@
         <span class="headers">Price</span>
         <span class="headers">Favorite?</span>
       </div>
-      <ng-container *ngFor="let beat of allBeats">
+      <ng-container *ngFor="let beat of filteredBeats">
         <app-beat-single-item [data]="beat"></app-beat-single-item>
       </ng-container>
+    </div>
   </div>
 </div>

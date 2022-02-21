@@ -11,8 +11,9 @@ export class SignInComponent implements OnInit {
   public registerForm: FormGroup = new FormGroup({
     nickname: new FormControl("", [Validators.required, Validators.minLength(3)]),
     email: new FormControl("", [Validators.required, Validators.email]),
-    password1: new FormControl("", [Validators.required, Validators.minLength(5)]),
-    password2: new FormControl("", [Validators.required, Validators.minLength(5)])
+    password: new FormControl("", [Validators.required, Validators.minLength(5)]),
+    bio: new FormControl("", [Validators.required, Validators.minLength(5)]),
+    
   });
 
   constructor(public authService: AuthService) { }

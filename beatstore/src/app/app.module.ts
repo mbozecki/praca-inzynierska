@@ -16,7 +16,6 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { MusicBottomBarComponent } from './components/music-bottom-bar/music-bottom-bar.component';
-import { AuthService } from './shared/services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarOnlyLogoComponent } from './components/navbar-only-logo/navbar-only-logo.component';
 import { SearchpageComponent } from './pages/searchpage/searchpage.component';
@@ -45,6 +44,8 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
+import { AuthService } from './shared/services/auth.service';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { CancelComponent } from './components/cancel/cancel.component';
     CartSingleItemComponent,
     SuccessComponent,
     CancelComponent,
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,

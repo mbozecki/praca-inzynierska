@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,10 +9,16 @@ import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 })
 export class NavbarComponent implements OnInit {
   faCart = faCartPlus;
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     
   }
 
+  isUserLoggedIn() {
+    return this.authService.isLoggedIn
+  }
+  logOut() {
+    this.authService.signOut();
+  }
 }

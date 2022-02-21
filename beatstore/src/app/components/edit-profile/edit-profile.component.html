@@ -1,0 +1,66 @@
+<app-navbar-only-logo></app-navbar-only-logo>
+<div class="sign-in row justify-content-md-center">
+    <div class="col-4 background align-middle sign-in-container">
+
+      <div class="d-flex justify-content-center ">
+
+        <form class="text-center" [formGroup]="registerForm">
+          <div class="row">
+            <div class="col">
+              <div class="form-floating mb-3">
+                <input class="form-control" 
+                [readonly]=true
+                  type="text"
+                  id="email"
+                  formControlName="email"
+                  placeholder="email"/>
+                <label for="email">
+                  Email
+                </label>
+              </div>
+              <div class="form-floating mb-3">
+                <input class="form-control" 
+                  type="text"
+                  id="nickname"
+                  formControlName="nickname"
+                  placeholder="nickname"/>
+                <label for="nickname">
+                  Nickname
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="area">
+            <textarea matInput class="form-control" 
+              type="textarea"
+              id="Bio"
+              formControlName="bio"
+              placeholder="Bio">Bio</textarea>
+            <label for="Bio">
+              Bio
+            </label>
+          </div>
+          <div class="form-floating mb-3">
+            <input class="form-control" 
+              type="password"
+              id="password"
+              formControlName="password"
+              placeholder="password"/>
+            <label for="password">
+              Password
+            </label>
+          </div>
+          
+          <div class="text-center">
+            <button class="btn actionButton"
+              type="button"
+              (click)="submitForm()">
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+    
+  

@@ -30,14 +30,20 @@
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/faq']" routerLinkActive="active">FAQ</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!isUserLoggedIn()">
           <a class="nav-link" [routerLink]="['/login']"  routerLinkActive="active">Log in</a>
+        </li>
+        <li class="nav-item" *ngIf="isUserLoggedIn()">
+          <a class="nav-link" [routerLink]="['/profile']"  routerLinkActive="active">Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" >|</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/cart']"  routerLinkActive="active"><fa-icon [icon]="faCart"></fa-icon></a>
+        </li>
+        <li class="nav-item" *ngIf="isUserLoggedIn()">
+          <a class="nav-link" (click)="logOut()"[routerLink]="['/logout']"  routerLinkActive="active">Logout</a>
         </li>
 
       </ul>

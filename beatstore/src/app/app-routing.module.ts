@@ -11,7 +11,7 @@ import { FaqpageComponent } from './pages/faqpage/faqpage.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { CancelComponent } from './components/cancel/cancel.component';
 import { SuccessComponent } from './components/success/success.component';
-
+import {EditProfileComponent} from './components/edit-profile/edit-profile.component'
 const routes: Routes = [
 
   { path: '',  pathMatch: 'full', component: HomepageComponent  },
@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'cart', component: CartPageComponent},
   { path: 'cancel', component: CancelComponent },
   { path: 'success', component: SuccessComponent },
+  { path: 'profile/edit', component: EditProfileComponent}
 ];
 
 @NgModule({
