@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -10,13 +12,20 @@ export class SearchBarComponent implements OnInit {
   faSearch= faSearch;
   @Input() hint =""
   @Input() actionHint = ""
-  
-  constructor() { }
+  fg : any;
+  constructor(private router: Router) { }
   
   ngOnInit(): void {
+    this.initInput()
   }
 
+  initInput() {
+    this.fg = new FormGroup({
+      searchText: new FormControl()
+  });
+  }
   navigateToExplore() {
-   //
+    console.log(this.fg.value.searchText)
+    this.router.navigate(['/search/'+this.fg.value.searchText])
   }
 }

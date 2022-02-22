@@ -1,6 +1,7 @@
 package org.mbozecki.rs.dtos;
 
 import io.quarkus.runtime.annotations.RegisterForReflection;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.mbozecki.domain.models.Beat;
@@ -25,6 +26,7 @@ public class UserDTO {
 
     private String firebase_id;
 
+    @Setter(AccessLevel.NONE)
     private byte[] profilepicture;
 
     private List<Beat> likedbeats;
@@ -37,4 +39,9 @@ public class UserDTO {
 
     private double bankaccount;
 
+    public void setProfilepicture(byte[] profilepicture) {
+        String example = profilepicture.toString();
+        byte[] profilebyte = example.getBytes();
+        this.profilepicture = profilebyte;
+    }
 }

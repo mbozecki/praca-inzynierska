@@ -9,7 +9,7 @@
 .sign-in-container {
     background-color: #230F2F;
     margin-top: 10vh;
-    height: 73vh;
+    min-height: 73vh;
     border-radius: 14px;
 }
 
@@ -45,4 +45,12 @@
 .row {
     font-family: 'Inter', sans-serif;
     --bs-gutter-x: 0rem;
+}
+
+textarea {
+    min-height: 18vh;
+}
+form {
+    margin-top: 0vh;
+    min-width: 40vh;
 }

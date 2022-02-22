@@ -67,6 +67,11 @@
       <ng-container *ngFor="let beat of filteredBeats">
         <app-beat-single-item [data]="beat"></app-beat-single-item>
       </ng-container>
+      <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+      </mat-paginator>
     </div>
   </div>
 </div>

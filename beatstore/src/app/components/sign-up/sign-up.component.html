@@ -36,11 +36,22 @@
           <div class="form-floating mb-3">
             <input class="form-control" 
               type="file"
+              (change)="handleUpload($event)"
               id="img"
               formControlName="img"
               placeholder="Upload profile picture"/>
             <label for="img">
               Upload profile picture
+            </label>
+          </div>
+          <div class="area">
+            <textarea matInput class="form-control" 
+              type="textarea"
+              id="Bio"
+              formControlName="bio"
+              placeholder="Bio">Bio - write a few words about yourself</textarea>
+            <label for="Bio">
+              Bio - write a few words about yourself
             </label>
           </div>
           <div class="form-floating mb-3">

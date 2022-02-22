@@ -43,7 +43,7 @@
           <a class="nav-link" [routerLink]="['/cart']"  routerLinkActive="active"><fa-icon [icon]="faCart"></fa-icon></a>
         </li>
         <li class="nav-item" *ngIf="isUserLoggedIn()">
-          <a class="nav-link" (click)="logOut()"[routerLink]="['/logout']"  routerLinkActive="active">Logout</a>
+          <a class="nav-link" (click)="logOut()"  routerLinkActive="active">Logout</a>
         </li>
 
       </ul>

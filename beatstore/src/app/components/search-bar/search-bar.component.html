@@ -2,15 +2,16 @@
 <div class="container" id="searchBar">
   <div class="row height d-flex justify-content-center align-items-center">
     <div class="col-md-6">
-      <div class="form">
+      <div class="form" [formGroup]="fg">
         
         <input
           type="text"
           class="form-control form-input"
           placeholder="{{ hint }}"
+          formControlName="searchText"
         />
         <span class="left-pan"
-          ><button class="btn" id="actionButton" (click)="navigateToExplore()">
+          ><button  class="btn" id="actionButton" (click)="navigateToExplore()">
             {{ actionHint }}
           </button></span
         >

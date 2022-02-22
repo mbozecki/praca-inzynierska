@@ -46,6 +46,7 @@ import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
 import { AuthService } from './shared/services/auth.service';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { EditProfileComponent } from './components/edit-profile/edit-profile.com
     MatExpansionModule,
     MatCardModule,
     HttpClientModule,
+    MatPaginatorModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
