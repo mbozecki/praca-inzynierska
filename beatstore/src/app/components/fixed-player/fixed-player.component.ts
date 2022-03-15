@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faPause } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +14,7 @@ import { BeatsService } from 'src/app/shared/services/beats.service';
   templateUrl: './fixed-player.component.html',
   styleUrls: ['./fixed-player.component.scss']
 })
-export class FixedPlayerComponent implements OnInit {
+export class FixedPlayerComponent implements OnInit, OnDestroy {
   faPlay=faPlay;
   faPause=faPause;
   faHeart= faHeart;
@@ -74,5 +74,9 @@ export class FixedPlayerComponent implements OnInit {
   }
   disableVisibility() {
     this.isVisible = false;
+  }
+
+  ngOnDestroy(): void {
+      this.audioService.stop();
   }
 }

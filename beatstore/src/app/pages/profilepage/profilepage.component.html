@@ -1,4 +1,4 @@
-<div id="profilepage">
+<div id="profilepage" class="fade-in">
   <app-navbar></app-navbar>
   <div class="profileContainer">
     <div class="picture">
@@ -31,9 +31,9 @@
         <h3>Total sales: 399$</h3>
       </mat-tab>
       <mat-tab label="My beats">
-        <button mat-raised-button color="primary" (click)="addNewBeat()">Add new beat</button>
+        <button class="wide" mat-raised-button color="primary" (click)="addNewBeat()">Add new beat</button>
         <ng-container *ngFor="let beat of myBeats">
-          <app-beat-single-item [data]="beat"></app-beat-single-item>
+          <app-beat-single-item [data]="beat" [editable]="true"></app-beat-single-item>
         </ng-container>
       </mat-tab>
     </mat-tab-group>

@@ -47,7 +47,13 @@ import { CancelComponent } from './components/cancel/cancel.component';
 import { AuthService } from './shared/services/auth.service';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { EditBeatDialogComponent } from './components/edit-beat-dialog/edit-beat-dialog.component';
+import { BeatSingleInfoComponent } from './pages/beat-single-info/beat-single-info.component';
 
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +77,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     SuccessComponent,
     CancelComponent,
     EditProfileComponent,
+    EditBeatDialogComponent,
+    BeatSingleInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,7 +105,11 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatExpansionModule,
     MatCardModule,
     HttpClientModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgxPayPalModule,
+    NgxSliderModule,
+    ShareButtonsModule,
+    ShareIconsModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

@@ -9,24 +9,22 @@ import { BeatsService } from 'src/app/shared/services/beats.service';
 @Component({
   selector: 'app-profilepage',
   templateUrl: './profilepage.component.html',
-  styleUrls: ['./profilepage.component.scss']
+  styleUrls: ['./profilepage.component.scss'],
 })
 export class ProfilepageComponent implements OnInit {
   faWrench = faWrench;
-  private beatName: string = "";
+
   public myBeats: Beat[] = [];
-  constructor(public beatService: BeatsService,
+  constructor(
+    public beatService: BeatsService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private route: ActivatedRoute) { }
-  
+    private snackBar: MatSnackBar
+  ) {}
+
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      this.beatName = params['name'];
-    });
     this.beatService.getAllBeats().subscribe((res) => {
       this.myBeats = res;
-    })
+    });
   }
 
   addNewBeat(): void {
@@ -34,9 +32,9 @@ export class ProfilepageComponent implements OnInit {
       height: '400px',
       width: '600px',
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
-      this.snackBar.open('Beat successfully created!')
+      if(result) this.snackBar.open('Beat successfully created!');
     });
   }
 }

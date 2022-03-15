@@ -44,10 +44,20 @@
     margin-top: 3vh;
     width: 70%;
     flex-direction: column;
+    color: black !important;
 }
 .bio {
     margin-left:100px;
     margin-right: 100px;
     text-align: center;
     margin-top: 5vh;
+}
+
+.wide {
+    width: 100%;
+    margin: 30px 0 30px 0;
+}
+
+:host::ng-deep .mat-tab-label-content {
+    color: black!important;
 }

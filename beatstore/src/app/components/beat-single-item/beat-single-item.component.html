@@ -1,4 +1,4 @@
-<div class="beatSingleItem ">
+<div class="beatSingleItem fade-in fade-out">
   <img class=" beatImg" [src]='thumbnail'/>
   <span class="headers instrumental">{{this.data.name}}</span>
   <span class="headers">·</span>
@@ -14,16 +14,24 @@
       </mat-chip>
     </mat-chip-list>
   </span>
-  <span class="headers">{{this.data.BPM + "BPM"}}</span>
-  <button mat-raised-button color="primary" class="headers">
+  <span class="headers" *ngIf="!editable">{{this.data.BPM + "BPM"}}</span>
+  <button mat-raised-button color="primary" class="headers" *ngIf="!editable">
     <mat-icon>play_circle_outline</mat-icon> Play
   </button>
-  <button mat-raised-button color="primary" class="headers">
+  <button mat-raised-button color="primary" class="headers" *ngIf="!editable">
     <mat-icon>add_shopping_cart</mat-icon>{{this.data.price + "$"}}
   </button>
-  <div class="example-button-container" class="headers">
+  <div class="example-button-container" class="headers" *ngIf="!editable">
     <button mat-mini-fab color="primary" aria-label="Heart">
       <mat-icon>favorite</mat-icon>
     </button>
+  </div>
+  <div class="example-button-container" class="headers" *ngIf="editable" (click)="onEdit()">
+    
+    <button mat-mini-fab color="primary" aria-label="edit">
+ 
+      <mat-icon>edit</mat-icon>
+    </button>
+     Edit beat
   </div>
 </div>

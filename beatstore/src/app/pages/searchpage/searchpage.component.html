@@ -1,11 +1,23 @@
-<div id="searchpage">
+
+<div id="searchpage" >
   <app-navbar></app-navbar>
-  <app-fixed-player></app-fixed-player>
-  <app-search-bar hint="Search..." actionHint="Search"></app-search-bar>
-  <div class="d-flex searchContainer">
+
+  <app-search-bar hint="Search..." actionHint="Search" #search></app-search-bar>
+  <div class="d-flex searchContainer fade-in" >
     <div class="filtersContainer" [formGroup]="fg">
       <h2>Filters</h2>
       <hr />
+      <h4>Sort by</h4>
+      <div class="chips">
+        <mat-form-field appearance="fill">
+          <mat-label>Sort by</mat-label>
+          <mat-select formControlName="sortBy">
+            <mat-option *ngFor="let sort of sortList" [value]="sort">{{
+              sort
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <h4>Genre</h4>
       <div class="chips">
         <mat-form-field appearance="fill">
@@ -19,16 +31,13 @@
       </div>
       <h4>BPM</h4>
       <div class="bpm">
-        <mat-slider
+        <ngx-slider
           formControlName="BPM"
-          thumbLabel
-          [displayWith]="formatLabel"
-          tickInterval="1"
-          step="1"
-          min="60"
-          max="220"
+          [(value)]="value"
+          [(highValue)]="highValue"
+          [options]="options"
           aria-label="BPM"
-        ></mat-slider>
+        ></ngx-slider>
       </div>
       <h4>Max Price</h4>
       <div class="price">
@@ -65,13 +74,8 @@
         <span class="headers">Favorite?</span>
       </div>
       <ng-container *ngFor="let beat of filteredBeats">
-        <app-beat-single-item [data]="beat"></app-beat-single-item>
+        <app-beat-single-item class='fade-in' [data]="beat"></app-beat-single-item>
       </ng-container>
-      <mat-paginator [length]="100"
-              [pageSize]="10"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              aria-label="Select page">
-      </mat-paginator>
     </div>
   </div>
 </div>

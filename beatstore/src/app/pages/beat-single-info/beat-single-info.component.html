@@ -1,0 +1,59 @@
+<div id="beatPage">
+  <app-navbar></app-navbar>
+
+  <h1 id="bigText">Beatname1 by producer 1
+  </h1>
+  
+  <div class="cartContainer fade-in">
+    <div class="beatInfo d-flex">
+
+        <span class="headers">Beatname</span>
+        <span class="headers">·</span>
+        <span class="headers">Producerblabla</span>
+        <span class="headers">·</span>
+        <span class="headers">{{ "BPM" }}</span>
+        </div>
+    
+    <div class="beatSingleItem fade-in fade-out">
+      <img class="beatImg" [src]="thumbnail" />
+
+      <span class="headers genre">
+        <mat-chip-list
+          class="mat-chip-list-stacked headers"
+          aria-label="Color selection"
+        >
+          <mat-chip
+            *ngFor="let type of beatTypes"
+            selected
+            [color]="type.color"
+          >
+            {{ type.name }}
+          </mat-chip>
+        </mat-chip-list>
+      </span>
+      
+      <button mat-raised-button color="primary" class="headers">
+        <mat-icon>play_circle_outline</mat-icon> Play
+      </button>
+      <button mat-raised-button color="primary" class="headers">
+        <mat-icon>add_shopping_cart</mat-icon>39.99$
+      </button>
+      <div class="example-button-container" class="headers">
+        <button mat-mini-fab color="primary" aria-label="Heart">
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="beatInfo d-flex">
+  <share-buttons class="cblack" theme="modern-dark"
+    [include]="['copy', 'facebook', 'messenger', 'twitter']"
+    [showIcon]="true"
+    [showText]="true"
+    url="https://rodrigo.kamada.com.br/"
+    description="Angular Share Buttons"
+    twitterAccount="rodrigokamada"
+    class="pt-5">
+  </share-buttons></div>
+  </div>
+</div>

@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular-material-components/file-input": "^6.0.0",
+    "@angular-slider/ngx-slider": "^2.0.4",
     "@angular/animations": "~13.0.3",
     "@angular/cdk": "~12.2.6",
     "@angular/common": "~13.0.3",
@@ -34,14 +35,16 @@
     "firebase": "^9.6.2",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
+    "ngx-paypal": "^9.0.0",
+    "ngx-sharebuttons": "^10.0.0",
     "popper.js": "^1.16.1",
     "primeflex": "^2.0.0",
     "primeicons": "^5.0.0",
     "primeng": "^13.0.4",
+    "rxfire": "^6.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.1",
-    "zone.js": "~0.11.4",
-    "rxfire": "^6.0.0"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^13.2.2",
