@@ -339,8 +339,7 @@ components:
       type: object
       properties:
         guid:
-          format: int64
-          type: integer
+          type: string
         name:
           type: string
         beatimg:

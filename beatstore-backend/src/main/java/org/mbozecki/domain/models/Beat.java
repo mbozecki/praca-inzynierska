@@ -1,20 +1,26 @@
 package org.mbozecki.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
-
+@Transactional
 @Getter
 @Setter
 @Entity
 @Table(name="t_beat")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Beat extends PanacheEntityBase {
     @Id
     @Column(name = "guid")
@@ -27,8 +33,7 @@ public class Beat extends PanacheEntityBase {
 
     public Double price;
 
-    @ElementCollection
-    public List<String> genre = new ArrayList<String>();
+    public String genre;
 
     @Lob
     public byte[] beatmp3;

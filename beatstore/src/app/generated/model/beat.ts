@@ -12,7 +12,7 @@
 
 
 export interface Beat { 
-    guid?: number;
+    guid?: string;
     name?: string;
     beatimg?: Blob;
     price?: number;

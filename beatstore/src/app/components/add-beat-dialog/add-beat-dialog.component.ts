@@ -35,12 +35,15 @@ export class AddBeatDialogComponent implements OnInit {
     reader.readAsDataURL(this.fg.value.img)
     reader.onloadend= () => {
       imag = reader.result
+      //reader.result
+      let arr : string[] = imag.split(",");
+      console.log("ARR")
       let beat: BeatDTO = { 
         guid: "423e4567-e89b-12d3-a456-556642440000",
         name: this.fg.value.beatname,
-        beatimg: imag as Blob,
+        beatimg: arr[1] as unknown as Blob,
         price: 23.12,
-        genre: this.fg.value.toppings,
+        genre: this.fg.value.toppings[0],
         
         producedby: "smialek"
     }

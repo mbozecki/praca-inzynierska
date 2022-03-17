@@ -11,7 +11,7 @@ export class HomepageComponent implements OnInit {
   constructor(private beatapiservice: BeatAPIService) { }
 
   ngOnInit(): void {
-    this.beatapiservice.getBeatById({id: "123e4567-e89b-12d3-a456-556642440000"}).subscribe(res => console.log(res));
+    this.beatapiservice.getBeatById({id: "3d4ad78d-db82-416a-8205-d087a49d1ca9"}).subscribe(res => console.log(res));
   }
 
 }

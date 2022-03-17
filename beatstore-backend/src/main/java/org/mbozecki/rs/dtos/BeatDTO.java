@@ -15,12 +15,11 @@ public class BeatDTO {
 
     private String name;
 
-    @Setter(AccessLevel.NONE)
     public byte[] beatimg;
 
     private Double price;
 
-    private List<String> genre;
+    private String genre;
 
     public byte[] beatmp3;
 
@@ -28,9 +27,4 @@ public class BeatDTO {
 
     public Integer howmanysold;
 
-    public byte[] setBeatimg() {
-        String example = beatimg.toString();
-        byte[] bytes = example.getBytes();
-        return bytes;
-    }
 }
