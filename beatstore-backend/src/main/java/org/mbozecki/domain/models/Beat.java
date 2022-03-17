@@ -33,6 +33,10 @@ public class Beat extends PanacheEntityBase {
 
     public Double price;
 
+    public Double BPM;
+
+    public Double likeNumber;
+
     public String genre;
 
     @Lob

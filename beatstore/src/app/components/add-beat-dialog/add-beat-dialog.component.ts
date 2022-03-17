@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { BeatAPIService, BeatDTO } from 'src/app/generated';
-
+import { Inject } from '@angular/core';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 @Component({
   selector: 'app-add-beat-dialog',
   templateUrl: './add-beat-dialog.component.html',
@@ -14,40 +15,49 @@ export class AddBeatDialogComponent implements OnInit {
   multiple: boolean = false;
   accept: string;
   color: ThemePalette = 'primary';
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  toppingList: string[] = ['Ambient', 'Club', 'Pop', 'Lofi', 'Trap', 'Soul'];
   fg = new FormGroup({
     beatname: new FormControl('', [Validators.required, Validators.minLength(3)]),
     img: new FormControl('', [Validators.required]),
     toppings: new FormControl('', [Validators.required]),
     bpm: new FormControl('', [Validators.required]),
     beatmp3: new FormControl('', [Validators.required]),
+    price: new FormControl('', [Validators.required]),
   })
-  constructor(private beatService: BeatAPIService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private beatService: BeatAPIService) { }
 
   ngOnInit(): void {
-    console.log(this.fg.value.beatname)
+    console.log(this.data.id)
   }
   
   addBeat() {
     console.log(this.fg.value)
     let reader= new FileReader();
     let imag: any;
+    let mp3: any;
+    let reader1 = new FileReader();
+
     reader.readAsDataURL(this.fg.value.img)
     reader.onloadend= () => {
       imag = reader.result
       //reader.result
       let arr : string[] = imag.split(",");
-      console.log("ARR")
-      let beat: BeatDTO = { 
-        guid: "423e4567-e89b-12d3-a456-556642440000",
-        name: this.fg.value.beatname,
-        beatimg: arr[1] as unknown as Blob,
-        price: 23.12,
-        genre: this.fg.value.toppings[0],
-        
-        producedby: "smialek"
-    }
-      this.beatService.createBeat({beatDTO: beat}).subscribe(res=>console.log(res));
+      
+      reader1.readAsDataURL(this.fg.value.beatmp3)
+      reader1.onloadend= () => {
+        mp3 = reader1.result
+        let slicedmp3 : string[] = mp3.split(",")
+        //TODO zrob bpmy
+        let beat: BeatDTO = { 
+          name: this.fg.value.beatname,
+          beatimg: arr[1] as unknown as Blob,
+          price: this.fg.value.price,
+          genre: this.fg.value.toppings.toString(),
+          producedby: this.data.id,
+          beatmp3: slicedmp3[1] as unknown as Blob,
+        }
+        this.beatService.createBeat({beatDTO: beat}).subscribe(res=>console.log(res));
+      }
     }
     
   }

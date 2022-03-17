@@ -50,14 +50,7 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
     sortBy: new FormControl('')
   });
 
-  genreList: string[] = [
-    'Experimental',
-    'Guitar',
-    'Piano',
-    'Pop',
-    'Sad',
-    'Lo-fi',
-  ];
+  genreList: string[] =['Ambient', 'Club', 'Pop', 'Lofi', 'Trap', 'Soul'];
 
   sortList: string[] = [
     'Price ascending',

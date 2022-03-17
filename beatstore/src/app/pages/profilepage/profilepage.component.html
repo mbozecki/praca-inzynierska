@@ -2,11 +2,11 @@
   <app-navbar></app-navbar>
   <div class="profileContainer">
     <div class="picture">
-      <img
+      <img #profileImg
         class="profilePicture"
-        src="https://media.istockphoto.com/vectors/male-user-icon-vector-id517998264?k=20&m=517998264&s=612x612&w=0&h=pdEwtkJlZsIoYBVeO2Bo4jJN6lxOuifgjaH8uMIaHTU="
+        [src]="imageURL"
       />
-      <div class="profileName"><h2>User</h2></div>
+      <div class="profileName"><h2>{{username}}</h2></div>
     </div>
     <div class="profileName settings">
      <a  [routerLink]="['edit']"> <fa-icon [icon]="faWrench"></fa-icon> Edit </a>
@@ -15,16 +15,14 @@
       <a [routerLink]="['public']"> <fa-icon [icon]="faWrench"></fa-icon> Show public profile </a>
     </div>
     <p class="bio">
-      Bacon ipsum dolor amet capicola fatback hamburger, doner boudin swine
-      tongue ham cow meatloaf. Pastrami venison doner, pancetta landjaeger
-      boudin bacon ham hock jowl burgdoggen ground round kielbasa flank tongue
-      turkey. Landjaeger beef ribs biltong buffalo meatball ham.
+      {{bio}}
     </p>
     <mat-tab-group class="tabs" mat-align-tabs="center">
       <mat-tab label="Bought licenses">
-        <ng-container *ngFor="let beat of myBeats">
+        <ng-container *ngFor="let beat of boughtLicenses">
           <app-beat-single-item [data]="beat"></app-beat-single-item>
         </ng-container>
+        <h4 class="wide" *ngIf="boughtLicenses.length == 0">You have no bought licenses!</h4>
       </mat-tab>
       <mat-tab label="My total sales">
         <h3>Total plays: 200</h3>

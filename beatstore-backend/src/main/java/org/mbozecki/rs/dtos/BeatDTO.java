@@ -19,7 +19,12 @@ public class BeatDTO {
 
     private Double price;
 
+    public Double BPM;
+
+    public Double likeNumber;
+
     private String genre;
+
 
     public byte[] beatmp3;
 

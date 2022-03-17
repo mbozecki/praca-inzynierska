@@ -28,10 +28,13 @@ export class BeatSingleItemComponent implements OnInit {
     ];
   }
 
-  onEdit() : void {
+  onEdit(xdata: any) : void {
     const dialogRef = this.dialog.open(EditBeatDialogComponent, {
       height: '600px',
       width: '300px',
+      data: {
+        beat: xdata
+      }
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);

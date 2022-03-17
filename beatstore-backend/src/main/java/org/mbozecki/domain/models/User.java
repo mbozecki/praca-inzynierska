@@ -51,4 +51,6 @@ public class User {
 
 
     private double bankaccount;
+
+    public String paypalmail;
 }

@@ -59,20 +59,29 @@ export class SignUpComponent implements OnInit {
         )
         .then(() => {
             console.log("myuser", this.authService.uid);
+            let reader= new FileReader();
+            let imag: any;
+            reader.readAsDataURL(this.registerForm.value.img)
+            reader.onloadend= () => {
+              imag = reader.result
+      //reader.result
+      console.log("imag", imag)
+              let arr : string[] = imag.split(",");
+              console.log("arr", arr)
             //profilepicture: this.byteImg
-            let newUser: UserDTO = {
-              name: this.registerForm.value.nickname,
-              bio: this.registerForm.value.bio,
-              email: this.registerForm.value.email,
-              firebase_id: this.authService.uid,
-              
-            };
-            console.log("newUser", newUser)
-            this.userService
-              .createUser({userDTO: newUser})
-              .toPromise()
-              .then(() => this.router.navigate(['/']));
-          
+              let newUser: UserDTO = {
+                name: this.registerForm.value.nickname,
+                bio: this.registerForm.value.bio,
+                email: this.registerForm.value.email,
+                firebase_id: this.authService.uid,
+                profilepicture: arr[1] as unknown as Blob,
+              };
+              console.log("newUser", newUser)
+              this.userService
+                .createUser({userDTO: newUser})
+                .toPromise()
+                .then(() => this.router.navigate(['/']));
+            }
         });
       //, this.registerForm.value.name, this.registerForm.value.surname
     }

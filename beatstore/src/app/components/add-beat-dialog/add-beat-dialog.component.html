@@ -7,12 +7,11 @@
     <mat-label>Beat name</mat-label>
     <input formControlName="beatname" matInput>
   </mat-form-field>
-
-  <mat-form-field >
-    <mat-label>Upload img here</mat-label>
-    <ngx-mat-file-input formControlName="img" [multiple]="multiple" [accept]="accept" [color]="color">
-    </ngx-mat-file-input>
- </mat-form-field>
+  <mat-form-field  lass="example-full-width" appearance="fill">
+    <mat-label>Price (in $)</mat-label>
+    <input type="number" matInput #postalCode formControlName="price" maxlength="5" placeholder="Ex. 30.12" value="128">
+  </mat-form-field>
+  
   <table class="example-full-width" cellspacing="0"><tr>
     <td><mat-form-field appearance="fill">
         <mat-label>Select types:</mat-label>
@@ -32,7 +31,11 @@
         <ngx-mat-file-input formControlName="beatmp3" [multiple]="multiple" [accept]="accept" [color]="color">
         </ngx-mat-file-input>
      </mat-form-field></td>
-     <td></td>
+     <td><mat-form-field >
+      <mat-label>Upload img here</mat-label>
+      <ngx-mat-file-input formControlName="img" [multiple]="multiple" [accept]="accept" [color]="color">
+      </ngx-mat-file-input>
+   </mat-form-field></td>
   </tr>
   </table>
 </form>

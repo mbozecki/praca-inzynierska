@@ -33,17 +33,7 @@
               </div>
             </div>
           </div>
-          <div class="form-floating mb-3">
-            <input class="form-control" 
-              type="file"
-              (change)="handleUpload($event)"
-              id="img"
-              formControlName="img"
-              placeholder="Upload profile picture"/>
-            <label for="img">
-              Upload profile picture
-            </label>
-          </div>
+
           <div class="area">
             <textarea matInput class="form-control" 
               type="textarea"
@@ -71,6 +61,13 @@
               type="password"
               formControlName="password2">
             <label for="password">Confirm pasword</label>
+          </div>
+          <div class="form-floating mb-3">
+            <mat-form-field>
+            <mat-label>Upload profile picture</mat-label>
+            <ngx-mat-file-input formControlName="img">
+            </ngx-mat-file-input>
+          </mat-form-field>
           </div>
           <div class="text-center">
             <button class="btn actionButton"

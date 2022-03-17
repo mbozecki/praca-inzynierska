@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { BeatAPIService, BeatDTO } from 'src/app/generated';
-
+import { Beat, BeatAPIService, BeatDTO, UpdateBeatRequestParams } from 'src/app/generated';
+import { Inject } from '@angular/core';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 @Component({
   selector: 'app-edit-beat-dialog',
   templateUrl: './edit-beat-dialog.component.html',
@@ -13,6 +14,10 @@ export class EditBeatDialogComponent implements OnInit {
   disabled: boolean = false;
   multiple: boolean = false;
   accept: string;
+  public beatname ="";
+  public types = ""
+  public bpm = ""
+  public price = 20;
   color: ThemePalette = 'primary';
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
   fg = new FormGroup({
@@ -21,11 +26,16 @@ export class EditBeatDialogComponent implements OnInit {
     toppings: new FormControl('', [Validators.required]),
     bpm: new FormControl('', [Validators.required]),
     beatmp3: new FormControl('', [Validators.required]),
+    price: new FormControl('', [Validators.required]),
   })
-  constructor(private beatService: BeatAPIService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: Beat,private beatService: BeatAPIService) { }
 
   ngOnInit(): void {
-    console.log(this.fg.value.beatname)
+    console.log(this.data)
+    this.beatname = this.data.name as string;
+    this.bpm = "132"
+    this.price = this.data.price as number
+    //this.types = this.data.genre;
   }
   
   saveBeat() {
@@ -36,15 +46,18 @@ export class EditBeatDialogComponent implements OnInit {
     reader.onloadend= () => {
       imag = reader.result
       let beat: BeatDTO = { 
-        guid: "423e4567-e89b-12d3-a456-556642440000",
         name: this.fg.value.beatname,
         beatimg: imag as Blob,
-        price: 23.12,
+        price: this.fg.value.price,
         genre: this.fg.value.toppings,
         
-        producedby: "smialek"
+        producedby: this.data.producedby
     }
-      this.beatService.createBeat({beatDTO: beat}).subscribe(res=>console.log(res));
+    let bUP: UpdateBeatRequestParams =  {
+      id: this.data.guid as string,
+      beatDTO: beat
+   }
+      this.beatService.updateBeat(bUP)
     }
     
   }

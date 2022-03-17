@@ -7,12 +7,15 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   userData: any; 
   public uid: any;
+
+  public uidObs: BehaviorSubject<string> = new BehaviorSubject('')
   constructor(
     public afs: AngularFirestore, 
     public afAuth: AngularFireAuth, 
@@ -23,6 +26,7 @@ export class AuthService {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.uid = user.uid;
+        this.uidObs.next(user.uid);
         console.log(user);
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
@@ -92,7 +96,9 @@ export class AuthService {
     return this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
       this.uid = null;
-      this.router.navigate(['sign-in']);
+      this.uidObs.next('');
+      this.router.navigate(['login']);
+      
     });
   }
 }

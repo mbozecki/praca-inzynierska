@@ -13,17 +13,19 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @ApplicationScoped
 public class UserRepository implements PanacheRepository<User> {
-
+    @Transactional
     public User findById(String id) {
         return find("guid", id).firstResult();
     }
 
+    @Transactional
     public PageResult<User> searchByCriteria(UserSearchCriteria criteria) {
         CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         List<Predicate> predicates = new ArrayList<>();

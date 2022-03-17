@@ -3,9 +3,13 @@
   <form [formGroup]="fg" class="example-form">
   <mat-form-field  class="example-full-width" appearance="fill">
     <mat-label>Beat name</mat-label>
-    <input formControlName="beatname" matInput>
+    <input  formControlName="beatname" [value]="beatname" matInput> {{beatname}}
   </mat-form-field>
   <tr></tr>
+  <mat-form-field  class="example-full-width" appearance="fill">
+    <mat-label>Price</mat-label>
+    <input  formControlName="price" [value]="price" matInput> {{price}}
+  </mat-form-field>
   <mat-form-field >
     <mat-label>Upload img here</mat-label>
     <ngx-mat-file-input formControlName="img" [multiple]="multiple" [accept]="accept" [color]="color">
@@ -22,7 +26,7 @@
     <tr>
     <td><mat-form-field  lass="example-full-width" appearance="fill">
         <mat-label>BPM</mat-label>
-        <input matInput #postalCode formControlName="bpm" maxlength="5" placeholder="Ex. 134" value="128">
+        <input matInput #postalCode formControlName="bpm" maxlength="5" placeholder="Ex. 134" value="128">{{bpm}}
       </mat-form-field></td>
   </tr></table>
 
