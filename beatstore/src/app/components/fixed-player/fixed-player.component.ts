@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faPause } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,7 @@ import { BeatsService } from 'src/app/shared/services/beats.service';
   templateUrl: './fixed-player.component.html',
   styleUrls: ['./fixed-player.component.scss']
 })
+@Injectable({ providedIn: 'root' })
 export class FixedPlayerComponent implements OnInit, OnDestroy {
   faPlay=faPlay;
   faPause=faPause;
@@ -39,9 +40,16 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
     });
   }
 
-  play() {
-    this.currentFile = this.files[0];
-    this.playStream(this.files[0].url);
+  play(file?: any) {
+   
+    if (file) {
+      this.currentFile = file;
+      this.playStream(file.url)
+    } else {
+      this.currentFile = this.files[0];
+      this.playStream(this.files[0].url);
+
+    }
     this.isPlaying= true;
     //this.audioService.play();
   }
@@ -53,6 +61,7 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
   playStream(url : any) {
     this.audioService.playStream(url).subscribe(events => {
       // listening for fun here
+      console.log("xd",events);
     });
   }
 

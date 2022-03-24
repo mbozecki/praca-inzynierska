@@ -12,6 +12,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatSlider } from '@angular/material/slider';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { BeatAPIService } from 'src/app/generated';
 import { Beat } from 'src/app/shared/models/Beat';
 import { BeatsService } from 'src/app/shared/services/beats.service';
 
@@ -40,7 +41,8 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('search') searchInput:any;
   constructor(
     public beatService: BeatsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private beatAPIService: BeatAPIService
   ) {}
   fg = new FormGroup({
     genre: new FormControl(''),
@@ -62,10 +64,16 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
       
       console.log("XD", this.beatName);
     });
-    this.beatService.getAllBeats().subscribe((res) => {
-      this.allBeats = res;
-      this.filteredBeats = res;
-    });
+   // this.beatService.getAllBeats().subscribe((res) => {
+   //   this.allBeats = res;
+   //   this.filteredBeats = res;
+   // });
+
+    this.beatAPIService.getbeatsByCriteria({page: 1}).toPromise().then(res => {
+      this.allBeats = res.stream as Beat[];
+      this.filteredBeats = res.stream as Beat[];
+      console.log("r", res);
+    })
     this.sub = this.fg.valueChanges.subscribe((data) => {
       console.log(data);
       let notNull: any = {};
