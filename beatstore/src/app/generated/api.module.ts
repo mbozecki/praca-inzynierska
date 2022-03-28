@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { BeatAPIService } from './api/beat.service';
+import { Beatmp3APIService } from './api/beatmp3.service';
+import { FullAPIService } from './api/full.service';
 import { GreetingResourceAPIService } from './api/greetingResource.service';
 import { StripeControllerAPIService } from './api/stripeController.service';
 import { UsersAPIService } from './api/users.service';

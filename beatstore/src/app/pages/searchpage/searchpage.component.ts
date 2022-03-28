@@ -36,6 +36,13 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
     floor: 0,
     ceil: 240,
   };
+
+  options1: Options = {
+    floor: 0,
+    ceil: 300,
+  };
+  valueDollar: number = 0;
+  highValueDollar: number = 300;
   //private allBeatsAPI: Observable<Beat[]>;
   @ViewChild('priceslider') pcslider: MatSlider;
   @ViewChild('search') searchInput:any;
@@ -105,8 +112,8 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
-    this.sub1.unsubscribe();
+    this.sub?.unsubscribe();
+    this.sub1?.unsubscribe();
   }
   formatLabel(value: number) {
     if (value >= 1) {
@@ -122,15 +129,15 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.filterval) filter = this.filterval;
     if (!filter) filter = {
       BPM: [0,300],
-      maxPrice: [300],
+      maxPrice: [0,300],
       sortBy: null,
     }
     if (!filter.BPM) filter.BPM = [0,300];
-    if (!filter.maxPrice) filter.maxPrice= 300;
+    if (!filter.maxPrice) filter.maxPrice= [0,300];
     this.allBeats.forEach((beat: Beat) => {
       if (
         (beat.BPM as number) <= filter?.BPM[1] && (beat.BPM as number) >= filter?.BPM[0] &&
-        beat.price <= filter?.maxPrice
+        beat.price <= filter?.maxPrice[1]
       ) {
         //if (this.beatName != null && beat.name.toLowerCase().includes(this.beatName.toLowerCase())) {
         //  console.log("her", this.beatName)

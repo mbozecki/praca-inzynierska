@@ -16,9 +16,12 @@ export interface Beat {
     name?: string;
     beatimg?: Blob;
     price?: number;
-    genre?: Array<string>;
-    beatmp3?: Blob;
+    BPM?: number;
+    likeNumber?: number;
+    genre?: string;
+    mp3ID?: string;
     producedby?: string;
     howmanysold?: number;
+    bPM?: number;
 }
 

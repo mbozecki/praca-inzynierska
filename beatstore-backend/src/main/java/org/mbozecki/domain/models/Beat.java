@@ -39,8 +39,7 @@ public class Beat extends PanacheEntityBase {
 
     public String genre;
 
-    @Lob
-    public byte[] beatmp3;
+    public String mp3ID;
 
     public String producedby;
     public Integer howmanysold;

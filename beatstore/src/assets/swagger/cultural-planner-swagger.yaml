@@ -8,6 +8,8 @@ servers:
 - url: http://localhost:8080/
 tags:
 - name: beat
+- name: beatmp3
+- name: full
 - name: users
 paths:
   /beat-store/api/payment:
@@ -155,6 +157,208 @@ paths:
       summary: Delete a beat
       description: This operation deletes a beat with given Id
       operationId: deleteBeat
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: No content
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /beat-store/beatmp3:
+    post:
+      tags:
+      - beatmp3
+      summary: Create beat3
+      description: This operations creates a beat3
+      operationId: createBeat3
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeatMP3DTO'
+      responses:
+        "200":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeatMP3DTO'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /beat-store/beatmp3/{id}:
+    get:
+      tags:
+      - beatmp3
+      description: Get beat3 by ID
+      operationId: getBeat3ById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The corresponding beat resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeatMP3DTO'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+    put:
+      tags:
+      - beatmp3
+      summary: Update a bea3t
+      description: This operation updates an already existing beat3.
+      operationId: updateBeat3
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeatMP3DTO'
+      responses:
+        "201":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeatMP3DTO'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+      - beatmp3
+      summary: Delete a beat3
+      description: This operation deletes a beat with given Id3
+      operationId: deleteBeat3
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: No content
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /beat-store/beatmp3full:
+    post:
+      tags:
+      - full
+      summary: Create beat3
+      description: This operations creates a beat3
+      operationId: createBeat3fff
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeatMP3FullDTO'
+      responses:
+        "200":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeatMP3FullDTO'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /beat-store/beatmp3full/{id}:
+    get:
+      tags:
+      - full
+      description: Get beat3 by ID
+      operationId: getBeat3fffById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The corresponding beat resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeatMP3FullDTO'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
+    put:
+      tags:
+      - full
+      summary: Update a bea3t
+      description: This operation updates an already existing beat3.
+      operationId: updateBeat3fff
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeatMP3FullDTO'
+      responses:
+        "201":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeatMP3FullDTO'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+      - full
+      summary: Delete a beat3
+      description: This operation deletes a beat with given Id3
+      operationId: deleteBeat3fff
       parameters:
       - name: id
         in: path
@@ -348,18 +552,24 @@ components:
         price:
           format: double
           type: number
+        BPM:
+          format: double
+          type: number
+        likeNumber:
+          format: double
+          type: number
         genre:
-          type: array
-          items:
-            type: string
-        beatmp3:
-          format: binary
+          type: string
+        mp3ID:
           type: string
         producedby:
           type: string
         howmanysold:
           format: int32
           type: integer
+        bPM:
+          format: double
+          type: number
     BeatDTO:
       type: object
       properties:
@@ -373,18 +583,44 @@ components:
         price:
           format: double
           type: number
+        BPM:
+          format: double
+          type: number
+        likeNumber:
+          format: double
+          type: number
         genre:
-          type: array
-          items:
-            type: string
-        beatmp3:
-          format: binary
+          type: string
+        mp3ID:
           type: string
         producedby:
           type: string
         howmanysold:
           format: int32
           type: integer
+        bPM:
+          format: double
+          type: number
+    BeatMP3DTO:
+      type: object
+      properties:
+        guid:
+          type: string
+        beatid:
+          type: string
+        fullbeatmp3:
+          format: binary
+          type: string
+    BeatMP3FullDTO:
+      type: object
+      properties:
+        guid:
+          type: string
+        beatid:
+          type: string
+        fullbeatmp3:
+          format: binary
+          type: string
     CheckoutPayment:
       type: object
       properties:
@@ -456,3 +692,5 @@ components:
         bankaccount:
           format: double
           type: number
+        paypalmail:
+          type: string

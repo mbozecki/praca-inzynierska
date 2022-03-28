@@ -25,8 +25,7 @@ public class BeatDTO {
 
     private String genre;
 
-
-    public byte[] beatmp3;
+    public String mp3ID;
 
     private String producedby;
 

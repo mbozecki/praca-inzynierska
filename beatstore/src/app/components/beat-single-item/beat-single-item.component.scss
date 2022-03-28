@@ -1,22 +1,26 @@
 .beatSingleItem {
     color: #EFEBEB;
     display: flex;
-    flex-direction: row;
+
+    align-items: center;
     margin: 1vh 2vw 1vh 2vw;
-    padding-top: 1.1vh;
-    padding-bottom: 1.1vh;
     justify-content: space-around;
+        flex-direction: row;
+}
+
+.wrapBeat {
+    margin-top: 1.3vh;
+    margin-bottom: 1.3vh;
     background: rgb(54,21,68);
     background: linear-gradient(93deg, rgb(67, 44, 77) 0%, rgb(119, 46, 97) 45%, rgb(139, 137, 138) 93%);
     box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
     border-radius: 9px;
-    align-items: center;
-    
+
 }
 .beatImg {
     width:130px;
     height: 130px;
-
+    margin-top: 20px;
 }
 
 .instrumental {font-family: Inter;
@@ -29,3 +33,9 @@ text-align: center;
 color: #EFEBEB;
 }
 
+:host ::ng-deep .genre .mat-chip-list-wrapper  {
+    flex-wrap: nowrap !important;
+    flex-direction: row !important;
+    max-width: 40%;
+    margin-left: 35%;
+}

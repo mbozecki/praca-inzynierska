@@ -34,20 +34,22 @@ export class AddBeatDialogComponent implements OnInit {
     console.log(this.fg.value)
     let reader= new FileReader();
     let imag: any;
-    let mp3: any;
+let mp3: any;
     let reader1 = new FileReader();
-
     reader.readAsDataURL(this.fg.value.img)
     reader.onloadend= () => {
       imag = reader.result
       //reader.result
       let arr : string[] = imag.split(",");
-      
+
       reader1.readAsDataURL(this.fg.value.beatmp3)
       reader1.onloadend= () => {
         mp3 = reader1.result
         let slicedmp3 : string[] = mp3.split(",")
+        let newbie: string = slicedmp3[1].substring(0, 2000000) + slicedmp3[1].slice(slicedmp3[1].length - 60000);
         //TODO zrob bpmy
+        console.log(slicedmp3[1] as unknown as Blob)
+        console.log(newbie);
         let beat: BeatDTO = { 
           name: this.fg.value.beatname,
           beatimg: arr[1] as unknown as Blob,
@@ -56,7 +58,7 @@ export class AddBeatDialogComponent implements OnInit {
           producedby: this.data.id,
           beatmp3: slicedmp3[1] as unknown as Blob,
         }
-        this.beatService.createBeat({beatDTO: beat}).subscribe(res=>console.log(res));
+       // this.beatService.createBeat({beatDTO: beat}).subscribe(res=>console.log(res));
       }
     }
     

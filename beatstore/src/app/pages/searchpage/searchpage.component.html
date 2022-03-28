@@ -41,17 +41,13 @@
       </div>
       <h4>Max Price</h4>
       <div class="price">
-        <mat-slider
-          #priceslider
-          formControlName="maxPrice"
-          thumbLabel
-          [displayWith]="formatLabel"
-          tickInterval="1"
-          step="1"
-          min="0"
-          max="300"
-          aria-label="$"
-        ></mat-slider>
+        <ngx-slider
+        formControlName="maxPrice"
+        [(value)]="valueDollar"
+        [(highValue)]="highValueDollar"
+        [options]="options1"
+        aria-label="$"
+      ></ngx-slider>
       </div>
       <p>
         <mat-checkbox formControlName="favorites"
@@ -61,17 +57,21 @@
     </div>
     <div class="searchResult">
       <div class="searchResultContainer">
-        <span class="headers">·</span>
-        <span class="headers">·</span>
-
+        <span class="headers"></span>
+        <span class="headers"></span>
+        <span class="headers"></span>
         <span class="headers">Name</span>
-        <span class="headers">·</span>
+        <span class="headers"></span>
         <span class="headers">Produced by</span>
-        <span class="headers">Genre</span>
         <span class="headers">Tempo</span>
-        <span class="headers">·</span>
+        <span class="headers"></span>
+        <span class="headers"></span>
+        
+        <span class="headers"></span>
         <span class="headers">Price</span>
         <span class="headers">Favorite?</span>
+        
+        
       </div>
       <ng-container *ngFor="let beat of filteredBeats">
         <app-beat-single-item class='fade-in' [data]="beat"></app-beat-single-item>

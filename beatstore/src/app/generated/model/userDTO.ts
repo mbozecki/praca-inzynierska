@@ -24,5 +24,6 @@ export interface UserDTO {
     boughtbeats?: Array<Beat>;
     soldbeats?: Array<Beat>;
     bankaccount?: number;
+    paypalmail?: string;
 }
 

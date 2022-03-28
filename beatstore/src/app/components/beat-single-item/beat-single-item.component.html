@@ -1,37 +1,48 @@
-<div class="beatSingleItem fade-in fade-out">
-  <img class=" beatImg" [src]='thumbnail'/>
-  <span class="headers instrumental">{{this.data.name}}</span>
-  <span class="headers">·</span>
-  <span class="headers">{{this.data.producedby}}</span>
-  <span class="headers genre">
-    <mat-chip-list class="mat-chip-list-stacked headers" aria-label="Color selection">
-      <mat-chip
-        *ngFor="let type of beatTypes"
-        selected
-        [color]="type.color"
-      >
+<div class="wrapBeat  fade-in fade-out">
+  <div class="beatSingleItem">
+    <img class="beatImg" [src]="thumbnail" />
+    <span class="headers instrumental">{{ this.data.name }}</span>
+    <span class="headers">·</span>
+    <span class="headers">{{ this.data.producedby }}</span>
+    <span class="headers" *ngIf="!editable">{{ this.data.BPM + "BPM" }}</span>
+    <button
+      mat-raised-button
+      color="primary"
+      class="headers"
+      *ngIf="!editable"
+      (click)="play()"
+    >
+      <mat-icon>play_circle_outline</mat-icon> Play
+    </button>
+    <button mat-raised-button color="primary" class="headers" *ngIf="!editable">
+      <mat-icon>add_shopping_cart</mat-icon>{{ this.data.price + "$" }}
+    </button>
+    <div class="example-button-container" class="headers" *ngIf="!editable">
+      <button mat-mini-fab color="primary" aria-label="Heart">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+    <div
+      class="example-button-container"
+      class="headers"
+      *ngIf="editable"
+      (click)="onEdit(this.data)"
+    >
+      <button mat-mini-fab color="primary" aria-label="edit">
+        <mat-icon>edit</mat-icon>
+      </button>
+      Edit beat
+    </div>
+  </div>
+  <div class="headers">
+    <mat-chip-list
+      class="mat-chip-list-stacked headers genre"
+      cdkDropListOrientation="horizontal"
+      aria-label="Color selection"
+    >
+      <mat-chip *ngFor="let type of beatTypes" selected [color]="type.color">
         {{ type.name }}
       </mat-chip>
     </mat-chip-list>
-  </span>
-  <span class="headers" *ngIf="!editable">{{this.data.BPM + "BPM"}}</span>
-  <button mat-raised-button color="primary" class="headers" *ngIf="!editable" (click)="play()">
-    <mat-icon>play_circle_outline</mat-icon> Play
-  </button>
-  <button mat-raised-button color="primary" class="headers" *ngIf="!editable">
-    <mat-icon>add_shopping_cart</mat-icon>{{this.data.price + "$"}}
-  </button>
-  <div class="example-button-container" class="headers" *ngIf="!editable">
-    <button mat-mini-fab color="primary" aria-label="Heart">
-      <mat-icon>favorite</mat-icon>
-    </button>
-  </div>
-  <div class="example-button-container" class="headers" *ngIf="editable" (click)="onEdit(this.data)">
-    
-    <button mat-mini-fab color="primary" aria-label="edit">
- 
-      <mat-icon>edit</mat-icon>
-    </button>
-     Edit beat
   </div>
 </div>

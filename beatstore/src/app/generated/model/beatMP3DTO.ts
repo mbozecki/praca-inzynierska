@@ -11,17 +11,9 @@
  */
 
 
-export interface BeatDTO { 
+export interface BeatMP3DTO { 
     guid?: string;
-    name?: string;
-    beatimg?: Blob;
-    price?: number;
-    BPM?: number;
-    likeNumber?: number;
-    genre?: string;
-    mp3ID?: string;
-    producedby?: string;
-    howmanysold?: number;
-    bPM?: number;
+    beatid?: string;
+    fullbeatmp3?: Blob;
 }
 

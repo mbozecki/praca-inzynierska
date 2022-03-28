@@ -72,3 +72,11 @@ letter-spacing: 0.02em;
   min-width: 100%;
 }
 
+ 
+:host ::ng-deep .mat-form-field-type-mat-select .mat-form-field-label {
+  color:gray;
+}
+
+.price {
+  margin-bottom: 4vh;
+}
