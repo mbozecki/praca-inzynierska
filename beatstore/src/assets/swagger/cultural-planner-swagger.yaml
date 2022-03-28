@@ -197,6 +197,31 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
+  /beat-store/beatmp3/beatid/{beatid}:
+    get:
+      tags:
+      - beatmp3
+      description: Get beat3 by beatID
+      operationId: getBeat3fBybeatId
+      parameters:
+      - name: beatid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The corresponding beat resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeatMP3DTO'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
+        "500":
+          description: Internal Server Error
   /beat-store/beatmp3/{id}:
     get:
       tags:
@@ -296,6 +321,31 @@ paths:
           description: Bad Request
         "404":
           description: Not Found
+        "500":
+          description: Internal Server Error
+  /beat-store/beatmp3full/beatid/{beatid}:
+    get:
+      tags:
+      - full
+      description: Get beat3 by beatID
+      operationId: getBeat3fffBybeatId
+      parameters:
+      - name: beatid
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The corresponding beat resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BeatMP3FullDTO'
+        "400":
+          description: Bad request
+        "404":
+          description: Not found
         "500":
           description: Internal Server Error
   /beat-store/beatmp3full/{id}:
@@ -539,37 +589,6 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    Beat:
-      type: object
-      properties:
-        guid:
-          type: string
-        name:
-          type: string
-        beatimg:
-          format: binary
-          type: string
-        price:
-          format: double
-          type: number
-        BPM:
-          format: double
-          type: number
-        likeNumber:
-          format: double
-          type: number
-        genre:
-          type: string
-        mp3ID:
-          type: string
-        producedby:
-          type: string
-        howmanysold:
-          format: int32
-          type: integer
-        bPM:
-          format: double
-          type: number
     BeatDTO:
       type: object
       properties:
@@ -676,19 +695,19 @@ components:
         likedbeats:
           type: array
           items:
-            $ref: '#/components/schemas/Beat'
+            type: string
         beatsincart:
           type: array
           items:
-            $ref: '#/components/schemas/Beat'
+            type: string
         boughtbeats:
           type: array
           items:
-            $ref: '#/components/schemas/Beat'
+            type: string
         soldbeats:
           type: array
           items:
-            $ref: '#/components/schemas/Beat'
+            type: string
         bankaccount:
           format: double
           type: number

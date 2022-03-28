@@ -9,12 +9,14 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.mbozecki.domain.models.Beat;
 import org.mbozecki.domain.models.BeatMP3;
+import org.mbozecki.domain.models.BeatMP3Full;
 import org.mbozecki.domain.repositories.BeatMP3Repository;
 import org.mbozecki.domain.repositories.BeatRepository;
 import org.mbozecki.domain.repositories.criteria.BeatSearchCriteria;
 import org.mbozecki.domain.repositories.criteria.models.PageResult;
 import org.mbozecki.rs.dtos.BeatDTO;
 import org.mbozecki.rs.dtos.BeatMP3DTO;
+import org.mbozecki.rs.dtos.BeatMP3FullDTO;
 import org.mbozecki.rs.dtos.criteria.BeatSearchCriteriaDTO;
 import org.mbozecki.rs.dtos.criteria.PageResultDTO;
 import org.mbozecki.rs.mappers.BeatMP3Mapper;
@@ -126,5 +128,25 @@ public class BeatMP3RestController {
         return Response.noContent().build();
     }
 
+
+    @GET
+    @Path("/beatid/{beatid}")
+    @Operation(operationId = "getBeat3fBybeatId", description = "Get beat3 by beatID")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "The corresponding beat resource",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = BeatMP3DTO.class))
+            ),
+            @APIResponse(responseCode = "400", description = "Bad request"),
+            @APIResponse(responseCode = "404", description = "Not found"),
+            @APIResponse(responseCode = "500", description = "Internal Server Error"),
+    })
+    public Response getBeatByBeatId(@PathParam("beatid") String beatid) {
+        BeatMP3 beat = beatmp3Repository.findByBeatId(beatid);
+        if (beat == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        logger.log(Level.INFO, String.format("Successfully returned a record with id: %s", beatid));
+        return Response.ok(beatmp3Mapper.map(beat)).build();
+    }
 
 }

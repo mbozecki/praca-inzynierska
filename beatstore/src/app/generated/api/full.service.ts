@@ -35,6 +35,10 @@ export interface GetBeat3fffByIdRequestParams {
     id: string;
 }
 
+export interface GetBeat3fffBybeatIdRequestParams {
+    beatid: string;
+}
+
 export interface UpdateBeat3fffRequestParams {
     id: string;
     beatMP3FullDTO?: BeatMP3FullDTO;
@@ -238,6 +242,52 @@ export class FullAPIService {
         }
 
         return this.httpClient.get<BeatMP3FullDTO>(`${this.configuration.basePath}/beat-store/beatmp3full/${encodeURIComponent(String(id))}`,
+            {
+                responseType: <any>responseType,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get beat3 by beatID
+     * @param requestParameters
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getBeat3fffBybeatId(requestParameters: GetBeat3fffBybeatIdRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<BeatMP3FullDTO>;
+    public getBeat3fffBybeatId(requestParameters: GetBeat3fffBybeatIdRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<BeatMP3FullDTO>>;
+    public getBeat3fffBybeatId(requestParameters: GetBeat3fffBybeatIdRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<BeatMP3FullDTO>>;
+    public getBeat3fffBybeatId(requestParameters: GetBeat3fffBybeatIdRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        const beatid = requestParameters.beatid;
+        if (beatid === null || beatid === undefined) {
+            throw new Error('Required parameter beatid was null or undefined when calling getBeat3fffBybeatId.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
+        return this.httpClient.get<BeatMP3FullDTO>(`${this.configuration.basePath}/beat-store/beatmp3full/beatid/${encodeURIComponent(String(beatid))}`,
             {
                 responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,

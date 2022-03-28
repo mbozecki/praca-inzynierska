@@ -15,4 +15,6 @@ public class BeatMP3FullRepository implements PanacheRepository<BeatMP3Full> {
         return find("guid", id).firstResult();
     }
 
+    @Transactional
+    public BeatMP3Full findByBeatId(String beatid) { return find("beatid", beatid).firstResult(); }
 }

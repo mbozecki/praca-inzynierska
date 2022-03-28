@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { Beat, BeatAPIService, BeatDTO, UpdateBeatRequestParams } from 'src/app/generated';
+import { BeatAPIService, BeatDTO, UpdateBeatRequestParams } from 'src/app/generated';
 import { Inject } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 @Component({
@@ -28,7 +28,7 @@ export class EditBeatDialogComponent implements OnInit {
     beatmp3: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
   })
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Beat,private beatService: BeatAPIService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private beatService: BeatAPIService) { }
 
   ngOnInit(): void {
     console.log(this.data)

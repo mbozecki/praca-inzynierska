@@ -28,13 +28,13 @@ public class UserDTO {
 
     private byte[] profilepicture;
 
-    private List<Beat> likedbeats;
+    private String[] likedbeats;
 
-    private List<Beat> beatsincart;
+    private String[] beatsincart;
 
-    private List<Beat> boughtbeats;
+    private String[] boughtbeats;
 
-    private List<Beat> soldbeats;
+    private String[] soldbeats;
 
     private double bankaccount;
 

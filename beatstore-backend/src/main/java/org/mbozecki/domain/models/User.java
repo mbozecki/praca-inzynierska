@@ -36,18 +36,13 @@ public class User {
     @Lob
     private byte[] profilepicture;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Beat> likedbeats;
+    private String[] likedbeats;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Beat> beatsincart;
+    private String[] beatsincart;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Beat> boughtbeats;
+    private String[] boughtbeats;
 
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Beat> soldbeats;
+    private String[] soldbeats;
 
 
     private double bankaccount;

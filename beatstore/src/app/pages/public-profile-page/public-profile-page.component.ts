@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatSlider } from '@angular/material/slider';
 import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { UserDTO, UsersAPIService } from 'src/app/generated';
+import { BeatAPIService, UserDTO, UsersAPIService } from 'src/app/generated';
 import { Beat } from 'src/app/shared/models/Beat';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { BeatsService } from 'src/app/shared/services/beats.service';
@@ -27,7 +27,8 @@ export class PublicProfilePageComponent implements OnInit, AfterViewInit {
     public beatService: BeatsService,
     private route: ActivatedRoute,
     private usersService: UsersAPIService,
-    private authService: AuthService
+    private authService: AuthService,
+    private beatAPIservice: BeatAPIService
   ) {}
   fg = new FormGroup({
     genre: new FormControl(''),
@@ -56,10 +57,20 @@ export class PublicProfilePageComponent implements OnInit, AfterViewInit {
       //console.log(this.imageURL)
       //const str2blob = (txt : string) => new Blob([txt]);
        
-    })
-    this.beatService.getAllBeats().subscribe((res) => {
-      this.allBeats = res;
     });
+    this.beatAPIservice.getbeatsByCriteria({producedby: this.username }).subscribe(res => {
+      console.log(res);
+      let allbits: Beat[] = res.stream as Beat[];
+      let filteredB: Beat[] = allbits.filter((bit: Beat) => {
+        console.log(bit, this.username)
+         return bit.producedby == this.username ? bit : ''
+     })
+     console.log(filteredB, "XD");
+     this.myBeats = filteredB;
+     console.log(this.myBeats, "XD")
+  });
+
+    
   }
   ngAfterViewInit(): void {
     this.pcslider.writeValue(120);

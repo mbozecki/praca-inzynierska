@@ -19,10 +19,10 @@
     </p>
     <mat-tab-group class="tabs" mat-align-tabs="center">
       <mat-tab label="Bought licenses">
-        <ng-container *ngFor="let beat of boughtLicenses">
+        <ng-container *ngFor="let beat of boughtBeats">
           <app-beat-single-item [data]="beat"></app-beat-single-item>
         </ng-container>
-        <h4 class="wide" *ngIf="boughtLicenses.length == 0">You have no bought licenses!</h4>
+        <h4 class="wide" *ngIf="!boughtLicenses">You have no bought licenses!</h4>
       </mat-tab>
       <mat-tab label="My total sales">
         <h3>Total plays: 200</h3>

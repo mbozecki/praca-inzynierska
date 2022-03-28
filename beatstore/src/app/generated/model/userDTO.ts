@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Beat } from './beat';
 
 
 export interface UserDTO { 
@@ -19,10 +18,10 @@ export interface UserDTO {
     email?: string;
     firebase_id?: string;
     profilepicture?: Blob;
-    likedbeats?: Array<Beat>;
-    beatsincart?: Array<Beat>;
-    boughtbeats?: Array<Beat>;
-    soldbeats?: Array<Beat>;
+    likedbeats?: Array<string>;
+    beatsincart?: Array<string>;
+    boughtbeats?: Array<string>;
+    soldbeats?: Array<string>;
     bankaccount?: number;
     paypalmail?: string;
 }

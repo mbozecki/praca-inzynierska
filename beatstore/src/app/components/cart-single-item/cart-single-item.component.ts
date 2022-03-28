@@ -8,7 +8,7 @@ import { Beat } from 'src/app/shared/models/Beat';
   styleUrls: ['./cart-single-item.component.scss']
 })
 export class CartSingleItemComponent implements OnInit {
-  @Input() data: Beat;
+  @Input() data: any;
   beatTypes: any 
   thumbnail: any;
   constructor(private sanitizer: DomSanitizer) { }

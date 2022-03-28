@@ -1,4 +1,4 @@
-<div class="wrapBeat  fade-in fade-out">
+<div class="wrapBeat  fade-in fade-out" *ngIf="this.data">
   <div class="beatSingleItem">
     <img class="beatImg" [src]="thumbnail" />
     <span class="headers instrumental">{{ this.data.name }}</span>
@@ -13,11 +13,12 @@
       (click)="play()"
     >
       <mat-icon>play_circle_outline</mat-icon> Play
-    </button>
-    <button mat-raised-button color="primary" class="headers" *ngIf="!editable">
+    </button> 
+    <button mat-raised-button color="primary" (click)="onCartAdd(this.data)"
+    class="headers" *ngIf="!editable">
       <mat-icon>add_shopping_cart</mat-icon>{{ this.data.price + "$" }}
     </button>
-    <div class="example-button-container" class="headers" *ngIf="!editable">
+    <div  (click)="onHeartAdd(this.data)" class="example-button-container" class="headers" *ngIf="!editable">
       <button mat-mini-fab color="primary" aria-label="Heart">
         <mat-icon>favorite</mat-icon>
       </button>
@@ -40,8 +41,8 @@
       cdkDropListOrientation="horizontal"
       aria-label="Color selection"
     >
-      <mat-chip *ngFor="let type of beatTypes" selected [color]="type.color">
-        {{ type.name }}
+      <mat-chip *ngFor="let type of beatTypes" selected  color="primary">
+        {{ type }}
       </mat-chip>
     </mat-chip-list>
   </div>

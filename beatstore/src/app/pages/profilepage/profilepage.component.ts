@@ -19,7 +19,8 @@ export class ProfilepageComponent implements OnInit, OnDestroy {
   public bio = ""
   public username = ""
   public myBeats: Beat[] = [];
-  public boughtLicenses: Beat[] = []
+  public boughtLicenses: string[] = []
+  public boughtBeats: BeatDTO[] = [];
   public imgBlob : Blob = new Blob();
   public imageURL:SafeUrl
   constructor(
@@ -42,7 +43,11 @@ export class ProfilepageComponent implements OnInit, OnDestroy {
         console.log(currentUser);
         this.bio = currentUser.bio as string;
         this.username = currentUser.name as string
-        this.boughtLicenses = currentUser.boughtbeats as Beat[];
+       this.boughtLicenses = currentUser.boughtbeats as string[];
+       if (this.boughtBeats.length == 0) this.boughtLicenses.forEach(idx => {
+         this.beatAPIService.getBeatById({id: idx}).toPromise()
+         .then(beat => this.boughtBeats.push(beat));
+       });
         console.log(currentUser.profilepicture)
         this.imgBlob = currentUser.profilepicture as Blob
         let xd :string = 'data:image/jpeg;base64,' + currentUser.profilepicture as any 

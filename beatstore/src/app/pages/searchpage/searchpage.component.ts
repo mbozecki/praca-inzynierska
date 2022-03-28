@@ -12,8 +12,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatSlider } from '@angular/material/slider';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { BeatAPIService } from 'src/app/generated';
+import { BeatAPIService, UserDTO, UsersAPIService } from 'src/app/generated';
 import { Beat } from 'src/app/shared/models/Beat';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { BeatsService } from 'src/app/shared/services/beats.service';
 
 @Component({
@@ -45,42 +46,44 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
   highValueDollar: number = 300;
   //private allBeatsAPI: Observable<Beat[]>;
   @ViewChild('priceslider') pcslider: MatSlider;
-  @ViewChild('search') searchInput:any;
+  @ViewChild('search') searchInput: any;
   constructor(
     public beatService: BeatsService,
     private route: ActivatedRoute,
-    private beatAPIService: BeatAPIService
+    private beatAPIService: BeatAPIService,
+    private usersService: UsersAPIService,
+    private authService: AuthService
   ) {}
   fg = new FormGroup({
     genre: new FormControl(''),
     BPM: new FormControl(''),
     maxPrice: new FormControl(''),
     favorites: new FormControl(''),
-    sortBy: new FormControl('')
+    sortBy: new FormControl(''),
   });
 
-  genreList: string[] =['Ambient', 'Club', 'Pop', 'Lofi', 'Trap', 'Soul'];
+  genreList: string[] = ['Ambient', 'Club', 'Pop', 'Lofi', 'Trap', 'Soul'];
 
-  sortList: string[] = [
-    'Price ascending',
-    'Price descending',
-  ]
+  sortList: string[] = ['Price ascending', 'Price descending'];
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.beatName = params['name'];
-      
-      console.log("XD", this.beatName);
-    });
-   // this.beatService.getAllBeats().subscribe((res) => {
-   //   this.allBeats = res;
-   //   this.filteredBeats = res;
-   // });
 
-    this.beatAPIService.getbeatsByCriteria({page: 1}).toPromise().then(res => {
-      this.allBeats = res.stream as Beat[];
-      this.filteredBeats = res.stream as Beat[];
-      console.log("r", res);
-    })
+      console.log('XD', this.beatName);
+    });
+    // this.beatService.getAllBeats().subscribe((res) => {
+    //   this.allBeats = res;
+    //   this.filteredBeats = res;
+    // });
+
+    this.beatAPIService
+      .getbeatsByCriteria({ page: 0 })
+      .toPromise()
+      .then((res) => {
+        this.allBeats = res.stream as Beat[];
+        this.filteredBeats = res.stream as Beat[];
+        console.log('r', res);
+      });
     this.sub = this.fg.valueChanges.subscribe((data) => {
       console.log(data);
       let notNull: any = {};
@@ -89,26 +92,37 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       console.log(notNull);
-      this.filterval= notNull;
+      this.filterval = notNull;
       this.filterSearch(notNull);
-    });
-    
 
+    });
+
+    
+    this.authService.uidObs.subscribe((val) => {
+      console.log(val);
+      this.usersService
+        .getusersByCriteria({ firebaseId: val })
+        .toPromise()
+        .then((pageResult) => {
+          let currentUser = pageResult.stream![0] as UserDTO;
+          console.log('currentny', currentUser.likedbeats);
+        });
+    });
   }
   ngAfterViewInit(): void {
     this.pcslider.writeValue(300);
     this.pcslider.valueChange.subscribe((val) => {
       console.log(val);
     });
-    console.log(this.searchInput)
-    
-    this.sub1= this.searchInput.fg.valueChanges.subscribe((val: any) => {
-      console.log("Wal smialo",val.searchText);
+    console.log(this.searchInput);
+
+    this.sub1 = this.searchInput.fg.valueChanges.subscribe((val: any) => {
+      console.log('Wal smialo', val.searchText);
       this.searchTextVal = val.searchText;
       this.filterSearch();
     });
-    this.searchInput.fg.controls.searchText.patchValue(this.beatName)
-    this.fg.controls['maxPrice'].setValue(300)
+    this.searchInput.fg.controls.searchText.patchValue(this.beatName);
+    this.fg.controls['maxPrice'].setValue(300);
   }
 
   ngOnDestroy(): void {
@@ -124,38 +138,46 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   filterSearch(filter?: any) {
     this.filteredBeats = [];
-    console.log("thissearcj", this.searchTextVal)
-    console.log("BTNMAM", this.beatName)
+    console.log('thissearcj', this.searchTextVal);
+    console.log('BTNMAM', this.beatName);
     if (this.filterval) filter = this.filterval;
-    if (!filter) filter = {
-      BPM: [0,300],
-      maxPrice: [0,300],
-      sortBy: null,
-    }
-    if (!filter.BPM) filter.BPM = [0,300];
-    if (!filter.maxPrice) filter.maxPrice= [0,300];
+    if (!filter)
+      filter = {
+        BPM: [0, 300],
+        maxPrice: [0, 300],
+        sortBy: null,
+        genre: [],
+      };
+    if (!filter.BPM) filter.BPM = [0, 300];
+    if (!filter.maxPrice) filter.maxPrice = [0, 300];
     this.allBeats.forEach((beat: Beat) => {
       if (
-        (beat.BPM as number) <= filter?.BPM[1] && (beat.BPM as number) >= filter?.BPM[0] &&
+        (beat.BPM as number) <= filter?.BPM[1] &&
+        (beat.BPM as number) >= filter?.BPM[0] &&
         beat.price <= filter?.maxPrice[1]
       ) {
         //if (this.beatName != null && beat.name.toLowerCase().includes(this.beatName.toLowerCase())) {
         //  console.log("her", this.beatName)
         if (!this.searchTextVal || !this.searchTextVal) {
           this.filteredBeats.push(beat);
-        }
-        else if (beat.name.toLowerCase().includes(this.searchTextVal.toLowerCase())) {
-        this.filteredBeats.push(beat);
+        } else if (
+          beat.name.toLowerCase().includes(this.searchTextVal.toLowerCase())
+        ) {
+          this.filteredBeats.push(beat);
         }
         if (filter.sortBy == 'Price ascending') {
-          console.log("ASd")
-          this.filteredBeats.sort((a, b) => a.price > b.price ? 1 : -1)
+          console.log('ASd');
+          this.filteredBeats.sort((a, b) => (a.price > b.price ? 1 : -1));
         } else if (filter.sortBy == 'Price descending') {
-          this.filteredBeats.sort((a, b) => a.price < b.price ? 1 : -1)
+          this.filteredBeats.sort((a, b) => (a.price < b.price ? 1 : -1));
+        }
+        if (filter.genre) {
+         // this.filteredBeats = this.filteredBeats.filter(beat => {
+         //   filter.genre.includes(beat.type)
+          //})
         }
       }
     });
     console.log(this.filteredBeats);
   }
-
 }

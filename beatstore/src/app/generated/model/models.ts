@@ -1,4 +1,3 @@
-export * from './beat';
 export * from './beatDTO';
 export * from './beatMP3DTO';
 export * from './beatMP3FullDTO';

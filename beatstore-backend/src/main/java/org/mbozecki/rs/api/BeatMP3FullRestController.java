@@ -118,4 +118,24 @@ public class BeatMP3FullRestController {
     }
 
 
+    @GET
+    @Path("/beatid/{beatid}")
+    @Operation(operationId = "getBeat3fffBybeatId", description = "Get beat3 by beatID")
+    @APIResponses({
+            @APIResponse(responseCode = "200", description = "The corresponding beat resource",
+                    content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = BeatMP3FullDTO.class))
+            ),
+            @APIResponse(responseCode = "400", description = "Bad request"),
+            @APIResponse(responseCode = "404", description = "Not found"),
+            @APIResponse(responseCode = "500", description = "Internal Server Error"),
+    })
+    public Response getBeatByBeatId(@PathParam("beatid") String beatid) {
+        BeatMP3Full beat = beatmp3Repository.findByBeatId(beatid);
+        if (beat == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        logger.log(Level.INFO, String.format("Successfully returned a record with id: %s", beatid));
+        return Response.ok(beatmp3Mapper.map(beat)).build();
+    }
+
 }

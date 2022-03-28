@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { BeatAPIService, BeatDTO } from 'src/app/generated';
+import { BeatAPIService, Beatmp3APIService, BeatDTO, FullAPIService, BeatMP3DTO, BeatMP3FullDTO } from 'src/app/generated';
 import { Inject } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 @Component({
@@ -24,7 +24,10 @@ export class AddBeatDialogComponent implements OnInit {
     beatmp3: new FormControl('', [Validators.required]),
     price: new FormControl('', [Validators.required]),
   })
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,private beatService: BeatAPIService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  private beatService: BeatAPIService,
+  private mp3Service: Beatmp3APIService,
+  private fullmp3Service: FullAPIService) { }
 
   ngOnInit(): void {
     console.log(this.data.id)
@@ -45,20 +48,36 @@ let mp3: any;
       reader1.readAsDataURL(this.fg.value.beatmp3)
       reader1.onloadend= () => {
         mp3 = reader1.result
-        let slicedmp3 : string[] = mp3.split(",")
-        let newbie: string = slicedmp3[1].substring(0, 2000000) + slicedmp3[1].slice(slicedmp3[1].length - 60000);
+        let slicedmp3 : string[] = mp3.split(",");
+        const fullbeat = slicedmp3[1] as unknown as Blob;
+        let newbie: string = slicedmp3[1].substring(0, 2800000) + slicedmp3[1].slice(slicedmp3[1].length - 60000);
+        
         //TODO zrob bpmy
         console.log(slicedmp3[1] as unknown as Blob)
         console.log(newbie);
-        let beat: BeatDTO = { 
-          name: this.fg.value.beatname,
-          beatimg: arr[1] as unknown as Blob,
-          price: this.fg.value.price,
-          genre: this.fg.value.toppings.toString(),
-          producedby: this.data.id,
-          beatmp3: slicedmp3[1] as unknown as Blob,
+        let notFullBeat: BeatMP3DTO = {
+          fullbeatmp3: newbie as unknown as Blob,
         }
-       // this.beatService.createBeat({beatDTO: beat}).subscribe(res=>console.log(res));
+        this.mp3Service.createBeat3({beatMP3DTO: notFullBeat}).toPromise()
+          .then(res => {
+            console.log("R", res.guid)
+            let beat: BeatDTO = { 
+              name: this.fg.value.beatname,
+              beatimg: arr[1] as unknown as Blob,
+              price: this.fg.value.price,
+              genre: this.fg.value.toppings.toString(),
+              producedby: this.data.id,
+              BPM: this.fg.value.bpm,
+              mp3ID: res.guid,
+            }
+            let fullmp3beat = {
+              beatid: res.guid,
+              fullbeatmp3: fullbeat
+            }
+            this.fullmp3Service.createBeat3fff({beatMP3FullDTO: fullmp3beat}).toPromise()
+            .then(res=> console.log("fullm3", res));
+            this.beatService.createBeat({beatDTO: beat}).subscribe(res=>console.log(res));
+          });
       }
     }
     
