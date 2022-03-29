@@ -14,8 +14,12 @@ export class CartSingleItemComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-    let imgUrl = 'data:image/jpeg;base64,' + this.data.img;
-    this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(imgUrl);
+
+    let imgBlob = this.data.beatimg as string;
+
+    let xd: string = ('data:image/jpeg;base64,' + imgBlob) as any;
+    console.log(xd, ' XD');
+    this.thumbnail = xd;
   }
 
 }

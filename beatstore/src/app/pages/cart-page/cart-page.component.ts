@@ -35,7 +35,7 @@ export class CartPageComponent implements OnInit {
     // this.beatService.getAllBeats().subscribe((res) => {
     //   this.cartBeats = res.slice(0,2);
     //})
-    console.log(this.cartBeats, "KURWA")
+    console.log(this.cartBeats, "cartbeats")
     this.initConfig();
     this.authService.uidObs.subscribe((val) => {
       console.log(val);

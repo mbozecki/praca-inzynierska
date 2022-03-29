@@ -76,9 +76,24 @@ export class AudioService {
   }
 
   private streamObservable(url: any) {
+    console.log("url", "XD", url);
+    let context = new AudioContext();
+    //let buf = new AudioBuffer();
+    let byteArray = url;
+    var arrayBuffer = new ArrayBuffer(byteArray.length);
+    var bufferView = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteArray.length; i++) {
+      bufferView[i] = byteArray[i];
+    }
+
+    //context.decodeAudioData(arrayBuffer, function(buffer) {
+    //    buf = buffer;
+    //});
     return new Observable((observer) => {
       // Play audio
-      this.audioObj.src = url;
+
+
+      this.audioObj.src = bufferView as unknown as string;
       this.audioObj.load();
       this.audioObj.play();
       

@@ -44,7 +44,7 @@ export class ProfilepageComponent implements OnInit, OnDestroy {
         this.bio = currentUser.bio as string;
         this.username = currentUser.name as string
        this.boughtLicenses = currentUser.boughtbeats as string[];
-       if (this.boughtBeats.length == 0) this.boughtLicenses.forEach(idx => {
+       if (this.boughtBeats.length == 0 && this.boughtLicenses) this.boughtLicenses.forEach(idx => {
          this.beatAPIService.getBeatById({id: idx}).toPromise()
          .then(beat => this.boughtBeats.push(beat));
        });

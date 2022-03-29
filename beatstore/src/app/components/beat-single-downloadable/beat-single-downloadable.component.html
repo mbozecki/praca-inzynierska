@@ -1,0 +1,36 @@
+<div class="wrapBeat  fade-in fade-out" *ngIf="this.data">
+    <div class="beatSingleItem">
+      <img class="beatImg" [src]="thumbnail" />
+      <span class="headers instrumental">{{ this.data.name }}</span>
+      <span class="headers">·</span>
+      <span class="headers">{{ this.data.producedby }}</span>
+      <span class="headers" *ngIf="!editable">{{ this.data.BPM + "BPM" }}</span>
+      <button mat-raised-button color="primary" (click)="onDownload(this.data)"
+      class="headers" >
+        <mat-icon>save_alt</mat-icon>Download
+      </button>
+      <div
+        class="example-button-container"
+        class="headers"
+        *ngIf="editable"
+        (click)="onEdit(this.data)"
+      >
+        <button mat-mini-fab color="primary" aria-label="edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+        Edit beat
+      </div>
+    </div>
+    <div class="headers">
+      <mat-chip-list
+        class="mat-chip-list-stacked headers genre"
+        cdkDropListOrientation="horizontal"
+        aria-label="Color selection"
+      >
+        <mat-chip *ngFor="let type of beatTypes" selected  color="primary">
+          {{ type }}
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+  

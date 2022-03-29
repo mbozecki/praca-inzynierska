@@ -6,6 +6,7 @@ import {
   BeatAPIService,
   BeatDTO,
   Beatmp3APIService,
+  FullAPIService,
   UserDTO,
   UsersAPIService,
 } from 'src/app/generated';
@@ -18,11 +19,11 @@ import { FixedPlayerComponent } from '../fixed-player/fixed-player.component';
 import { MusicBottomBarComponent } from '../music-bottom-bar/music-bottom-bar.component';
 
 @Component({
-  selector: 'app-beat-single-item',
-  templateUrl: './beat-single-item.component.html',
-  styleUrls: ['./beat-single-item.component.scss'],
+  selector: 'app-beat-single-downloadable',
+  templateUrl: './beat-single-downloadable.component.html',
+  styleUrls: ['./beat-single-downloadable.component.scss']
 })
-export class BeatSingleItemComponent implements OnInit {
+export class BeatSingleDownloadableComponent implements OnInit {
   @Input() data: any;
   @Input() editable = false;
   
@@ -38,7 +39,7 @@ export class BeatSingleItemComponent implements OnInit {
     private authService: AuthService,
     private beatAPIService: BeatAPIService,
     private usersService: UsersAPIService,
-    
+    private beatFullService: FullAPIService,
   ) {}
 
   ngOnInit(): void {
@@ -97,42 +98,9 @@ export class BeatSingleItemComponent implements OnInit {
     //this.audio.playStream()
   }
 
-  onCartAdd(data: BeatDTO) {
+  onDownload(data: BeatDTO) {
     console.log(data);
-    this.authService.uidObs.subscribe((val) => {
-      console.log(val);
-      this.usersService
-        .getusersByCriteria({ firebaseId: val })
-        .toPromise()
-        .then((pageResult) => {
-          let currentUser = pageResult.stream![0] as UserDTO;
-          console.log("cur", currentUser)
-          let newLiked: Array<string> = [];
-          if (currentUser.beatsincart) (currentUser.beatsincart as Array<string>).forEach(elem => newLiked.push(elem));
-          console.log(newLiked," XADAS")
-          newLiked.push(data.guid as string)
-
-          if ([...new Set(newLiked)].length != newLiked.length) {
-            this.snackBar.open('Beat has already been added to cart!','',
-            { 
-              duration: 2000
-            });
-            return;
-          }
-          let c_id: string = currentUser.guid as unknown as string;
-          let updated: UserDTO = {
-            ...currentUser,
-            beatsincart: [...new Set(newLiked)]
-          }
-          console.log("upd", updated)
-          this.usersService.updateUser({id: c_id, userDTO: updated}).toPromise()
-            .then(res => console.log("colg", res));
-            this.snackBar.open('Beat successfully added to cart!','',
-            { 
-              duration: 2000
-            });
-        });
-    });
+    //this.beatFullService.
   }
 
   onHeartAdd(data: BeatDTO) {
@@ -172,3 +140,4 @@ export class BeatSingleItemComponent implements OnInit {
     });
   }
 }
+

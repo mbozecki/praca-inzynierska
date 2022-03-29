@@ -12,7 +12,7 @@
      <a  [routerLink]="['edit']"> <fa-icon [icon]="faWrench"></fa-icon> Edit </a>
     </div>
     <div class="profileName settings" >
-      <a [routerLink]="['public']"> <fa-icon [icon]="faWrench"></fa-icon> Show public profile </a>
+      <a [routerLink]="[username]"> <fa-icon [icon]="faWrench"></fa-icon> Show public profile </a>
     </div>
     <p class="bio">
       {{bio}}
@@ -20,7 +20,7 @@
     <mat-tab-group class="tabs" mat-align-tabs="center">
       <mat-tab label="Bought licenses">
         <ng-container *ngFor="let beat of boughtBeats">
-          <app-beat-single-item [data]="beat"></app-beat-single-item>
+          <app-beat-single-downloadable [data]="beat" ></app-beat-single-downloadable>
         </ng-container>
         <h4 class="wide" *ngIf="!boughtLicenses">You have no bought licenses!</h4>
       </mat-tab>

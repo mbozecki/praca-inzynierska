@@ -44,6 +44,7 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
    
     if (file) {
       this.currentFile = file;
+      console.log("crn", this.currentFile)
       this.playStream(file.url)
     } else {
       this.currentFile = this.files[0];
@@ -51,7 +52,7 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
 
     }
     this.isPlaying= true;
-    //this.audioService.play();
+    this.audioService.play();
   }
   pause() {
     this.isPlaying =false;

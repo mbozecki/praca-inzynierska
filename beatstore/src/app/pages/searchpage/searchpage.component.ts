@@ -12,8 +12,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatSlider } from '@angular/material/slider';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { BeatAPIService, UserDTO, UsersAPIService } from 'src/app/generated';
-import { Beat } from 'src/app/shared/models/Beat';
+import {
+  BeatAPIService,
+  BeatDTO,
+  UserDTO,
+  UsersAPIService,
+} from 'src/app/generated';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { BeatsService } from 'src/app/shared/services/beats.service';
 
@@ -23,8 +27,9 @@ import { BeatsService } from 'src/app/shared/services/beats.service';
   styleUrls: ['./searchpage.component.scss'],
 })
 export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
-  public allBeats: Beat[] = [];
-  public filteredBeats: Beat[] = [];
+  public allBeats: BeatDTO[] = [];
+  public filteredBeats: BeatDTO[] = [];
+  private likedBeatsIDs: string[] = [];
   private sub: Subscription;
   private sub1: Subscription;
   private sub2: Subscription;
@@ -80,8 +85,8 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
       .getbeatsByCriteria({ page: 0 })
       .toPromise()
       .then((res) => {
-        this.allBeats = res.stream as Beat[];
-        this.filteredBeats = res.stream as Beat[];
+        this.allBeats = res.stream as BeatDTO[];
+        this.filteredBeats = res.stream as BeatDTO[];
         console.log('r', res);
       });
     this.sub = this.fg.valueChanges.subscribe((data) => {
@@ -94,10 +99,8 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(notNull);
       this.filterval = notNull;
       this.filterSearch(notNull);
-
     });
 
-    
     this.authService.uidObs.subscribe((val) => {
       console.log(val);
       this.usersService
@@ -105,7 +108,8 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
         .toPromise()
         .then((pageResult) => {
           let currentUser = pageResult.stream![0] as UserDTO;
-          console.log('currentny', currentUser.likedbeats);
+          // console.log('currentny', currentUser?.likedbeats);
+          this.likedBeatsIDs = currentUser?.likedbeats || [];
         });
     });
   }
@@ -147,34 +151,49 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
         maxPrice: [0, 300],
         sortBy: null,
         genre: [],
+        favorites: false,
       };
     if (!filter.BPM) filter.BPM = [0, 300];
     if (!filter.maxPrice) filter.maxPrice = [0, 300];
-    this.allBeats.forEach((beat: Beat) => {
+    this.allBeats.forEach((beat: BeatDTO) => {
       if (
         (beat.BPM as number) <= filter?.BPM[1] &&
         (beat.BPM as number) >= filter?.BPM[0] &&
-        beat.price <= filter?.maxPrice[1]
+        (beat.price as number) <= filter?.maxPrice[1]
       ) {
         //if (this.beatName != null && beat.name.toLowerCase().includes(this.beatName.toLowerCase())) {
         //  console.log("her", this.beatName)
         if (!this.searchTextVal || !this.searchTextVal) {
           this.filteredBeats.push(beat);
         } else if (
-          beat.name.toLowerCase().includes(this.searchTextVal.toLowerCase())
+          (beat.name as string)
+            .toLowerCase()
+            .includes(this.searchTextVal.toLowerCase())
         ) {
           this.filteredBeats.push(beat);
         }
         if (filter.sortBy == 'Price ascending') {
           console.log('ASd');
-          this.filteredBeats.sort((a, b) => (a.price > b.price ? 1 : -1));
+          this.filteredBeats.sort((a: any, b: any) =>
+            a.price > b.price ? 1 : -1
+          );
         } else if (filter.sortBy == 'Price descending') {
-          this.filteredBeats.sort((a, b) => (a.price < b.price ? 1 : -1));
+          this.filteredBeats.sort((a: any, b: any) =>
+            a.price < b.price ? 1 : -1
+          );
+        }
+        if (filter.favorites == true) {
+          this.filteredBeats = this.filteredBeats.filter((beat) => {
+            console.log(this.likedBeatsIDs, beat.guid);
+            return this.likedBeatsIDs.includes(beat.guid as string);
+          });
         }
         if (filter.genre) {
-         // this.filteredBeats = this.filteredBeats.filter(beat => {
-         //   filter.genre.includes(beat.type)
-          //})
+          filter.genre.forEach((genre: string) => {
+            if (!beat.genre?.includes(genre)) {
+              this.filteredBeats = this.filteredBeats.filter(item => item !== beat)
+            }
+          })
         }
       }
     });
