@@ -12,7 +12,7 @@
 
 
 export interface BeatDTO { 
-    guid?: string;
+    guid: string;
     name?: string;
     beatimg?: Blob;
     price?: number;

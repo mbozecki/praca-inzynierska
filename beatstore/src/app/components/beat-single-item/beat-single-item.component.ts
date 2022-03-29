@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -25,7 +25,9 @@ import { MusicBottomBarComponent } from '../music-bottom-bar/music-bottom-bar.co
 export class BeatSingleItemComponent implements OnInit {
   @Input() data: any;
   @Input() editable = false;
-  
+  @Input() inCart = false;
+  @Input() isLiked = false;
+  @Output() refresh = new EventEmitter<string>();
   beatTypes: string[] = [];
   thumbnail: SafeUrl;
   constructor(
@@ -64,7 +66,10 @@ export class BeatSingleItemComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
-      if (result) this.snackBar.open('Beat successfully edited!');
+      if (result) this.snackBar.open('Beat successfully edited!','',
+      { 
+        duration: 3000
+      });
     });
   }
 
@@ -115,7 +120,7 @@ export class BeatSingleItemComponent implements OnInit {
           if ([...new Set(newLiked)].length != newLiked.length) {
             this.snackBar.open('Beat has already been added to cart!','',
             { 
-              duration: 2000
+              duration: 3000
             });
             return;
           }
@@ -129,8 +134,10 @@ export class BeatSingleItemComponent implements OnInit {
             .then(res => console.log("colg", res));
             this.snackBar.open('Beat successfully added to cart!','',
             { 
-              duration: 2000
+              duration: 3000
             });
+            this.inCart = true;
+            this.refresh.emit("true");
         });
     });
   }
@@ -157,7 +164,7 @@ export class BeatSingleItemComponent implements OnInit {
           if ([...new Set(newLiked)].length != newLiked.length) {
             this.snackBar.open('Beat has already been added to liked!','',
             { 
-              duration: 2000
+              duration: 3000
             });
             return;
           }
@@ -166,8 +173,10 @@ export class BeatSingleItemComponent implements OnInit {
             .then(res => console.log("colg", res));
             this.snackBar.open('Beat successfully added to liked!','',
             { 
-              duration: 2000
+              duration: 3000
             });
+            this.isLiked = true;
+            this.refresh.emit("true");
         });
     });
   }

@@ -22,7 +22,8 @@ export class ProfilepageComponent implements OnInit, OnDestroy {
   public boughtLicenses: string[] = []
   public boughtBeats: BeatDTO[] = [];
   public imgBlob : Blob = new Blob();
-  public imageURL:SafeUrl
+  public imageURL:SafeUrl;
+  public bankAccount = 0;
   constructor(
     public beatService: BeatsService,
     public dialog: MatDialog,
@@ -50,6 +51,7 @@ export class ProfilepageComponent implements OnInit, OnDestroy {
        });
         console.log(currentUser.profilepicture)
         this.imgBlob = currentUser.profilepicture as Blob
+        this.bankAccount = currentUser.bankaccount || 0
         let xd :string = 'data:image/jpeg;base64,' + currentUser.profilepicture as any 
         this.imageURL = xd
        // this.imageURL=  'data:image/jpeg;base64,' +this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.imgBlob))
@@ -80,7 +82,10 @@ export class ProfilepageComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
-      if(result) this.snackBar.open('Beat successfully created!');
+      if(result) this.snackBar.open('Beat successfully created!','',
+      { 
+        duration: 3000
+      });
     });
   }
 

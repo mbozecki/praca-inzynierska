@@ -8,12 +8,13 @@ import {
 } from 'src/app/generated';
 import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 @Component({
-  selector: 'app-edit-beat-dialog',
-  templateUrl: './edit-beat-dialog.component.html',
-  styleUrls: ['./edit-beat-dialog.component.scss'],
+  selector: 'app-edit-profile-dialog',
+  templateUrl: './edit-profile-dialog.component.html',
+  styleUrls: ['./edit-profile-dialog.component.scss']
 })
-export class EditBeatDialogComponent implements OnInit {
+export class EditProfileDialogComponent implements OnInit {
   disabled: boolean = false;
   multiple: boolean = false;
   accept: string;
@@ -80,3 +81,4 @@ export class EditBeatDialogComponent implements OnInit {
       });
   }
 }
+

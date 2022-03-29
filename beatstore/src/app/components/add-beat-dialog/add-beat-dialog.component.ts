@@ -62,6 +62,7 @@ let mp3: any;
           .then(res => {
             console.log("R", res.guid)
             let beat: BeatDTO = { 
+              guid: "",
               name: this.fg.value.beatname,
               beatimg: arr[1] as unknown as Blob,
               price: this.fg.value.price,

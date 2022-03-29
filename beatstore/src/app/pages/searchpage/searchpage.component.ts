@@ -29,7 +29,8 @@ import { BeatsService } from 'src/app/shared/services/beats.service';
 export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
   public allBeats: BeatDTO[] = [];
   public filteredBeats: BeatDTO[] = [];
-  private likedBeatsIDs: string[] = [];
+  public likedBeatsIDs: string[] = [];
+  public beatsInCart: string[] = []
   private sub: Subscription;
   private sub1: Subscription;
   private sub2: Subscription;
@@ -105,11 +106,12 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(val);
       this.usersService
         .getusersByCriteria({ firebaseId: val })
-        .toPromise()
-        .then((pageResult) => {
+        .subscribe
+        ((pageResult) => {
           let currentUser = pageResult.stream![0] as UserDTO;
           // console.log('currentny', currentUser?.likedbeats);
           this.likedBeatsIDs = currentUser?.likedbeats || [];
+          this.beatsInCart = currentUser?.beatsincart || []
         });
     });
   }
@@ -198,5 +200,29 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
     console.log(this.filteredBeats);
+  }
+
+  refreshData() {
+    this.beatAPIService
+      .getbeatsByCriteria({ page: 0 })
+      .toPromise()
+      .then((res) => {
+        this.allBeats = res.stream as BeatDTO[];
+        this.filteredBeats = res.stream as BeatDTO[];
+        console.log('r', res);
+      });
+
+      this.authService.uidObs.subscribe((val) => {
+        console.log(val);
+        this.usersService
+          .getusersByCriteria({ firebaseId: val })
+          .subscribe
+          ((pageResult) => {
+            let currentUser = pageResult.stream![0] as UserDTO;
+            // console.log('currentny', currentUser?.likedbeats);
+            this.likedBeatsIDs = currentUser?.likedbeats || [];
+            this.beatsInCart = currentUser?.beatsincart || []
+          });
+      });
   }
 }

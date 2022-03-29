@@ -74,7 +74,10 @@
         
       </div>
       <ng-container *ngFor="let beat of filteredBeats">
-        <app-beat-single-item class='fade-in' [data]="beat" ></app-beat-single-item>
+        <app-beat-single-item class='fade-in' [data]="beat" 
+        [inCart]="beatsInCart.includes(beat.guid)" 
+        [isLiked]="likedBeatsIDs.includes(beat.guid)"
+        (refresh)="refreshData()"></app-beat-single-item>
       </ng-container>
     </div>
   </div>

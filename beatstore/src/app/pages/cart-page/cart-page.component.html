@@ -4,13 +4,13 @@
   <h1 id="bigText">Your cart</h1>
   <div class="cartContainer fade-in" >
     <ng-container *ngFor="let beat of cartBeats">
-      <app-cart-single-item [data]="beat"></app-cart-single-item>
+      <app-cart-single-item [data]="beat" [currentUser]="currentUser" (deleteEvent)="refresh($event)" ></app-cart-single-item>
     </ng-container>
     <div  *ngIf="cartBeats.length < 1">
       <h2>You have no beats in cart - go to search page to buy them!</h2>
     </div>
     <div class="checkout"   *ngIf="cartBeats.length >= 1">
-        <div class="total"><h2>Total: {{this.total}} $</h2></div>
+        <div class="total"><h2>Total:{{this.total}} $</h2></div>
           <ngx-paypal [config]="payPalConfig"></ngx-paypal>
     </div>
   </div>

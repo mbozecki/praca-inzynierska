@@ -8,7 +8,7 @@
   <span>{{ this.data.price + "$" }}</span>
 
   <div class="example-button-container" class="headers">
-    <button mat-mini-fab color="secondary" aria-label="Heart">
+    <button mat-mini-fab color="secondary" aria-label="Heart" (click)="deleteFromCart()">
       <mat-icon>delete_outline</mat-icon>
     </button>
   </div>

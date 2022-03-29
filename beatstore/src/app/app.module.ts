@@ -55,6 +55,7 @@ import { BeatSingleInfoComponent } from './pages/beat-single-info/beat-single-in
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { BeatSingleDownloadableComponent } from './components/beat-single-downloadable/beat-single-downloadable.component';
+import { EditProfileDialogComponent } from './components/edit-profile-dialog/edit-profile-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,6 +82,7 @@ import { BeatSingleDownloadableComponent } from './components/beat-single-downlo
     EditBeatDialogComponent,
     BeatSingleInfoComponent,
     BeatSingleDownloadableComponent,
+    EditProfileDialogComponent,
   ],
   imports: [
     BrowserModule,

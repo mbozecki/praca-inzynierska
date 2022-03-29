@@ -125,7 +125,7 @@ export class BeatSingleDownloadableComponent implements OnInit {
           if ([...new Set(newLiked)].length != newLiked.length) {
             this.snackBar.open('Beat has already been added to liked!','',
             { 
-              duration: 2000
+              duration: 3000
             });
             return;
           }
@@ -134,7 +134,7 @@ export class BeatSingleDownloadableComponent implements OnInit {
             .then(res => console.log("colg", res));
             this.snackBar.open('Beat successfully added to liked!','',
             { 
-              duration: 2000
+              duration: 3000
             });
         });
     });

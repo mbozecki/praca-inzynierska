@@ -21,7 +21,7 @@ export class CartPageComponent implements OnInit {
   private likedIDs: string[] = [];
   private allbeats: any[] =[];
   public total: number = 0;
-  private currentUser: UserDTO = {};
+  public currentUser: UserDTO = {};
   constructor(
     public beatService: BeatsService,
     private beatAPIService: BeatAPIService,
@@ -37,6 +37,12 @@ export class CartPageComponent implements OnInit {
     //})
     console.log(this.cartBeats, "cartbeats")
     this.initConfig();
+    this.initData();
+  }
+
+  initData() {
+    this.cartBeats = [];
+    this.total = 0;
     this.authService.uidObs.subscribe((val) => {
       console.log(val);
       this.usersService
@@ -44,9 +50,10 @@ export class CartPageComponent implements OnInit {
         .toPromise()
         .then((pageResult) => {
           this.currentUser = pageResult.stream![0] as UserDTO;
-          console.log('currentny', this.currentUser.likedbeats);
+          console.log('currentny', this.currentUser.beatsincart);
           this.likedIDs = this.currentUser.beatsincart || []
-          if (this.cartBeats.length == 0) this.likedIDs.forEach(id => {
+          
+          this.likedIDs.forEach(id => {
             this.beatAPIService.getBeatById({id: id}).toPromise()
             .then(beat => {
               this.cartBeats.push(beat);
@@ -72,7 +79,6 @@ export class CartPageComponent implements OnInit {
         });
     });
   }
-
   async pay(): Promise<void> {
     // here we create a payment object
     const payment = {
@@ -188,5 +194,9 @@ export class CartPageComponent implements OnInit {
         //this.resetStatus();
       },
     };
+  }
+
+  refresh(event: any): void {
+    this.initData();
   }
 }
