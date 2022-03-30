@@ -115,20 +115,14 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     });
   }
+  
   ngAfterViewInit(): void {
-    this.pcslider.writeValue(300);
-    this.pcslider.valueChange.subscribe((val) => {
-      console.log(val);
-    });
-    console.log(this.searchInput);
-
     this.sub1 = this.searchInput.fg.valueChanges.subscribe((val: any) => {
       console.log('Wal smialo', val.searchText);
       this.searchTextVal = val.searchText;
       this.filterSearch();
     });
     this.searchInput.fg.controls.searchText.patchValue(this.beatName);
-    this.fg.controls['maxPrice'].setValue(300);
   }
 
   ngOnDestroy(): void {
@@ -225,4 +219,6 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
           });
       });
   }
+
+
 }
