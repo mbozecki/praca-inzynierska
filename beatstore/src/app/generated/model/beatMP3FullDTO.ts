@@ -14,6 +14,6 @@
 export interface BeatMP3FullDTO { 
     guid?: string;
     beatid?: string;
-    fullbeatmp3?: Blob;
+    path?: string;
 }
 

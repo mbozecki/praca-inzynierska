@@ -22,7 +22,6 @@ public class BeatMP3 extends PanacheEntityBase {
 
     public String beatid;
 
-    @Lob
-    public byte[] fullbeatmp3;
+    public String path;
 
 }

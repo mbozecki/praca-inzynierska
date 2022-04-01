@@ -11,9 +11,7 @@
  */
 
 
-export interface BeatMP3DTO { 
-    guid?: string;
-    beatid?: string;
-    path?: string;
+export interface InlineObject1 { 
+    file?: string;
 }
 

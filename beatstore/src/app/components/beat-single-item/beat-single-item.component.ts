@@ -6,6 +6,7 @@ import {
   BeatAPIService,
   BeatDTO,
   Beatmp3APIService,
+  FileRestControllerAPIService,
   UserDTO,
   UsersAPIService,
 } from 'src/app/generated';
@@ -15,8 +16,6 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { AddBeatDialogComponent } from '../add-beat-dialog/add-beat-dialog.component';
 import { EditBeatDialogComponent } from '../edit-beat-dialog/edit-beat-dialog.component';
 import { FixedPlayerComponent } from '../fixed-player/fixed-player.component';
-import { MusicBottomBarComponent } from '../music-bottom-bar/music-bottom-bar.component';
-
 @Component({
   selector: 'app-beat-single-item',
   templateUrl: './beat-single-item.component.html',
@@ -34,13 +33,11 @@ export class BeatSingleItemComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private audio: AudioService,
-    private player: FixedPlayerComponent,
     private beatMP3Service: Beatmp3APIService,
     private authService: AuthService,
     private beatAPIService: BeatAPIService,
     private usersService: UsersAPIService,
-    
+    private fileService: FileRestControllerAPIService
   ) {}
 
   ngOnInit(): void {
@@ -74,11 +71,26 @@ export class BeatSingleItemComponent implements OnInit {
   }
 
   play() {
-    this.beatMP3Service
+
+    //this.fileService.beatStoreFileDownloadGet({file: "szklanka.mp3"}).toPromise()
+   //   .then(res => {
+    //    console.log("ok", res)
+    //  })
+    let file = {
+      url: 'http://localhost:8080/beat-store/file/download?file=szklanka.mp3',
+      name: this.data.name,
+      producedby: this.data.producedby,
+      price: this.data.price,
+      type: ['Sad', 'Slow', 'Pop'],
+    };
+   //this.audio.playStream('http://localhost:8080/beat-store/file/download?file=szklanka.mp3').subscribe(ev => console.log(ev));
+   
+   ;/*
+    this.beatMP3Servicethis.player.play()
       .getBeat3ById({ id: this.data.mp3ID })
       .toPromise()
       .then((res) => {
-        console.log('asd', res.fullbeatmp3);
+        //console.log('asd', res.fullbeatmp3);
         /*let file = {
           url: "data:audio/mp3;base64"+ res.fullbeatmp3 as SafeUrl,
           name: this.data.name,
@@ -86,17 +98,10 @@ export class BeatSingleItemComponent implements OnInit {
           price: this.data.price,
           type: ['Sad', 'Slow', 'Pop']
         }
-        */
-        let file = {
-          url: new Audio('data:audio/mp3;base64' + res.fullbeatmp3 ),
-          name: this.data.name,
-          producedby: this.data.producedby,
-          price: this.data.price,
-          type: ['Sad', 'Slow', 'Pop'],
-        };
-        this.player.play(file);
+        
+        
       });
-
+ */ 
     // console.log(this.data.beatmp3)
 
     //this.audio.playStream()

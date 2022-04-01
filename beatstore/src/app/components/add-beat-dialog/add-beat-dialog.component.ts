@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { BeatAPIService, Beatmp3APIService, BeatDTO, FullAPIService, BeatMP3DTO, BeatMP3FullDTO } from 'src/app/generated';
+import { BeatAPIService, Beatmp3APIService, BeatDTO, FullAPIService, BeatMP3DTO, BeatMP3FullDTO, FileRestControllerAPIService } from 'src/app/generated';
 import { Inject } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-add-beat-dialog',
   templateUrl: './add-beat-dialog.component.html',
@@ -27,7 +28,9 @@ export class AddBeatDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   private beatService: BeatAPIService,
   private mp3Service: Beatmp3APIService,
-  private fullmp3Service: FullAPIService) { }
+  private fullmp3Service: FullAPIService,
+  private http: HttpClient,
+  private fileService: FileRestControllerAPIService) { }
 
   ngOnInit(): void {
     console.log(this.data.id)
@@ -37,26 +40,22 @@ export class AddBeatDialogComponent implements OnInit {
     console.log(this.fg.value)
     let reader= new FileReader();
     let imag: any;
-let mp3: any;
+    let mp3: any;
     let reader1 = new FileReader();
-    reader.readAsDataURL(this.fg.value.img)
-    reader.onloadend= () => {
-      imag = reader.result
-      //reader.result
-      let arr : string[] = imag.split(",");
 
-      reader1.readAsDataURL(this.fg.value.beatmp3)
-      reader1.onloadend= () => {
-        mp3 = reader1.result
-        let slicedmp3 : string[] = mp3.split(",");
-        const fullbeat = slicedmp3[1] as unknown as Blob;
-        let newbie: string = slicedmp3[1].substring(0, 2800000) + slicedmp3[1].slice(slicedmp3[1].length - 60000);
-        
-        //TODO zrob bpmy
-        console.log(slicedmp3[1] as unknown as Blob)
-        console.log(newbie);
+    const formData= new FormData();
+    formData.append('attachment', this.fg.value.beatmp3);
+    console.log(formData);
+    let mp3Link: string = "";
+    
+    this.fileService.beatStoreFileUploadPost(formData).toPromise().then(res=> {
+      console.log("XD", res)
+      reader.readAsDataURL(this.fg.value.img)
+      reader.onloadend= () => {
+      imag = reader.result
+      let arr : string[] = imag.split(",");
         let notFullBeat: BeatMP3DTO = {
-          fullbeatmp3: newbie as unknown as Blob,
+          path: mp3Link,
         }
         this.mp3Service.createBeat3({beatMP3DTO: notFullBeat}).toPromise()
           .then(res => {
@@ -71,16 +70,12 @@ let mp3: any;
               BPM: this.fg.value.bpm,
               mp3ID: res.guid,
             }
-            let fullmp3beat = {
-              beatid: res.guid,
-              fullbeatmp3: fullbeat
-            }
-            this.fullmp3Service.createBeat3fff({beatMP3FullDTO: fullmp3beat}).toPromise()
-            .then(res=> console.log("fullm3", res));
-            this.beatService.createBeat({beatDTO: beat}).subscribe(res=>console.log(res));
+            //this.fullmp3Service.createBeat3fff({beatMP3FullDTO: fullmp3beat}).toPromise()
+            //.then(res=> console.log("fullm3", res));
+            //this.beatService.createBeat({beatDTO: beat}).subscribe(res=>console.log(res));
           });
-      }
-    }
+
+    }});
     
   }
 }

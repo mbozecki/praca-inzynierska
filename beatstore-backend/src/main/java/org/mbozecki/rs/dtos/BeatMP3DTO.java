@@ -15,6 +15,6 @@ public class BeatMP3DTO {
 
     public String beatid;
 
-    public byte[] fullbeatmp3;
+    public String path;
 
 }

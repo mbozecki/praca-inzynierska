@@ -424,6 +424,96 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
+  /beat-store/file/download:
+    get:
+      tags:
+      - File Rest Controller
+      parameters:
+      - name: file
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+      - File Rest Controller
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+      responses:
+        "200":
+          description: OK
+  /beat-store/file/downloadful:
+    get:
+      tags:
+      - File Rest Controller
+      parameters:
+      - name: file
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /beat-store/file/downloadfull:
+    post:
+      tags:
+      - File Rest Controller
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+      responses:
+        "200":
+          description: OK
+  /beat-store/file/list:
+    get:
+      tags:
+      - File Rest Controller
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /beat-store/file/upload:
+    post:
+      tags:
+      - File Rest Controller
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: OK
+  /beat-store/file/uploadfull:
+    post:
+      tags:
+      - File Rest Controller
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: OK
   /beat-store/hello:
     get:
       tags:
@@ -627,8 +717,7 @@ components:
           type: string
         beatid:
           type: string
-        fullbeatmp3:
-          format: binary
+        path:
           type: string
     BeatMP3FullDTO:
       type: object
@@ -637,8 +726,7 @@ components:
           type: string
         beatid:
           type: string
-        fullbeatmp3:
-          format: binary
+        path:
           type: string
     CheckoutPayment:
       type: object

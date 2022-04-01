@@ -11,7 +11,6 @@ import {
   UsersAPIService,
 } from 'src/app/generated';
 import { Beat } from 'src/app/shared/models/Beat';
-import { AudioService } from 'src/app/shared/services/audio.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AddBeatDialogComponent } from '../add-beat-dialog/add-beat-dialog.component';
 import { EditBeatDialogComponent } from '../edit-beat-dialog/edit-beat-dialog.component';
@@ -33,8 +32,6 @@ export class BeatSingleDownloadableComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private audio: AudioService,
-    private player: FixedPlayerComponent,
     private beatMP3Service: Beatmp3APIService,
     private authService: AuthService,
     private beatAPIService: BeatAPIService,
@@ -74,7 +71,7 @@ export class BeatSingleDownloadableComponent implements OnInit {
       .getBeat3ById({ id: this.data.mp3ID })
       .toPromise()
       .then((res) => {
-        console.log('asd', res.fullbeatmp3);
+        //console.log('asd', res.fullbeatmp3);
         /*let file = {
           url: "data:audio/mp3;base64"+ res.fullbeatmp3 as SafeUrl,
           name: this.data.name,
@@ -84,13 +81,13 @@ export class BeatSingleDownloadableComponent implements OnInit {
         }
         */
         let file = {
-          url: new Audio('data:audio/mp3;base64' + res.fullbeatmp3 ),
+          //url: new Audio('data:audio/mp3;base64' + res.fullbeatmp3 ),
           name: this.data.name,
           producedby: this.data.producedby,
           price: this.data.price,
           type: ['Sad', 'Slow', 'Pop'],
         };
-        this.player.play(file);
+        //this.player.play(file);
       });
 
     // console.log(this.data.beatmp3)

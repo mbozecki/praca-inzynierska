@@ -14,7 +14,6 @@ import { BeatsService } from 'src/app/shared/services/beats.service';
   templateUrl: './fixed-player.component.html',
   styleUrls: ['./fixed-player.component.scss']
 })
-@Injectable({ providedIn: 'root' })
 export class FixedPlayerComponent implements OnInit, OnDestroy {
   faPlay=faPlay;
   faPause=faPause;
@@ -25,12 +24,13 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
   isVisible: boolean = true;
   isPlaying: boolean= false;
 
-  files: Array<any> = [];
+  public files: Array<any> = [];
   state: StreamState;
   currentFile: any = {};
   constructor(public audioService: AudioService, public beatService: BeatsService, private router: Router) { }
 
   ngOnInit(): void {
+    
     this.beatService.getFiles().subscribe((files : any) => {
       this.files = files;
     });
@@ -40,19 +40,11 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
     });
   }
 
-  play(file?: any) {
-   
-    if (file) {
-      this.currentFile = file;
-      console.log("crn", this.currentFile)
-      this.playStream(file.url)
-    } else {
-      this.currentFile = this.files[0];
-      this.playStream(this.files[0].url);
-
-    }
+  play() {
+    this.currentFile = this.files[0];
+    this.playStream(this.files[0].url);
     this.isPlaying= true;
-    this.audioService.play();
+    //this.audioService.play();
   }
   pause() {
     this.isPlaying =false;
@@ -62,7 +54,6 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
   playStream(url : any) {
     this.audioService.playStream(url).subscribe(events => {
       // listening for fun here
-      console.log("xd",events);
     });
   }
 
