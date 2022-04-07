@@ -14,6 +14,10 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import org.apache.commons.io.IOUtils;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+
 
 @ApplicationScoped
 @Path("/file")
@@ -57,18 +61,37 @@ public class FileRestController {
         File fileDownload = new File(path + File.separator + file);
         ResponseBuilder response = Response.ok((Object) fileDownload);
         response.header("Content-Disposition", "attachment;filename=" + file);
+        response.type("audio/mpeg");
         return response.build();
     }
     @GET
     @Path("/download")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response downloadFileWithGet(@QueryParam("file") String file) {
-        System.out.println("Download file "+file);
-        File fileDownload = new File("elo" + File.separator + file);
-        ResponseBuilder response = Response.ok((Object) fileDownload);
-        response.header("Content-Disposition", "attachment;filename=" + file);
-        return response.build();
+        StreamingOutput fileStream =  new StreamingOutput() 
+        {
+            @Override
+            public void write(java.io.OutputStream output) throws IOException, WebApplicationException 
+            {
+                try
+                {
+                    java.nio.file.Path path = Paths.get("elo" + File.separator + file);
+                    byte[] data = Files.readAllBytes(path);
+                    output.write(data);
+                    output.flush();
+                } 
+                catch (Exception e) 
+                {
+                    throw new WebApplicationException("File Not Found !!");
+                }
+            }
+        };
+        return Response
+                .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition","attachment;filename=" + file)
+                .build();
     }
+
     @GET
     @Path("/list")
     @Produces(MediaType.APPLICATION_JSON)
