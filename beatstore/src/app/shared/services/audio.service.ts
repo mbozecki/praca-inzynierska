@@ -36,6 +36,18 @@ export class AudioService {
     this.state
   );
 
+  private musicFile: Object = {
+    url: 'http://localhost:8080/beat-store/file/download?file=szklanka.mp3',
+    name: 'Name',
+    producedby: 'Produced by',
+    price: '0',
+    type: ['Sad', 'Slow', 'Pop'],
+  };
+
+  private filechange: BehaviorSubject<any> = new BehaviorSubject(
+    this.musicFile
+  )
+
   private updateStateEvents(event: Event): void {
     switch (event.type) {
       case 'canplay':
@@ -143,5 +155,16 @@ export class AudioService {
   
   setVolume(val: any) {
     this.audioObj.volume = val;
+  }
+
+  getFile(): Observable<any> {
+    return this.filechange.asObservable();
+  }
+
+  setFile(file: any) {
+    //this.musicFile = file;
+    this.filechange.next(file);
+    this.musicFile = Object.assign({}, file);
+    console.log(file, this.musicFile)
   }
 }

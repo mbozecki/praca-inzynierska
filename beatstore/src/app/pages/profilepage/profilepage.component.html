@@ -24,10 +24,11 @@
         </ng-container>
         <h4 class="wide" *ngIf="!boughtLicenses">You have no bought licenses!</h4>
       </mat-tab>
-      <mat-tab label="My total sales">
+      <!--<mat-tab label="My total sales">
         <h3></h3>
         <h3 class="text-center margins">Total sales: {{bankAccount}}$</h3>
       </mat-tab>
+    -->
       <mat-tab label="My beats">
         <button class="wide" mat-raised-button color="primary" (click)="addNewBeat()">Add new beat</button>
         <ng-container *ngFor="let beat of myBeats">

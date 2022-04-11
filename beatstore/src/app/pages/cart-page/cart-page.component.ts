@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { loadStripe } from '@stripe/stripe-js';
-import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
+import { ICreateOrderRequest, IPayPalConfig, ITransactionItem } from 'ngx-paypal';
 import { BeatAPIService, BeatDTO, UserDTO, UsersAPIService } from 'src/app/generated';
 import { Beat } from 'src/app/shared/models/Beat';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -16,11 +16,13 @@ import { environment } from 'src/environments/environment';
 })
 export class CartPageComponent implements OnInit {
   stripePromise = loadStripe(environment.stripe);
-  public cartBeats: BeatDTO[] = [];
+  public cartBeats: BeatDTO[] = []
+  public cartOnlyBeats: BeatDTO[] = []
   public payPalConfig?: IPayPalConfig;
   private likedIDs: string[] = [];
   private allbeats: any[] =[];
   public total: number = 0;
+  private hasDownloaded=false;
   public currentUser: UserDTO = {};
   constructor(
     public beatService: BeatsService,
@@ -52,30 +54,20 @@ export class CartPageComponent implements OnInit {
           this.currentUser = pageResult.stream![0] as UserDTO;
           console.log('currentny', this.currentUser.beatsincart);
           this.likedIDs = this.currentUser.beatsincart || []
-          
-          this.likedIDs.forEach(id => {
-            this.beatAPIService.getBeatById({id: id}).toPromise()
-            .then(beat => {
-              this.cartBeats.push(beat);
-              this.total+= beat.price as number
-            });
-          })
-             /* this.allbeats =  res.stream || [];
-             console.log(this.likedIDs)
-              if (this.cartBeats.length) {
-                this.allbeats.forEach((beat) => {
-                  if (this.likedIDs.includes(beat.uid as string)) {
-                    console.log("ok")
-                    this.cartBeats.push(beat);
-                    this.total+= beat.price
-                  }
-                });
-              }
-              
-              console.log('r', this.cartBeats);
-            });
-            */
-
+          if (!this.hasDownloaded) {
+            this.likedIDs.forEach(id => {
+              this.beatAPIService.getBeatById({id: id}).toPromise()
+              .then(beat => {
+                console.log("bit", beat)
+                this.cartBeats.push(beat);
+                this.cartOnlyBeats = [...new Set(this.cartBeats)]
+                this.cartOnlyBeats.forEach(val => {
+                  this.total+=val.price as number;
+                })
+              });
+            })
+            this.hasDownloaded= true;
+          }
         });
     });
   }
@@ -106,6 +98,20 @@ export class CartPageComponent implements OnInit {
   }
 
   private initConfig(): void {
+    var iItems: ITransactionItem[] = [];
+    this.cartOnlyBeats.forEach(beat => {
+      let i: ITransactionItem = {
+        name: beat.name as string,
+        quantity: '1',
+        category: 'DIGITAL_GOODS',
+        unit_amount: {
+          currency_code: 'USD',
+          value: beat.price?.toString() as string,
+        }
+      }
+      iItems.push(i);
+      
+    })
     this.payPalConfig = {
       currency: 'USD',
       clientId:
@@ -124,21 +130,15 @@ export class CartPageComponent implements OnInit {
                     value: this.total.toString(),
                   },
                 },
+                
               },
 
-              items: [
-                {
-                  name: 'Enterprise Subscription',
-                  quantity: '1',
-                  category: 'DIGITAL_GOODS',
-                  unit_amount: {
-                    currency_code: 'USD',
-                    value: this.total.toString(),
-                  },
-                },
-              ],
+              items: iItems,
             },
           ],
+          payee: {
+            email_address: 'teberra@interia.pl'
+          }
         },
       advanced: {
         commit: 'true',

@@ -21,6 +21,7 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
   faCart = faCartPlus;
   faVolume = faVolumeUp
 
+  isLaunched = false;
   isVisible: boolean = true;
   isPlaying: boolean= false;
 
@@ -36,8 +37,19 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
     });
 
     this.audioService.getState().subscribe(state => {
+      //console.log("getinState", state)
       this.state = state;
+      if (state.playing) {
+        this.isLaunched = true;
+        this.isPlaying = true;
+      } else {
+        this.isPlaying = false;
+      }
     });
+
+    this.audioService.getFile().subscribe(f => {
+      this.currentFile = f;
+    })
   }
 
   play() {
@@ -45,7 +57,7 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
     if (this.state.duration) {
       this.audioService.play();
     } else {
-      this.currentFile = this.files[0];
+      //this.currentFile = this.files[0];
       this.playStream(this.files[0].url);
     }
    
@@ -86,5 +98,10 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       this.audioService.stop();
+  }
+
+  getType(type: string) {
+    console.log(type, "TYPE")
+    return type;
   }
 }

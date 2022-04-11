@@ -37,7 +37,8 @@ export class BeatSingleItemComponent implements OnInit {
     private authService: AuthService,
     private beatAPIService: BeatAPIService,
     private usersService: UsersAPIService,
-    private fileService: FileRestControllerAPIService
+    private fileService: FileRestControllerAPIService,
+    private audio: AudioService
   ) {}
 
   ngOnInit(): void {
@@ -81,9 +82,15 @@ export class BeatSingleItemComponent implements OnInit {
       name: this.data.name,
       producedby: this.data.producedby,
       price: this.data.price,
-      type: ['Sad', 'Slow', 'Pop'],
+      type: this.data.genre.toString(),
+      liked: this.isLiked,
+      cart:  this.inCart,
     };
-   //this.audio.playStream('http://localhost:8080/beat-store/file/download?file=szklanka.mp3').subscribe(ev => console.log(ev));
+
+    
+    this.audio.getFile().subscribe(e => console.log("file", e))
+    this.audio.setFile(file);
+    this.audio.playStream('http://localhost:8080/beat-store/file/download?file=myman.mp3').subscribe();
    
    ;/*
     this.beatMP3Servicethis.player.play()
@@ -158,7 +165,7 @@ export class BeatSingleItemComponent implements OnInit {
           let currentUser = pageResult.stream![0] as UserDTO;
           console.log("cur", currentUser)
           let newLiked: Array<string> = [];
-          if (currentUser.beatsincart) (currentUser.beatsincart as Array<string>).forEach(elem => newLiked.push(elem));
+          if (currentUser.likedbeats) (currentUser.likedbeats as Array<string>).forEach(elem => newLiked.push(elem));
           console.log(newLiked," XADAS")
           newLiked.push(data.guid as string)
           let c_id: string = currentUser.guid as unknown as string;
@@ -174,13 +181,14 @@ export class BeatSingleItemComponent implements OnInit {
             return;
           }
           console.log("upd", updated)
+          this.isLiked = true;
           this.usersService.updateUser({id: c_id, userDTO: updated}).toPromise()
             .then(res => console.log("colg", res));
             this.snackBar.open('Beat successfully added to liked!','',
             { 
               duration: 3000
             });
-            this.isLiked = true;
+            
             this.refresh.emit("true");
         });
     });

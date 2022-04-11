@@ -6,6 +6,7 @@ import {
   BeatAPIService,
   BeatDTO,
   Beatmp3APIService,
+  FileRestControllerAPIService,
   FullAPIService,
   UserDTO,
   UsersAPIService,
@@ -37,6 +38,7 @@ export class BeatSingleDownloadableComponent implements OnInit {
     private beatAPIService: BeatAPIService,
     private usersService: UsersAPIService,
     private beatFullService: FullAPIService,
+    private fileService: FileRestControllerAPIService,
   ) {}
 
   ngOnInit(): void {
@@ -97,7 +99,11 @@ export class BeatSingleDownloadableComponent implements OnInit {
 
   onDownload(data: BeatDTO) {
     console.log(data);
+    data.name
     //this.beatFullService.
+    window.open("http://localhost:8080/beat-store/file/download?file="+data.name+".mp3");
+    //this.fileService.beatStoreFileDownloadGet({file: "myman.mp3"}).toPromise();
+
   }
 
   onHeartAdd(data: BeatDTO) {

@@ -1,6 +1,7 @@
-<div >
+<div *ngIf="isLaunched">
 
 <div #player class="fixedInput">
+    <!--
   <mat-slider
     class="time-slider"
     min="0"
@@ -9,7 +10,7 @@
     [value]="state?.currentTime"
     (input)="onSliderChangeEnd($event)"
     [disabled]="state?.error || currentFile.index === undefined"
-  ></mat-slider>
+  ></mat-slider>-->
 </div>
 <div id="fixedPlayer">
   <div class="fixedPlayerContainer d-flex">
@@ -18,11 +19,17 @@
       <div class="title">
         <div>{{currentFile.name}}</div>
         <div class="light">{{currentFile.producedby}}</div>
-        <div class="type">Lo-fi · hiphop · pop</div>
+        <div class="type">{{currentFile.type}}</div>
       </div>
     </div>
     <div>
-      <a class="like" href="/"><fa-icon [icon]="faHeart"></fa-icon></a>
+      <a class="like" href="/"><button
+        mat-icon-button
+        [color]="currentFile.liked ? 'primary' : 'secondary'"
+        aria-label="Heart"
+      >
+        <mat-icon>favorite</mat-icon>
+      </button></a>
     </div>
     <div *ngIf="!isPlaying" class="playPause">
       <a (click)="play()"><fa-icon [icon]="faPlay"></fa-icon></a>
@@ -31,7 +38,7 @@
       <a (click)="pause()"><fa-icon [icon]="faPause"></fa-icon></a>
     </div>
 
-    <div class="volume">
+  <div class="volume">
       <fa-icon [icon]="faVolume"></fa-icon>
       <mat-slider
         #volumeslider
@@ -47,8 +54,12 @@
       ></mat-slider>
     </div>
 
-    <div class="price">
-      <span class="prc">29.99$</span>
+    <div class="price" *ngIf="!currentFile.cart">
+      <span class="prc">{{currentFile.price}}$</span>
+      <fa-icon [icon]="faCart"></fa-icon>
+    </div>
+    <div class="price" *ngIf="currentFile.cart">
+      <span class="prc">Already bought</span>
       <fa-icon [icon]="faCart"></fa-icon>
     </div>
   </div>
