@@ -5,6 +5,7 @@ import { BeatAPIService, Beatmp3APIService, BeatDTO, FullAPIService, BeatMP3DTO,
 import { Inject } from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-beat-dialog',
   templateUrl: './add-beat-dialog.component.html',
@@ -30,7 +31,8 @@ export class AddBeatDialogComponent implements OnInit {
   private mp3Service: Beatmp3APIService,
   private fullmp3Service: FullAPIService,
   private http: HttpClient,
-  private fileService: FileRestControllerAPIService) { }
+  private fileService: FileRestControllerAPIService,
+  private router: Router) { }
 
   ngOnInit(): void {
     console.log(this.data.id)
@@ -48,8 +50,13 @@ export class AddBeatDialogComponent implements OnInit {
     console.log(formData);
     let mp3Link: string = "";
     
-    this.fileService.beatStoreFileUploadPost(formData).toPromise().then(res=> {
+    this.fileService.beatStoreFileUploadPost(formData).toPromise().catch(res=> {
       console.log("XD", res)
+    });
+    this.fileService.beatStoreFileUploadfullPost(formData).toPromise().catch(res=> {
+      console.log("XD", res)
+    });
+
       reader.readAsDataURL(this.fg.value.img)
       reader.onloadend= () => {
       imag = reader.result
@@ -60,22 +67,36 @@ export class AddBeatDialogComponent implements OnInit {
         this.mp3Service.createBeat3({beatMP3DTO: notFullBeat}).toPromise()
           .then(res => {
             console.log("R", res.guid)
+            console.log(arr);
             let beat: BeatDTO = { 
-              guid: "",
               name: this.fg.value.beatname,
-              beatimg: arr[1] as unknown as Blob,
+              beatimg: arr[1] as any,
               price: this.fg.value.price,
               genre: this.fg.value.toppings.toString(),
               producedby: this.data.id,
               BPM: this.fg.value.bpm,
               mp3ID: res.guid,
             }
-            //this.fullmp3Service.createBeat3fff({beatMP3FullDTO: fullmp3beat}).toPromise()
+
+            let fullmp3beat : BeatMP3FullDTO = {
+              beatid: res.guid,
+              path: res.path
+            }
+
+            this.fullmp3Service.createBeat3fff({beatMP3FullDTO: fullmp3beat}).toPromise()
+              .then(res => {
+                this.beatService.createBeat({beatDTO: beat}).subscribe(res=> {
+                  console.log("Oby", res)
+                  this.router.navigate(['/profile']);
+                });
+              }
+               
+              )
             //.then(res=> console.log("fullm3", res));
-            //this.beatService.createBeat({beatDTO: beat}).subscribe(res=>console.log(res));
+            
           });
 
-    }});
+    }
     
   }
 }

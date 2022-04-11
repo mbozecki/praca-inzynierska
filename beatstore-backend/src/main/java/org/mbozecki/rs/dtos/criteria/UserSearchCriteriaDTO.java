@@ -16,6 +16,7 @@ public class UserSearchCriteriaDTO extends PageCriteriaDTO {
 
     @QueryParam("email")
     private String email;
+    
     @QueryParam("firebase_id")
     private String firebase_id;
 

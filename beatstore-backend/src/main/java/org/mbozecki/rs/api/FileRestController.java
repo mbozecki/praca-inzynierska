@@ -50,7 +50,7 @@ public class FileRestController {
                 e.printStackTrace();
             }
         }
-        return null;
+        return Response.status(200).entity("Uploaded").build();
     }
     @POST
     @Path("/download")
@@ -157,7 +157,7 @@ public class FileRestController {
                 e.printStackTrace();
             }
         }
-        return null;
+        return Response.status(200).entity("Uploaded file name").build();
     }
     @POST
     @Path("/downloadfull")

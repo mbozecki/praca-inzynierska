@@ -12,22 +12,6 @@ tags:
 - name: full
 - name: users
 paths:
-  /beat-store/api/payment:
-    post:
-      tags:
-      - Stripe Controller
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CheckoutPayment'
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: string
   /beat-store/beat:
     get:
       tags:
@@ -728,23 +712,6 @@ components:
           type: string
         path:
           type: string
-    CheckoutPayment:
-      type: object
-      properties:
-        name:
-          type: string
-        currency:
-          type: string
-        successUrl:
-          type: string
-        cancelUrl:
-          type: string
-        amount:
-          format: int64
-          type: integer
-        quantity:
-          format: int64
-          type: integer
     PageResultDTO:
       type: object
       properties:

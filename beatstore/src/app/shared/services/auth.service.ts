@@ -44,7 +44,7 @@ export class AuthService {
       .then((result) => {
         this.userData = (result.user as User);
         this.uid= result.user?.uid;
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['/']);
       })
       .catch((error) => {
         window.alert(error.message);
@@ -85,7 +85,7 @@ export class AuthService {
     const provider = new GoogleAuthProvider();
     return this.afAuth.signInWithPopup(provider)
       .then((result: any) => {
-      this.router.navigate(['dashboard']);
+      this.router.navigate(['/']);
     })
     .catch((error: any) => {
       window.alert(error);

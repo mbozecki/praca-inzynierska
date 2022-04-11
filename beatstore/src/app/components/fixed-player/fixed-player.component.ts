@@ -41,9 +41,15 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
   }
 
   play() {
-    this.currentFile = this.files[0];
-    this.playStream(this.files[0].url);
     this.isPlaying= true;
+    if (this.state.duration) {
+      this.audioService.play();
+    } else {
+      this.currentFile = this.files[0];
+      this.playStream(this.files[0].url);
+    }
+   
+    
     //this.audioService.play();
   }
   pause() {
@@ -52,6 +58,7 @@ export class FixedPlayerComponent implements OnInit, OnDestroy {
   }
 
   playStream(url : any) {
+    this.isPlaying= true;
     this.audioService.playStream(url).subscribe(events => {
       // listening for fun here
     });

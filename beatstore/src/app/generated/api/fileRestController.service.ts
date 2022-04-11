@@ -415,11 +415,11 @@ export class FileRestControllerAPIService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public beatStoreFileUploadfullPost(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
-    public beatStoreFileUploadfullPost(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
-    public beatStoreFileUploadfullPost(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
-    public beatStoreFileUploadfullPost(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
-
+    public beatStoreFileUploadfullPost(requestParameters: FormData, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public beatStoreFileUploadfullPost(requestParameters: FormData, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public beatStoreFileUploadfullPost(requestParameters: FormData, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public beatStoreFileUploadfullPost(requestParameters: FormData, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+        const formData = requestParameters;
         let headers = this.defaultHeaders;
 
         let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
@@ -440,7 +440,7 @@ export class FileRestControllerAPIService {
         }
 
         return this.httpClient.post<any>(`${this.configuration.basePath}/beat-store/file/uploadfull`,
-            null,
+            formData,
             {
                 responseType: <any>responseType,
                 withCredentials: this.configuration.withCredentials,

@@ -74,7 +74,7 @@ export class SignUpComponent implements OnInit {
                 bio: this.registerForm.value.bio,
                 email: this.registerForm.value.email,
                 firebase_id: this.authService.uid,
-                profilepicture: arr[1] as unknown as Blob,
+                //profilepicture: arr[1] as unknown as Blob,
               };
               console.log("newUser", newUser)
               this.userService

@@ -7,15 +7,22 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
   public registerForm: FormGroup = new FormGroup({
-    email: new FormControl("", [Validators.required, Validators.email]),
-    password: new FormControl("", [Validators.required, Validators.minLength(5)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(5),
+    ]),
   });
 
-  constructor(public authService: AuthService, private userService: UsersAPIService, private router: Router) { }
+  constructor(
+    public authService: AuthService,
+    private userService: UsersAPIService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     //this.initFormGroup();
@@ -23,27 +30,33 @@ export class SignInComponent implements OnInit {
 
   submitForm(): void {
     if (this.registerForm.invalid) {
-      alert("Niepoprawne wartosci pol! Sprobuj ponownie")
+      alert('Niepoprawne wartosci pol! Sprobuj ponownie');
     } else {
-      this.authService.signIn(this.registerForm.value.email, this.registerForm.value.password).then((result:any) => {
-        this.userService
-          .getusersByCriteria({firebaseId: result.user.uid})
-          .toPromise().then((pageResult:any) => {
-            let currentUser = pageResult.stream[0] as UserDTO
-            this.authService.uid= currentUser.guid
-            setTimeout(() => {
-              this.router.navigate(['/'])
-          }, 1500);
-            
-          })
-        //localStorage.setItem('user', JSON.stringify(this.userData));
-        
-        
-      }).catch((error) => {
-        window.alert(error.message)
-      })
+      this.authService
+        .signIn(this.registerForm.value.email, this.registerForm.value.password)
+        .then((result: any) => {
+          console.log(result, 'okej');
+          this.userService
+            .getusersByCriteria({ firebaseId: result.user.uid })
+            .toPromise()
+            .then((pageResult: any) => {
+              let currentUser = pageResult.stream[0] as UserDTO;
+              this.authService.uid = currentUser.guid;
+              setTimeout(() => {
+                this.router.navigate(['search']);
+              }, 1500);
+            })
+            .catch(() => {
+              setTimeout(() => {
+                this.router.navigate(['search']);
+              }, 1500);
+            });
+          //localStorage.setItem('user', JSON.stringify(this.userData));
+        })
+        .catch((error) => {
+         // window.alert(error.message);
+        });
       //, this.registerForm.value.name, this.registerForm.value.surname
     }
   }
-
 }
