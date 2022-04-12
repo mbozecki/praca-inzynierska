@@ -42,5 +42,8 @@ public class Beat extends PanacheEntityBase {
     public String mp3ID;
 
     public String producedby;
+
     public Integer howmanysold;
+
+    public String imgName;
 }

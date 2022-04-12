@@ -29,6 +29,7 @@ export class BeatSingleItemComponent implements OnInit {
   @Output() refresh = new EventEmitter<string>();
   beatTypes: string[] = [];
   thumbnail: SafeUrl;
+  public imageURL: string = ""
   constructor(
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
@@ -46,11 +47,12 @@ export class BeatSingleItemComponent implements OnInit {
     //this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(imgUrl);
     console.log(this.data);
     let imgBlob = this.data.beatimg as string;
-
+    this.imageURL = "http://localhost:8080/beat-store/file/downloadimg?file="+this.data.imgName as string
     let xd: string = ('data:image/jpeg;base64,' + imgBlob) as any;
     console.log(xd, ' XD');
     this.thumbnail = xd;
     this.beatTypes = this.data.genre.split(",");
+
     //console.log("elo", this.beatTypes)
   }
 
@@ -77,6 +79,7 @@ export class BeatSingleItemComponent implements OnInit {
    //   .then(res => {
     //    console.log("ok", res)
     //  })
+    /// TODO: Zostlao tutaj zgetowanie patha do mp3 i wrzucenie nizej
     let file = {
       url: 'http://localhost:8080/beat-store/file/download?file=szklanka.mp3',
       name: this.data.name,

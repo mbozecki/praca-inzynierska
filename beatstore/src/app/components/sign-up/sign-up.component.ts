@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   CreateUserRequestParams,
+  FileRestControllerAPIService,
   UserDTO,
   UsersAPIService,
 } from 'src/app/generated';
@@ -19,7 +20,8 @@ export class SignUpComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private userService: UsersAPIService
+    private userService: UsersAPIService,
+    private fileService: FileRestControllerAPIService
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +51,7 @@ export class SignUpComponent implements OnInit {
     });
   }
   submitForm(): void {
+    let fileName = this.registerForm.controls.img.value.name;
     if (this.registerForm.invalid) {
       alert('Niepoprawne wartosci pol! Sprobuj ponownie');
     } else {
@@ -59,21 +62,18 @@ export class SignUpComponent implements OnInit {
         )
         .then(() => {
             console.log("myuser", this.authService.uid);
-            let reader= new FileReader();
-            let imag: any;
-            reader.readAsDataURL(this.registerForm.value.img)
-            reader.onloadend= () => {
-              imag = reader.result
-      //reader.result
-      console.log("imag", imag)
-              let arr : string[] = imag.split(",");
-              console.log("arr", arr)
             //profilepicture: this.byteImg
+            const formData1 = new FormData();
+            formData1.append('attachment', this.registerForm.value.img);
+            this.fileService.beatStoreFileUploadImgPost(formData1).toPromise().catch((res) => {
+              console.log('XD', res);
+              });
               let newUser: UserDTO = {
                 name: this.registerForm.value.nickname,
                 bio: this.registerForm.value.bio,
                 email: this.registerForm.value.email,
                 firebase_id: this.authService.uid,
+                paypalmail: fileName
                 //profilepicture: arr[1] as unknown as Blob,
               };
               console.log("newUser", newUser)
@@ -82,7 +82,7 @@ export class SignUpComponent implements OnInit {
                 .toPromise()
                 .then(() => this.router.navigate(['/']));
             }
-        });
+        );
       //, this.registerForm.value.name, this.registerForm.value.surname
     }
   }

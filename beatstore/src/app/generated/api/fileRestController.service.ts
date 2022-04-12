@@ -38,6 +38,10 @@ export interface BeatStoreFileDownloadfullPostRequestParams {
     file?: string;
 }
 
+export interface BeatStoreFileDownloadimgGetRequestParams {
+    file?: string;
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -332,6 +336,54 @@ export class FileRestControllerAPIService {
     }
 
     /**
+     * @param requestParameters
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public beatStoreFileDownloadimgGet(requestParameters: BeatStoreFileDownloadimgGetRequestParams, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public beatStoreFileDownloadimgGet(requestParameters: BeatStoreFileDownloadimgGetRequestParams, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public beatStoreFileDownloadimgGet(requestParameters: BeatStoreFileDownloadimgGetRequestParams, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public beatStoreFileDownloadimgGet(requestParameters: BeatStoreFileDownloadimgGetRequestParams, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+        const file = requestParameters.file;
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (file !== undefined && file !== null) {
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>file, 'file');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType = 'text';
+        }
+
+        return this.httpClient.get<any>(`${this.configuration.basePath}/beat-store/file/downloadimg`,
+            {
+                params: queryParameters,
+                responseType: <any>responseType,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
@@ -375,10 +427,10 @@ export class FileRestControllerAPIService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public beatStoreFileUploadPost(requestParameters: FormData, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
-    public beatStoreFileUploadPost(requestParameters: FormData,observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
-    public beatStoreFileUploadPost(requestParameters: FormData,observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
-    public beatStoreFileUploadPost(requestParameters: FormData,observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+    public beatStoreFileUploadImgPost(requestParameters: FormData,observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+    public beatStoreFileUploadImgPost(requestParameters: FormData,observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+    public beatStoreFileUploadImgPost(requestParameters: FormData,observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+    public beatStoreFileUploadImgPost(requestParameters: FormData,observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
         const formData = requestParameters;
         let headers = this.defaultHeaders;
 
@@ -399,7 +451,7 @@ export class FileRestControllerAPIService {
             responseType = 'text';
         }
 
-        return this.httpClient.post<any>(`${this.configuration.basePath}/beat-store/file/upload`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/beat-store/file/uploadImg`,
             formData,
             {
                 responseType: <any>responseType,
@@ -410,6 +462,46 @@ export class FileRestControllerAPIService {
             }
         );
     }
+
+    /**
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+     public beatStoreFileUploadPost(requestParameters: FormData, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<any>;
+     public beatStoreFileUploadPost(requestParameters: FormData,observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpResponse<any>>;
+     public beatStoreFileUploadPost(requestParameters: FormData,observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: undefined}): Observable<HttpEvent<any>>;
+     public beatStoreFileUploadPost(requestParameters: FormData,observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined}): Observable<any> {
+         const formData = requestParameters;
+         let headers = this.defaultHeaders;
+ 
+         let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+         if (httpHeaderAcceptSelected === undefined) {
+             // to determine the Accept header
+             const httpHeaderAccepts: string[] = [
+             ];
+             httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+         }
+         if (httpHeaderAcceptSelected !== undefined) {
+             headers = headers.set('Accept', httpHeaderAcceptSelected);
+         }
+ 
+ 
+         let responseType: 'text' | 'json' = 'json';
+         if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+             responseType = 'text';
+         }
+ 
+         return this.httpClient.post<any>(`${this.configuration.basePath}/beat-store/file/upload`,
+             formData,
+             {
+                 responseType: <any>responseType,
+                 withCredentials: this.configuration.withCredentials,
+                 headers: headers,
+                 observe: observe,
+                 reportProgress: reportProgress
+             }
+         );
+     }
 
     /**
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

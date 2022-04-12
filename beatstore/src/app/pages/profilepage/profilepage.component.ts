@@ -23,6 +23,7 @@ export class ProfilepageComponent implements OnInit, OnDestroy {
   public boughtBeats: BeatDTO[] = [];
   public imgBlob : Blob = new Blob();
   public imageURL:SafeUrl;
+  public imageDisk: string;
   public bankAccount = 0;
   constructor(
     public beatService: BeatsService,
@@ -51,6 +52,7 @@ export class ProfilepageComponent implements OnInit, OnDestroy {
        });
         console.log(currentUser.profilepicture)
         this.imgBlob = currentUser.profilepicture as Blob
+        this.imageDisk = "http://localhost:8080/beat-store/file/downloadimg?file="+currentUser.paypalmail
         this.bankAccount = currentUser.bankaccount || 0
         let xd :string = 'data:image/jpeg;base64,' + currentUser.profilepicture as any 
         this.imageURL = xd

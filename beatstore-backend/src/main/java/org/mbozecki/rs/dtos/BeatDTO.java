@@ -31,4 +31,5 @@ public class BeatDTO {
 
     public Integer howmanysold;
 
+    public String imgName;
 }

@@ -35,6 +35,7 @@ services:
             PGADMIN_DEFAULT_PASSWORD: mysecretpassword
         volumes:
             - ./init-data/servers.json:/pgadmin4/servers.json
+            - ./pgadminvolume:/var/lib/pgadmin
         labels:
             - "traefik.port=80"
             - "traefik.frontend.rule=Host:pgadmin"

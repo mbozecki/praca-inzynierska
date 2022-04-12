@@ -22,6 +22,7 @@ export interface BeatDTO {
     mp3ID?: string;
     producedby?: string;
     howmanysold?: number;
+    imgName?: string;
     bPM?: number;
 }
 

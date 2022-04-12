@@ -461,6 +461,18 @@ paths:
       responses:
         "200":
           description: OK
+  /beat-store/file/downloadimg:
+    get:
+      tags:
+      - File Rest Controller
+      parameters:
+      - name: file
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
   /beat-store/file/list:
     get:
       tags:
@@ -475,6 +487,18 @@ paths:
                 items:
                   type: string
   /beat-store/file/upload:
+    post:
+      tags:
+      - File Rest Controller
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: OK
+  /beat-store/file/uploadImg:
     post:
       tags:
       - File Rest Controller
@@ -691,6 +715,8 @@ components:
         howmanysold:
           format: int32
           type: integer
+        imgName:
+          type: string
         bPM:
           format: double
           type: number

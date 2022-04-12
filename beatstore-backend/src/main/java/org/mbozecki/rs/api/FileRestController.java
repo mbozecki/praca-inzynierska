@@ -22,6 +22,7 @@ import java.nio.file.Paths;
 @ApplicationScoped
 @Path("/file")
 public class FileRestController {
+
     @POST
     @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -39,7 +40,7 @@ public class FileRestController {
                 InputStream inputStream = inputPart.getBody(InputStream.class, null);
                 byte[] bytes = IOUtils.toByteArray(inputStream);
                 //String path = System.getProperty("user.home") + File.separator + "uploads";
-                File customDir = new File("elo");
+                File customDir = new File("mp3s");
                 if (!customDir.exists()) {
                     customDir.mkdir();
                 }
@@ -75,7 +76,7 @@ public class FileRestController {
             {
                 try
                 {
-                    java.nio.file.Path path = Paths.get("elo" + File.separator + file);
+                    java.nio.file.Path path = Paths.get("mp3s" + File.separator + file);
                     byte[] data = Files.readAllBytes(path);
                     output.write(data);
                     output.flush();
@@ -97,7 +98,7 @@ public class FileRestController {
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> listFiles() {
         List<String> listFiles = new ArrayList<>();
-        File fileFolder = new File("elo");
+        File fileFolder = new File("mp3s");
         File[] list = fileFolder.listFiles();
         for (File f: list) {
             if (!f.isDirectory()) {
@@ -179,5 +180,61 @@ public class FileRestController {
         ResponseBuilder response = Response.ok((Object) fileDownload);
         response.header("Content-Disposition", "attachment;filename=" + file);
         return response.build();
+    }
+
+    @POST
+    @Path("/uploadImg")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response uploadImgFile(MultipartFormDataInput input) throws IOException {
+        Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
+        List<InputPart> inputParts = uploadForm.get("attachment");
+        for (InputPart inputPart : inputParts) {
+            try {
+                MultivaluedMap<String, String> header = inputPart.getHeaders();
+                String fileName = getFileName(header);
+                // convert the uploaded file to inputstream
+                InputStream inputStream = inputPart.getBody(InputStream.class, null);
+                byte[] bytes = IOUtils.toByteArray(inputStream);
+                //String path = System.getProperty("user.home") + File.separator + "uploads";
+                File customDir = new File("images");
+                if (!customDir.exists()) {
+                    customDir.mkdir();
+                }
+                fileName = customDir.getCanonicalPath() + File.separator + fileName;
+                writeFile(bytes, fileName);
+                return Response.status(200).entity("Uploaded file name : " + fileName+" . <br/> ").build();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return Response.status(200).entity("Uploaded").build();
+    }
+
+    @GET
+    @Path("/downloadimg")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response downloadImgFileWithGet(@QueryParam("file") String file) {
+        StreamingOutput fileStream =  new StreamingOutput() 
+        {
+            @Override
+            public void write(java.io.OutputStream output) throws IOException, WebApplicationException 
+            {
+                try
+                {
+                    java.nio.file.Path path = Paths.get("images" + File.separator + file);
+                    byte[] data = Files.readAllBytes(path);
+                    output.write(data);
+                    output.flush();
+                } 
+                catch (Exception e) 
+                {
+                    throw new WebApplicationException("File Not Found !!");
+                }
+            }
+        };
+        return Response
+                .ok(fileStream, MediaType.APPLICATION_OCTET_STREAM)
+                .header("content-disposition","attachment;filename=" + file)
+                .build();
     }
 }

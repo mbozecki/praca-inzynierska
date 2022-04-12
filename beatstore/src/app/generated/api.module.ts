@@ -8,7 +8,6 @@ import { Beatmp3APIService } from './api/beatmp3.service';
 import { FileRestControllerAPIService } from './api/fileRestController.service';
 import { FullAPIService } from './api/full.service';
 import { GreetingResourceAPIService } from './api/greetingResource.service';
-import { StripeControllerAPIService } from './api/stripeController.service';
 import { UsersAPIService } from './api/users.service';
 
 @NgModule({
