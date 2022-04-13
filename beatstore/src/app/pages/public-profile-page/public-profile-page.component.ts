@@ -20,7 +20,7 @@ export class PublicProfilePageComponent implements OnInit, AfterViewInit {
   public myBeats: Beat[] = [];
   public boughtLicenses: Beat[] = []
   public imgBlob : Blob = new Blob();
-  public imageURL:SafeUrl
+  public imageURL: string;
   //private allBeatsAPI: Observable<Beat[]>;
   @ViewChild('priceslider') pcslider: MatSlider;
   constructor(
@@ -51,7 +51,7 @@ export class PublicProfilePageComponent implements OnInit, AfterViewInit {
       console.log(currentUser.profilepicture)
       this.imgBlob = currentUser.profilepicture as Blob
       let xd :string = 'data:image/jpeg;base64,' + currentUser.profilepicture as any 
-      this.imageURL = xd
+      this.imageURL = currentUser.paypalmail || ""
       //TODO czkea na usera
      // this.imageURL=  'data:image/jpeg;base64,' +this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.imgBlob))
       //console.log(this.imageURL)

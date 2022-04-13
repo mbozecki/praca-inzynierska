@@ -15,7 +15,7 @@
 <div id="fixedPlayer">
   <div class="fixedPlayerContainer d-flex">
     <div class="imgTitle">
-      <img class="img" src="../../../assets/singleItemMock.png" />
+      <img class="img" [src]="'http://localhost:8080/beat-store/file/downloadimg?file=' + currentFile.imgName" />
       <div class="title">
         <div>{{currentFile.name}}</div>
         <div class="light">{{currentFile.producedby}}</div>
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div>
-      <a class="like" href="/"><button
+      <a class="like"><button
         mat-icon-button
         [color]="currentFile.liked ? 'primary' : 'secondary'"
         aria-label="Heart"

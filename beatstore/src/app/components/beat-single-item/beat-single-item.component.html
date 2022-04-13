@@ -1,7 +1,7 @@
 <div class="wrapBeat" *ngIf="this.data">
   <div class="beatSingleItem">
     <img class="beatImg" [src]="imageURL" />
-    <span class="headers instrumental">{{ this.data.name }}</span>
+    <span class="headers instrumental"  (click)='openPage()'>{{ this.data.name }}</span>
     <span class="headers">·</span>
     <span class="headers">{{ this.data.producedby }}</span>
     <span class="headers" *ngIf="!editable">{{ this.data.BPM + "BPM" }}</span>

@@ -1,21 +1,21 @@
 <div id="beatPage">
   <app-navbar></app-navbar>
 
-  <h1 id="bigText">Beatname1 by producer 1
+  <h1 id="bigText">{{this.data.name}} by {{this.data.producedby}}
   </h1>
   
   <div class="cartContainer fade-in">
     <div class="beatInfo d-flex">
 
-        <span class="headers">Beatname</span>
+        <span class="headers">{{this.data.name}}</span>
         <span class="headers">·</span>
-        <span class="headers">Producerblabla</span>
+        <span class="headers">{{this.data.producedby}}</span>
         <span class="headers">·</span>
-        <span class="headers">{{ "BPM" }}</span>
+        <span class="headers">{{ this.data.BPM }} BPM</span>
         </div>
     
     <div class="beatSingleItem fade-in fade-out">
-      <img class="beatImg" [src]="thumbnail" />
+      <img class="beatImg" [src]="'http://localhost:8080/beat-store/file/downloadimg?file=' + this.data.imgName" />
 
       <span class="headers genre">
         <mat-chip-list
@@ -32,13 +32,13 @@
         </mat-chip-list>
       </span>
       
-      <button mat-raised-button color="primary" class="headers">
+      <button mat-raised-button color="primary" class="headers" (click)="play()">
         <mat-icon>play_circle_outline</mat-icon> Play
       </button>
-      <button mat-raised-button color="primary" class="headers">
-        <mat-icon>add_shopping_cart</mat-icon>39.99$
+      <button mat-raised-button color="primary" class="headers" (click)="cart()">
+        <mat-icon>add_shopping_cart</mat-icon>{{ this.data.price }}$
       </button>
-      <div class="example-button-container" class="headers">
+      <div class="example-button-container" class="headers" (click)="heart()">
         <button mat-mini-fab color="primary" aria-label="Heart">
           <mat-icon>favorite</mat-icon>
         </button>
@@ -47,10 +47,10 @@
 
     <div class="beatInfo d-flex">
   <share-buttons class="cblack" theme="modern-dark"
-    [include]="['copy', 'facebook', 'messenger', 'twitter']"
+    [include]="['copy', 'facebook', 'messenger',]"
     [showIcon]="true"
     [showText]="true"
-    url="https://rodrigo.kamada.com.br/"
+    url={{this.router.url}}
     description="Angular Share Buttons"
     twitterAccount="rodrigokamada"
     class="pt-5">

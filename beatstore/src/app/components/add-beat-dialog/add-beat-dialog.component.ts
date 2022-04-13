@@ -63,7 +63,6 @@ export class AddBeatDialogComponent implements OnInit {
     const formData = new FormData();
     formData.append('attachment', this.fg.value.beatmp3);
     console.log(formData);
-    let mp3Link: string = '';
 
     this.fileService
       .beatStoreFileUploadPost(formData)
@@ -88,7 +87,7 @@ export class AddBeatDialogComponent implements OnInit {
     //reader.onloadend= () => {
     //imag = reader.result
     let notFullBeat: BeatMP3DTO = {
-      path: mp3Link,
+      path: mp3fileName,
     };
     this.mp3Service
       .createBeat3({ beatMP3DTO: notFullBeat })

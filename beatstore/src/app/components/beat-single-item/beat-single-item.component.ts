@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import {
   BeatAPIService,
   BeatDTO,
@@ -29,7 +30,7 @@ export class BeatSingleItemComponent implements OnInit {
   @Output() refresh = new EventEmitter<string>();
   beatTypes: string[] = [];
   thumbnail: SafeUrl;
-  public imageURL: string = ""
+  public imageURL: string = '';
   constructor(
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
@@ -39,7 +40,8 @@ export class BeatSingleItemComponent implements OnInit {
     private beatAPIService: BeatAPIService,
     private usersService: UsersAPIService,
     private fileService: FileRestControllerAPIService,
-    private audio: AudioService
+    private audio: AudioService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -47,11 +49,12 @@ export class BeatSingleItemComponent implements OnInit {
     //this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(imgUrl);
     console.log(this.data);
     let imgBlob = this.data.beatimg as string;
-    this.imageURL = "http://localhost:8080/beat-store/file/downloadimg?file="+this.data.imgName as string
+    this.imageURL = ('http://localhost:8080/beat-store/file/downloadimg?file=' +
+      this.data.imgName) as string;
     let xd: string = ('data:image/jpeg;base64,' + imgBlob) as any;
     console.log(xd, ' XD');
     this.thumbnail = xd;
-    this.beatTypes = this.data.genre.split(",");
+    this.beatTypes = this.data.genre.split(',');
 
     //console.log("elo", this.beatTypes)
   }
@@ -66,55 +69,39 @@ export class BeatSingleItemComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
-      if (result) this.snackBar.open('Beat successfully edited!','',
-      { 
-        duration: 3000
-      });
+      if (result)
+        this.snackBar.open('Beat successfully edited!', '', {
+          duration: 3000,
+        });
     });
   }
 
   play() {
-
-    //this.fileService.beatStoreFileDownloadGet({file: "szklanka.mp3"}).toPromise()
-   //   .then(res => {
-    //    console.log("ok", res)
-    //  })
-    /// TODO: Zostlao tutaj zgetowanie patha do mp3 i wrzucenie nizej
-    let file = {
-      url: 'http://localhost:8080/beat-store/file/download?file=szklanka.mp3',
-      name: this.data.name,
-      producedby: this.data.producedby,
-      price: this.data.price,
-      type: this.data.genre.toString(),
-      liked: this.isLiked,
-      cart:  this.inCart,
-    };
-
-    
-    this.audio.getFile().subscribe(e => console.log("file", e))
-    this.audio.setFile(file);
-    this.audio.playStream('http://localhost:8080/beat-store/file/download?file=myman.mp3').subscribe();
-   
-   ;/*
-    this.beatMP3Servicethis.player.play()
+    this.beatMP3Service
       .getBeat3ById({ id: this.data.mp3ID })
       .toPromise()
       .then((res) => {
-        //console.log('asd', res.fullbeatmp3);
-        /*let file = {
-          url: "data:audio/mp3;base64"+ res.fullbeatmp3 as SafeUrl,
+        console.log(res);
+        let file = {
+          url: 'http://localhost:8080/beat-store/file/download?file=' + res.path,
           name: this.data.name,
           producedby: this.data.producedby,
           price: this.data.price,
-          type: ['Sad', 'Slow', 'Pop']
-        }
-        
-        
-      });
- */ 
-    // console.log(this.data.beatmp3)
+          type: this.data.genre.toString(),
+          liked: this.isLiked,
+          cart: this.inCart,
+          imgName: this.data.imgName
+        };
 
-    //this.audio.playStream()
+        this.audio.getFile().subscribe((e) => console.log('file', e));
+        this.audio.setFile(file);
+        this.audio
+          .playStream(
+            'http://localhost:8080/beat-store/file/download?file=' + res.path
+          )
+          .subscribe();
+      });
+
   }
 
   onCartAdd(data: BeatDTO) {
@@ -126,33 +113,36 @@ export class BeatSingleItemComponent implements OnInit {
         .toPromise()
         .then((pageResult) => {
           let currentUser = pageResult.stream![0] as UserDTO;
-          console.log("cur", currentUser)
+          console.log('cur', currentUser);
           let newLiked: Array<string> = [];
-          if (currentUser.beatsincart) (currentUser.beatsincart as Array<string>).forEach(elem => newLiked.push(elem));
-          console.log(newLiked," XADAS")
-          newLiked.push(data.guid as string)
+          if (currentUser.beatsincart)
+            (currentUser.beatsincart as Array<string>).forEach((elem) =>
+              newLiked.push(elem)
+            );
+          console.log(newLiked, ' XADAS');
+          newLiked.push(data.guid as string);
 
           if ([...new Set(newLiked)].length != newLiked.length) {
-            this.snackBar.open('Beat has already been added to cart!','',
-            { 
-              duration: 3000
+            this.snackBar.open('Beat has already been added to cart!', '', {
+              duration: 3000,
             });
             return;
           }
           let c_id: string = currentUser.guid as unknown as string;
           let updated: UserDTO = {
             ...currentUser,
-            beatsincart: [...new Set(newLiked)]
-          }
-          console.log("upd", updated)
-          this.usersService.updateUser({id: c_id, userDTO: updated}).toPromise()
-            .then(res => console.log("colg", res));
-            this.snackBar.open('Beat successfully added to cart!','',
-            { 
-              duration: 3000
-            });
-            this.inCart = true;
-            this.refresh.emit("true");
+            beatsincart: [...new Set(newLiked)],
+          };
+          console.log('upd', updated);
+          this.usersService
+            .updateUser({ id: c_id, userDTO: updated })
+            .toPromise()
+            .then((res) => console.log('colg', res));
+          this.snackBar.open('Beat successfully added to cart!', '', {
+            duration: 3000,
+          });
+          this.inCart = true;
+          this.refresh.emit('true');
         });
     });
   }
@@ -166,34 +156,42 @@ export class BeatSingleItemComponent implements OnInit {
         .toPromise()
         .then((pageResult) => {
           let currentUser = pageResult.stream![0] as UserDTO;
-          console.log("cur", currentUser)
+          console.log('cur', currentUser);
           let newLiked: Array<string> = [];
-          if (currentUser.likedbeats) (currentUser.likedbeats as Array<string>).forEach(elem => newLiked.push(elem));
-          console.log(newLiked," XADAS")
-          newLiked.push(data.guid as string)
+          if (currentUser.likedbeats)
+            (currentUser.likedbeats as Array<string>).forEach((elem) =>
+              newLiked.push(elem)
+            );
+          console.log(newLiked, ' XADAS');
+          newLiked.push(data.guid as string);
           let c_id: string = currentUser.guid as unknown as string;
           let updated: UserDTO = {
             ...currentUser,
-            likedbeats: [...new Set(newLiked)]
-          }
+            likedbeats: [...new Set(newLiked)],
+          };
           if ([...new Set(newLiked)].length != newLiked.length) {
-            this.snackBar.open('Beat has already been added to liked!','',
-            { 
-              duration: 3000
+            this.snackBar.open('Beat has already been added to liked!', '', {
+              duration: 3000,
             });
             return;
           }
-          console.log("upd", updated)
+          console.log('upd', updated);
           this.isLiked = true;
-          this.usersService.updateUser({id: c_id, userDTO: updated}).toPromise()
-            .then(res => console.log("colg", res));
-            this.snackBar.open('Beat successfully added to liked!','',
-            { 
-              duration: 3000
-            });
-            
-            this.refresh.emit("true");
+          this.usersService
+            .updateUser({ id: c_id, userDTO: updated })
+            .toPromise()
+            .then((res) => console.log('colg', res));
+          this.snackBar.open('Beat successfully added to liked!', '', {
+            duration: 3000,
+          });
+
+          this.refresh.emit('true');
         });
     });
+  }
+
+  openPage() {
+    console.log("elo", this.data)
+    this.router.navigate(['beat',this.data.guid])
   }
 }
