@@ -97,6 +97,7 @@ export class AuthService {
       localStorage.removeItem('user');
       this.uid = null;
       this.uidObs.next('');
+      window.location.reload();
       this.router.navigate(['login']);
       
     });

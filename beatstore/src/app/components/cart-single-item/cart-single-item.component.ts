@@ -19,11 +19,8 @@ export class CartSingleItemComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let imgBlob = this.data.beatimg as string;
-
-    let xd: string = ('data:image/jpeg;base64,' + imgBlob) as any;
-    console.log(xd, ' XD');
-    this.thumbnail = xd;
+    this.thumbnail = ('http://localhost:8080/beat-store/file/downloadimg?file=' +
+      this.data.imgName) as string;
   }
 
   deleteFromCart(): void {

@@ -28,7 +28,7 @@ export class BeatSingleDownloadableComponent implements OnInit {
   @Input() editable = false;
   
   beatTypes: string[] = [];
-  thumbnail: SafeUrl;
+  thumbnail: any;
   constructor(
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
@@ -46,10 +46,10 @@ export class BeatSingleDownloadableComponent implements OnInit {
     //this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(imgUrl);
     console.log(this.data);
     let imgBlob = this.data.beatimg as string;
-
     let xd: string = ('data:image/jpeg;base64,' + imgBlob) as any;
     console.log(xd, ' XD');
-    this.thumbnail = xd;
+    this.thumbnail = ('http://localhost:8080/beat-store/file/downloadimg?file=' +
+    this.data.imgName) as string;
     this.beatTypes = this.data.genre.split(",");
     //console.log("elo", this.beatTypes)
   }
@@ -99,9 +99,15 @@ export class BeatSingleDownloadableComponent implements OnInit {
 
   onDownload(data: BeatDTO) {
     console.log(data);
-    data.name
+    this.beatMP3Service
+      .getBeat3ById({ id: this.data.mp3ID })
+      .toPromise()
+      .then((res) => {
+        window.open('http://localhost:8080/beat-store/file/downloadful?file=' + res.path);
+      });
+   // data.name
     //this.beatFullService.
-    window.open("http://localhost:8080/beat-store/file/download?file="+data.name+".mp3");
+   // ("http://localhost:8080/beat-store/file/download?file="+data.paypalmail+".mp3");
     //this.fileService.beatStoreFileDownloadGet({file: "myman.mp3"}).toPromise();
 
   }

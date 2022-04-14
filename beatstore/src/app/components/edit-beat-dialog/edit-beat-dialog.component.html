@@ -3,11 +3,11 @@
   <form [formGroup]="fg" class="example-form">
   <mat-form-field  class="example-full-width" appearance="fill">
     <mat-label>Beat name</mat-label>
-    <input  formControlName="beatname" [value]="beatname" matInput>{{beatname}}</mat-form-field>
+    <input  formControlName="beatname" [value]="beatname" matInput></mat-form-field>
   <tr></tr>
   <mat-form-field  class="example-full-width" appearance="fill">
     <mat-label>Price</mat-label>
-    <input  formControlName="price" [value]="pricex" matInput> {{pricex}}
+    <input  formControlName="price" [value]="pricex" matInput>
   </mat-form-field>
   <table class="example-full-width" cellspacing="0"><tr>
     <td><mat-form-field appearance="fill">
@@ -20,7 +20,7 @@
     <tr>
     <td><mat-form-field  lass="example-full-width" appearance="fill">
         <mat-label>BPM</mat-label>
-        <input matInput #postalCode formControlName="bpm" maxlength="5" [value]="bpm" placeholder="Ex. 134">{{bpm}}
+        <input matInput #postalCode formControlName="bpm" maxlength="5" [value]="bpm" placeholder="Ex. 134">
       </mat-form-field></td>
   </tr></table>
 </form>
@@ -28,5 +28,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" (click)="saveBeat()" cdkFocusInitial>Save</button>
+  <button mat-button  (click)="saveBeat()" cdkFocusInitial>Save</button>
 </mat-dialog-actions>

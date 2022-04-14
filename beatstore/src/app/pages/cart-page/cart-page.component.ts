@@ -37,6 +37,7 @@ export class CartPageComponent implements OnInit {
     // this.beatService.getAllBeats().subscribe((res) => {
     //   this.cartBeats = res.slice(0,2);
     //})
+    this.cartOnlyBeats = [];
     console.log(this.cartBeats, "cartbeats")
     this.initConfig();
     this.initData();
@@ -197,6 +198,6 @@ export class CartPageComponent implements OnInit {
   }
 
   refresh(event: any): void {
-    this.initData();
+    this.ngOnInit();
   }
 }

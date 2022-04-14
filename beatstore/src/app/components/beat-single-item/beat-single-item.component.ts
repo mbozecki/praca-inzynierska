@@ -186,6 +186,7 @@ export class BeatSingleItemComponent implements OnInit {
           });
 
           this.refresh.emit('true');
+          this.isLiked = true;
         });
     });
   }

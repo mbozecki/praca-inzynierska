@@ -7,7 +7,7 @@ import {
   UpdateBeatRequestParams,
 } from 'src/app/generated';
 import { Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-edit-beat-dialog',
   templateUrl: './edit-beat-dialog.component.html',
@@ -35,7 +35,8 @@ export class EditBeatDialogComponent implements OnInit {
   });
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private beatService: BeatAPIService
+    private beatService: BeatAPIService,
+    private ref: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +47,9 @@ export class EditBeatDialogComponent implements OnInit {
     // this.genreList = this.data.beat.genre.split(',')
 
     this.fg.controls['toppings'].setValue(this.data.beat.genre.split(','));
+    this.fg.controls['bpm'].setValue(this.data.beat.BPM);
+    this.fg.controls['beatname'].setValue(this.data.beat.name);
+    this.fg.controls['price'].setValue(this.data.beat.price);
     console.log(this.fg, this.data.beat.price);
     //this.types = this.data.genre;
   }
@@ -61,22 +65,28 @@ export class EditBeatDialogComponent implements OnInit {
       
     }
     */
+
+
     let beat: BeatDTO = {
       ...(this.data.beat as BeatDTO),
       name: this.fg.value.beatname,
       price: this.fg.value.price,
       genre: this.fg.value.toppings.toString(),
-      BPM: this.fg.value.bpm,
+      BPM: +this.fg.value.bpm,
     };
     let bUP: UpdateBeatRequestParams = {
       id: this.data.beat.guid as string,
       beatDTO: beat,
     };
+    console.log()
     this.beatService
       .updateBeat(bUP)
       .toPromise()
       .then((res) => {
         console.log(res);
+        this.ref.closeAll();
       });
   }
+  
+  
 }

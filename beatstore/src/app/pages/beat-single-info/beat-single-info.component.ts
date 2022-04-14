@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BeatAPIService, Beatmp3APIService } from 'src/app/generated';
+import { BeatAPIService, Beatmp3APIService, UserDTO, UsersAPIService } from 'src/app/generated';
 import { Beat } from 'src/app/shared/models/Beat';
 import { AudioService } from 'src/app/shared/services/audio.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-beat-single-info',
@@ -18,7 +20,10 @@ export class BeatSingleInfoComponent implements OnInit {
     public router: Router,
     private beatAPIService : BeatAPIService,
     private audio: AudioService,
-    private beatMP3Service: Beatmp3APIService ) { }
+    private beatMP3Service: Beatmp3APIService,
+    private authService: AuthService,
+    private usersService: UsersAPIService,
+    private snackBar: MatSnackBar ) { }
   beatTypes: any 
   thumbnail: any;
   ngOnInit(): void {
@@ -60,11 +65,83 @@ export class BeatSingleInfoComponent implements OnInit {
   }
 
   cart() {
+    this.authService.uidObs.subscribe((val) => {
+      console.log(val);
+      this.usersService
+        .getusersByCriteria({ firebaseId: val })
+        .toPromise()
+        .then((pageResult) => {
+          let currentUser = pageResult.stream![0] as UserDTO;
+          console.log('cur', currentUser);
+          let newLiked: Array<string> = [];
+          if (currentUser.beatsincart)
+            (currentUser.beatsincart as Array<string>).forEach((elem) =>
+              newLiked.push(elem)
+            );
+          console.log(newLiked, ' XADAS');
+          newLiked.push(this.data.guid as string);
 
+          if ([...new Set(newLiked)].length != newLiked.length) {
+            this.snackBar.open('Beat has already been added to cart!', '', {
+              duration: 3000,
+            });
+            return;
+          }
+          let c_id: string = currentUser.guid as unknown as string;
+          let updated: UserDTO = {
+            ...currentUser,
+            beatsincart: [...new Set(newLiked)],
+          };
+          console.log('upd', updated);
+          this.usersService
+            .updateUser({ id: c_id, userDTO: updated })
+            .toPromise()
+            .then((res) => console.log('colg', res));
+          this.snackBar.open('Beat successfully added to cart!', '', {
+            duration: 3000,
+          });
+        });
+    });
   }
 
   heart() {
-
+    this.authService.uidObs.subscribe((val) => {
+      console.log(val);
+      this.usersService
+        .getusersByCriteria({ firebaseId: val })
+        .toPromise()
+        .then((pageResult) => {
+          let currentUser = pageResult.stream![0] as UserDTO;
+          console.log('cur', currentUser);
+          let newLiked: Array<string> = [];
+          if (currentUser.likedbeats)
+            (currentUser.likedbeats as Array<string>).forEach((elem) =>
+              newLiked.push(elem)
+            );
+          console.log(newLiked, ' XADAS');
+          newLiked.push(this.data.guid as string);
+          let c_id: string = currentUser.guid as unknown as string;
+          let updated: UserDTO = {
+            ...currentUser,
+            likedbeats: [...new Set(newLiked)],
+          };
+          if ([...new Set(newLiked)].length != newLiked.length) {
+            this.snackBar.open('Beat has already been added to liked!', '', {
+              duration: 3000,
+            });
+            return;
+          }
+          console.log('upd', updated);
+          //this.isLiked = true;
+          this.usersService
+            .updateUser({ id: c_id, userDTO: updated })
+            .toPromise()
+            .then((res) => console.log('colg', res));
+          this.snackBar.open('Beat successfully added to liked!', '', {
+            duration: 3000,
+          });
+        });
+    });
   }
 
 }

@@ -13,6 +13,7 @@ import { CancelComponent } from './components/cancel/cancel.component';
 import { SuccessComponent } from './components/success/success.component';
 import {EditProfileComponent} from './components/edit-profile/edit-profile.component'
 import { BeatSingleInfoComponent } from './pages/beat-single-info/beat-single-info.component';
+import { FileGuard } from './shared/file-guard.guard';
 const routes: Routes = [
 
   { path: '',  pathMatch: 'full', component: HomepageComponent  },

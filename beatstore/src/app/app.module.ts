@@ -56,6 +56,8 @@ import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { BeatSingleDownloadableComponent } from './components/beat-single-downloadable/beat-single-downloadable.component';
 import { EditProfileDialogComponent } from './components/edit-profile-dialog/edit-profile-dialog.component';
+import { FileGuard } from './shared/file-guard.guard';
+import { FiledlComponent } from './components/filedl/filedl.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,6 +85,7 @@ import { EditProfileDialogComponent } from './components/edit-profile-dialog/edi
     BeatSingleInfoComponent,
     BeatSingleDownloadableComponent,
     EditProfileDialogComponent,
+    FiledlComponent,
   ],
   imports: [
     BrowserModule,
@@ -115,7 +118,7 @@ import { EditProfileDialogComponent } from './components/edit-profile-dialog/edi
     ShareButtonsModule,
     ShareIconsModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, FileGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
