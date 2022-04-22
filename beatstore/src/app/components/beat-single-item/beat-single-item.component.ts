@@ -30,6 +30,9 @@ export class BeatSingleItemComponent implements OnInit {
   @Output() refresh = new EventEmitter<string>();
   beatTypes: string[] = [];
   thumbnail: SafeUrl;
+  private emptyUser: UserDTO = {
+
+  }
   public imageURL: string = '';
   constructor(
     private sanitizer: DomSanitizer,
@@ -112,7 +115,7 @@ export class BeatSingleItemComponent implements OnInit {
         .getusersByCriteria({ firebaseId: val })
         .toPromise()
         .then((pageResult) => {
-          let currentUser = pageResult.stream![0] as UserDTO;
+          let currentUser: UserDTO = (pageResult.stream?.filter((usr: UserDTO) => usr.firebase_id == this.authService.uid) as UserDTO[])[0] || this.emptyUser
           console.log('cur', currentUser);
           let newLiked: Array<string> = [];
           if (currentUser.beatsincart)
@@ -155,7 +158,7 @@ export class BeatSingleItemComponent implements OnInit {
         .getusersByCriteria({ firebaseId: val })
         .toPromise()
         .then((pageResult) => {
-          let currentUser = pageResult.stream![0] as UserDTO;
+          let currentUser: UserDTO = (pageResult.stream?.filter((usr: UserDTO) => usr.firebase_id == this.authService.uid) as UserDTO[])[0] || this.emptyUser
           console.log('cur', currentUser);
           let newLiked: Array<string> = [];
           if (currentUser.likedbeats)

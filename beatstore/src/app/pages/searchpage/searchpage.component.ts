@@ -43,7 +43,9 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
     floor: 0,
     ceil: 240,
   };
+  private emptyUser: UserDTO = {
 
+  }
   options1: Options = {
     floor: 0,
     ceil: 300,
@@ -74,13 +76,8 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.beatName = params['name'];
-
-      console.log('XD', this.beatName);
+      this.searchInput.fg.controls.searchText.patchValue(this.beatName);
     });
-    // this.beatService.getAllBeats().subscribe((res) => {
-    //   this.allBeats = res;
-    //   this.filteredBeats = res;
-    // });
 
     this.beatAPIService
       .getbeatsByCriteria({ page: 0 })
@@ -108,21 +105,23 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
         .getusersByCriteria({ firebaseId: val })
         .subscribe
         ((pageResult) => {
-          let currentUser = pageResult.stream![0] as UserDTO;
-          // console.log('currentny', currentUser?.likedbeats);
+          let currentUser: UserDTO = (pageResult.stream?.filter((usr: UserDTO) => usr.firebase_id == this.authService.uid) as UserDTO[])[0] || this.emptyUser
           this.likedBeatsIDs = currentUser?.likedbeats || [];
           this.beatsInCart = currentUser?.beatsincart || []
         });
     });
+    
   }
   
   ngAfterViewInit(): void {
     this.sub1 = this.searchInput.fg.valueChanges.subscribe((val: any) => {
-      console.log('Wal smialo', val.searchText);
+      console.log('', val.searchText);
       this.searchTextVal = val.searchText;
       this.filterSearch();
     });
     this.searchInput.fg.controls.searchText.patchValue(this.beatName);
+    this.filterSearch();
+    
   }
 
   ngOnDestroy(): void {
@@ -197,7 +196,10 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   refreshData() {
-    this.beatAPIService
+    new Promise(resolve => setTimeout(resolve, 1000)).then(() => {
+
+    
+      this.beatAPIService
       .getbeatsByCriteria({ page: 0 })
       .toPromise()
       .then((res) => {
@@ -212,13 +214,16 @@ export class SearchpageComponent implements OnInit, AfterViewInit, OnDestroy {
           .getusersByCriteria({ firebaseId: val })
           .subscribe
           ((pageResult) => {
-            let currentUser = pageResult.stream![0] as UserDTO;
+            let currentUser: UserDTO = (pageResult.stream?.filter((usr: UserDTO) => usr.firebase_id == this.authService.uid) as UserDTO[])[0] || this.emptyUser
             // console.log('currentny', currentUser?.likedbeats);
             this.likedBeatsIDs = currentUser?.likedbeats || [];
             this.beatsInCart = currentUser?.beatsincart || []
           });
       });
   }
+    )
+}
+    
 
 
 }

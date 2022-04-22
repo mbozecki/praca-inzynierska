@@ -29,6 +29,9 @@ export class BeatSingleDownloadableComponent implements OnInit {
   
   beatTypes: string[] = [];
   thumbnail: any;
+  private emptyUser: UserDTO = {
+
+  }
   constructor(
     private sanitizer: DomSanitizer,
     private dialog: MatDialog,
@@ -51,7 +54,6 @@ export class BeatSingleDownloadableComponent implements OnInit {
     this.thumbnail = ('http://localhost:8080/beat-store/file/downloadimg?file=' +
     this.data.imgName) as string;
     this.beatTypes = this.data.genre.split(",");
-    //console.log("elo", this.beatTypes)
   }
 
   onEdit(xdata: any): void {
@@ -105,11 +107,6 @@ export class BeatSingleDownloadableComponent implements OnInit {
       .then((res) => {
         window.open('http://localhost:8080/beat-store/file/downloadful?file=' + res.path);
       });
-   // data.name
-    //this.beatFullService.
-   // ("http://localhost:8080/beat-store/file/download?file="+data.paypalmail+".mp3");
-    //this.fileService.beatStoreFileDownloadGet({file: "myman.mp3"}).toPromise();
-
   }
 
   onHeartAdd(data: BeatDTO) {
@@ -120,7 +117,7 @@ export class BeatSingleDownloadableComponent implements OnInit {
         .getusersByCriteria({ firebaseId: val })
         .toPromise()
         .then((pageResult) => {
-          let currentUser = pageResult.stream![0] as UserDTO;
+          let currentUser: UserDTO = (pageResult.stream?.filter((usr: UserDTO) => usr.firebase_id == this.authService.uid) as UserDTO[])[0] || this.emptyUser
           console.log("cur", currentUser)
           let newLiked: Array<string> = [];
           if (currentUser.beatsincart) (currentUser.beatsincart as Array<string>).forEach(elem => newLiked.push(elem));

@@ -8,7 +8,7 @@
 }
 
 .profileContainer {
-    width: 80%;
+    
     min-height: 80vh;
     margin: 18vh auto;
     background-color: #f0f0f0;
@@ -55,6 +55,8 @@
     margin-right: 100px;
     text-align: center;
     margin-top: 5vh;
+    max-width: 80%;
+    overflow:auto;
 }
 
 .wide {

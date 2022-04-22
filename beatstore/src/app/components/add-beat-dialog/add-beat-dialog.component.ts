@@ -14,6 +14,7 @@ import { Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+//declare var mp3cutter: any;
 @Component({
   selector: 'app-add-beat-dialog',
   templateUrl: './add-beat-dialog.component.html',
@@ -46,46 +47,34 @@ export class AddBeatDialogComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    console.log(this.data.id);
-  }
+  ngOnInit(): void {}
 
   addBeat() {
-    console.log(this.fg.value);
-    //let reader= new FileReader();
-    let imag: any;
-    let mp3: any;
-    //let reader1 = new FileReader();
-
     let imgfileName = this.fg.controls['img'].value.name;
     let mp3fileName = this.fg.controls['beatmp3'].value.name;
 
     const formData = new FormData();
     formData.append('attachment', this.fg.value.beatmp3);
-    console.log(formData);
-
     this.fileService
       .beatStoreFileUploadPost(formData)
       .toPromise()
       .catch((res) => {
-        console.log('XD', res);
+        console.log('', res);
       });
     this.fileService
       .beatStoreFileUploadfullPost(formData)
       .toPromise()
       .catch((res) => {
-        console.log('XD', res);
-    });
- //TODO:
-    
+        console.log('', res);
+      });
+
     const formData1 = new FormData();
     formData1.append('attachment', this.fg.value.img);
-    this.fileService.beatStoreFileUploadImgPost(formData1).toPromise().catch((res) => {
-      console.log('XD', res);
-      });
-    // reader.readAsDataURL(this.fg.value.img)
-    //reader.onloadend= () => {
-    //imag = reader.result
+    this.fileService
+      .beatStoreFileUploadImgPost(formData1)
+      .toPromise()
+      .catch((res) => {});
+
     let notFullBeat: BeatMP3DTO = {
       path: mp3fileName,
     };
@@ -93,7 +82,6 @@ export class AddBeatDialogComponent implements OnInit {
       .createBeat3({ beatMP3DTO: notFullBeat })
       .toPromise()
       .then((res) => {
-        console.log('R', res.guid);
         let beat: BeatDTO = {
           name: this.fg.value.beatname,
           price: this.fg.value.price,
@@ -114,13 +102,9 @@ export class AddBeatDialogComponent implements OnInit {
           .toPromise()
           .then((res) => {
             this.beatService.createBeat({ beatDTO: beat }).subscribe((res) => {
-              console.log('Oby', res);
               this.router.navigate(['/profile']);
             });
           });
-        //.then(res=> console.log("fullm3", res));
       });
-
-    //}
   }
 }

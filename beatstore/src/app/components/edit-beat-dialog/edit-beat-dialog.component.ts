@@ -8,6 +8,8 @@ import {
 } from 'src/app/generated';
 import { Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+
 @Component({
   selector: 'app-edit-beat-dialog',
   templateUrl: './edit-beat-dialog.component.html',
@@ -52,6 +54,7 @@ export class EditBeatDialogComponent implements OnInit {
     this.fg.controls['price'].setValue(this.data.beat.price);
     console.log(this.fg, this.data.beat.price);
     //this.types = this.data.genre;
+
   }
 
   saveBeat() {
@@ -90,3 +93,5 @@ export class EditBeatDialogComponent implements OnInit {
   
   
 }
+
+

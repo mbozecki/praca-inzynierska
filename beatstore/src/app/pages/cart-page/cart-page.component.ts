@@ -24,6 +24,9 @@ export class CartPageComponent implements OnInit {
   public total: number = 0;
   private hasDownloaded=false;
   public currentUser: UserDTO = {};
+  private emptyUser: UserDTO = {
+
+  }
   constructor(
     public beatService: BeatsService,
     private beatAPIService: BeatAPIService,
@@ -34,9 +37,6 @@ export class CartPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.beatService.getAllBeats().subscribe((res) => {
-    //   this.cartBeats = res.slice(0,2);
-    //})
     this.cartOnlyBeats = [];
     console.log(this.cartBeats, "cartbeats")
     this.initConfig();
@@ -52,7 +52,7 @@ export class CartPageComponent implements OnInit {
         .getusersByCriteria({ firebaseId: val })
         .toPromise()
         .then((pageResult) => {
-          this.currentUser = pageResult.stream![0] as UserDTO;
+          this.currentUser =  (pageResult.stream?.filter((usr: UserDTO) => usr.firebase_id == this.authService.uid) as UserDTO[])[0] || this.emptyUser
           console.log('currentny', this.currentUser.beatsincart);
           this.likedIDs = this.currentUser.beatsincart || []
           if (!this.hasDownloaded) {
@@ -100,7 +100,9 @@ export class CartPageComponent implements OnInit {
 
   private initConfig(): void {
     var iItems: ITransactionItem[] = [];
+    var payee: string;
     this.cartOnlyBeats.forEach(beat => {
+      let payee = beat.producedby
       let i: ITransactionItem = {
         name: beat.name as string,
         quantity: '1',
@@ -138,7 +140,7 @@ export class CartPageComponent implements OnInit {
             },
           ],
           payee: {
-            email_address: 'teberra@interia.pl'
+            email_address: payee
           }
         },
       advanced: {

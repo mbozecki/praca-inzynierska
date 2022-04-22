@@ -23,7 +23,7 @@
       </div>
     </div>
     <div>
-      <a class="like"><button
+      <a class="like none"><button
         mat-icon-button
         [color]="currentFile.liked ? 'primary' : 'secondary'"
         aria-label="Heart"
@@ -56,11 +56,11 @@
 
     <div class="price" *ngIf="!currentFile.cart">
       <span class="prc">{{currentFile.price}}$</span>
-      <fa-icon [icon]="faCart"></fa-icon>
+      <fa-icon class="none" [icon]="faCart"></fa-icon>
     </div>
     <div class="price" *ngIf="currentFile.cart">
-      <span class="prc">Already bought</span>
-      <fa-icon [icon]="faCart"></fa-icon>
+      <span class="prc">Already in cart</span>
+      <fa-icon class="none" [icon]="faCart"></fa-icon>
     </div>
   </div>
 </div>

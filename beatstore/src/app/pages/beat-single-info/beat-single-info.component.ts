@@ -15,6 +15,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class BeatSingleInfoComponent implements OnInit {
   public data: any;
   private bID: any;
+  private emptyUser: UserDTO = {
+
+  }
   constructor(
     private route: ActivatedRoute,
     public router: Router,
@@ -71,7 +74,7 @@ export class BeatSingleInfoComponent implements OnInit {
         .getusersByCriteria({ firebaseId: val })
         .toPromise()
         .then((pageResult) => {
-          let currentUser = pageResult.stream![0] as UserDTO;
+          let currentUser: UserDTO = (pageResult.stream?.filter((usr: UserDTO) => usr.firebase_id == this.authService.uid) as UserDTO[])[0] || this.emptyUser
           console.log('cur', currentUser);
           let newLiked: Array<string> = [];
           if (currentUser.beatsincart)
@@ -111,7 +114,7 @@ export class BeatSingleInfoComponent implements OnInit {
         .getusersByCriteria({ firebaseId: val })
         .toPromise()
         .then((pageResult) => {
-          let currentUser = pageResult.stream![0] as UserDTO;
+          let currentUser: UserDTO = (pageResult.stream?.filter((usr: UserDTO) => usr.firebase_id == this.authService.uid) as UserDTO[])[0] || this.emptyUser
           console.log('cur', currentUser);
           let newLiked: Array<string> = [];
           if (currentUser.likedbeats)
